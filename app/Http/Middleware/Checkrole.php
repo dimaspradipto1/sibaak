@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Checkrole
+class CheckRole
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,24 @@ class Checkrole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->is_admin || Auth::user()->is_operator || Auth::user()->is_mahasiswa || Auth::user()->is_tata_usaha){
+        // if (Auth::user()->is_admin || Auth::user()->is_operator || Auth::user()->is_mahasiswa || Auth::user()->is_tata_usaha) {
+        //     return $next($request);
+        // }
+        // return $next($request);
+
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        if (
+            Auth::user()->is_admin ||
+            Auth::user()->is_operator ||
+            Auth::user()->is_mahasiswa ||
+            Auth::user()->is_tata_usaha
+        ) {
             return $next($request);
         }
-        return $next($request);
+
+        abort(403, 'Unauthorized');
     }
 }

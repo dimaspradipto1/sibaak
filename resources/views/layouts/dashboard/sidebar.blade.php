@@ -3,7 +3,7 @@
     <div class="pcoded-inner-navbar main-menu">
         <div class="">
             <div class="main-menu-header">
-                <img class="img-80 img-radius" src="{{ asset('dashboard/assets/images/user.png') }}"
+                <img class="img-80 img-radius" src="{{ asset('assets/images/user.png') }}"
                     alt="User-Profile-Image">
                 <div class="user-details">
                     <span id="more-details">{{ Auth::user()->name }}<i class="fa fa-caret-down"></i></span>

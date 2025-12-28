@@ -1,8 +1,22 @@
 <?php
 
+use App\Models\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SkController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\JenisSKController;
+use App\Http\Controllers\PedomanController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KurikulumController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\WasdalbinController;
+use App\Http\Controllers\SuratAktifController;
+use App\Http\Controllers\KepanitiaanController;
+use App\Http\Controllers\SopAkademikController;
+use App\Http\Controllers\ProgramStudiController;
+use App\Http\Controllers\SuratAkademikController;
+use App\Http\Controllers\TahunAkademikController;
 
 
 Route::controller(LoginController::class)->group(function () {
@@ -10,9 +24,27 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/loginproses', 'loginproses')->name('loginproses');
     Route::get('/register', 'register')->name('register');
     Route::post('/registerproses', 'registerproses')->name('registerproses');
+    Route::get('/logout', 'logout')->name('logout');
 });
 
 
 Route::middleware(['auth', 'checkrole'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+    Route::resource('users', UserController::class);
+    Route::get('/user/{id}/update-password',[UserController::class, 'showUpdatePasswordForm'])->name('users.showUpdatePasswordForm');
+    Route::put('/user/{id}/update-password', [UserController::class, 'updatePassword'])->name('users.updatePassword');
+    Route::resource('tahunAkademik', TahunAkademikController::class);
+    Route::resource('mahasiswa', MahasiswaController::class);
+    Route::resource('programStudi', ProgramStudiController::class);
+    Route::resource('jenissk', JenisSKController::class);
+    Route::resource('pegawai', PegawaiController::class);
+    Route::resource('suratAktif', SuratAktifController::class);
+    Route::resource('suratAkademik', SuratAkademikController::class);
+    Route::resource('SOPAkademik', SopAkademikController::class);
+    Route::resource('kepanitiaan', KepanitiaanController::class);
+    Route::resource('pedoman', PedomanController::class);
+    Route::resource('sk', SkController::class);
+    Route::resource('kurikulum', KurikulumController::class);
+    Route::resource('wasdalbin', WasdalbinController::class);
 });

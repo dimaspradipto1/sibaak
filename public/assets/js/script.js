@@ -16,7 +16,7 @@ $(document).ready(function() {
     $(".card-header-right .reload-card").on('click', function() {
         var $this = $(this);
         $this.parents('.card').addClass("card-load");
-        $this.parents('.card').append('<div class="card-loader"><i class="fa fa-spinner rotate-refresh"></div>');
+        $this.parents('.card').append('<div class="card-loader"><i class="fa fa-circle-o-notch rotate-refresh"></div>');
         setTimeout(function() {
             $this.parents('.card').children(".card-loader").remove();
             $this.parents('.card').removeClass("card-load");
@@ -51,10 +51,6 @@ $(document).ready(function() {
         port.toggleClass("full-card");
         $(this).toggleClass("fa-window-restore");
     });
-
-    $(".card-header-right .icofont-spinner-alt-5").on('mouseenter mouseleave', function() {
-        $(this).toggleClass("rotate-refresh").fadeIn('slow');
-    });
     $("#more-details").on('click', function() {
         $(".more-details").slideToggle(500);
     });
@@ -75,12 +71,6 @@ $(document).ready(function() {
             $(".main-search").removeClass('open');
         }, 300);
     });
-    // $(".header-notification").on('click', function() {
-    //     $(this).children('.show-notification').slideToggle(500);
-    //     $(this).toggleClass('active');
-    //
-    // });
-
     $(document).ready(function(){
         $(".header-notification").click(function(){
             $(this).find(".show-notification").slideToggle(500);
@@ -99,7 +89,7 @@ $(document).ready(function() {
     $.mCustomScrollbar.defaults.axis = "yx";
     $("#styleSelector .style-cont").slimScroll({
         setTop: "1px",
-        height:"calc(100vh - 520px)",
+        height:"calc(100vh - 320px)",
     });
     $(".main-menu").mCustomScrollbar({
         setTop: "1px",
@@ -192,14 +182,26 @@ $(document).ready(function() {
     Waves.attach('.float-buttons', ['waves-button', 'waves-float']);
     Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light']);
     Waves.attach('.flat-buttons', ['waves-button', 'waves-float', 'waves-light', 'flat-buttons']);
+
+    $('.form-control').on('blur', function() {
+        if ($(this).val().length > 0) {
+            $(this).addClass("fill");
+        } else {
+            $(this).removeClass("fill");
+        }
+    });
+    $('.form-control').on('focus', function() {
+        $(this).addClass("fill");
+    });
 });
 $(document).ready(function() {
-    $(".theme-loader").animate({
-        opacity: "0"
-    },1000);
-    setTimeout(function() {
-        $(".theme-loader").remove();
-    }, 800);
+        $(".theme-loader").animate({
+            opacity: "0"
+        },1000);
+        setTimeout(function() {
+            $(".theme-loader").remove();
+        }, 1000);
+
 });
 
 // toggle full screen
@@ -226,19 +228,3 @@ function toggleFullScreen() {
     }
 }
 
-$('body').append('' +
-    '<div class="fixed-button">' +
-        '<a href="https://themeforest.net/item/mega-able-bootstrap-4-and-angular-5-admin-dashboard-template/20790784?ref=phoenixcoded" target="_blank" class="btn btn-md btn-primary">' +
-            '<i class="fa fa-shopping-cart" aria-hidden="true"></i> Upgrade To Pro' +
-        '</a> ' +
-    '</div>' +
-'');
-var $window = $(window);
-var nav = $('.fixed-button');
-$window.scroll(function() {
-    if ($window.scrollTop() >= 200) {
-        nav.addClass('active');
-    } else {
-        nav.removeClass('active');
-    }
-});

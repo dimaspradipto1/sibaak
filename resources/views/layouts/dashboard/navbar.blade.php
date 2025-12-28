@@ -18,7 +18,7 @@
                 </div>
             </div>
             <a href="{{ route('dashboard') }}">
-                <img class="img-fluid" src="{{ asset('dashboard/assets/images/logouis.png') }}" style="width: 30px; height: 30px;" alt="UIS Logo" />
+                <img class="img-fluid" src="{{ asset('assets/images/logouis.png') }}" style="width: 30px; height: 30px;" alt="UIS Logo" />
             </a>
             <span class="navbar-brand mb-0 text-white ml-2">SIBAAK</span>
             <a class="mobile-options waves-effect waves-light">
@@ -89,7 +89,7 @@
                 </li> --}}
                 <li class="user-profile header-notification">
                     <a href="#!" class="waves-effect waves-light">
-                        <img src="{{ asset('dashboard/assets/images/user.png') }}" class="img-radius"
+                        <img src="{{ asset('assets/images/user.png') }}" class="img-radius"
                             alt="User-Profile-Image">
                         <span>{{ Auth::user()->name }}</span>
                         <i class="ti-angle-down"></i>

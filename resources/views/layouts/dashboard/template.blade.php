@@ -12,26 +12,26 @@
         content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
     <meta name="author" content="Codedthemes" />
     <!-- Favicon icon -->
-    <link rel="icon" href="{{ asset('dashboard/assets/images/logouis.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/logouis.png') }}" type="image/x-icon">
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <!-- waves.css -->
-    <link rel="stylesheet" href="{{ asset('dashboard/assets/pages/waves/css/waves.min.css') }}" type="text/css"
+    <link rel="stylesheet" href="{{ asset('assets/pages/waves/css/waves.min.css') }}" type="text/css"
         media="all">
     <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/assets/css/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap/css/bootstrap.min.css') }}">
     <!-- waves.css -->
-    <link rel="stylesheet" href="{{ asset('dashboard/assets/pages/waves/css/waves.min.css') }}" type="text/css"
+    <link rel="stylesheet" href="{{ asset('assets/pages/waves/css/waves.min.css') }}" type="text/css"
         media="all">
     <!-- themify icon -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/assets/icon/themify-icons/themify-icons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/themify-icons/themify-icons.css') }}">
     <!-- font-awesome-n -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/assets/css/font-awesome-n.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/assets/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome-n.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css') }}">
     <!-- scrollbar.css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/assets/css/jquery.mCustomScrollbar.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery.mCustomScrollbar.css') }}">
     <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
 
      {{--  datatables CSS  --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
@@ -153,23 +153,23 @@
     </div>
 
     <!-- Required Jquery -->
-    <script type="text/javascript" src="{{ asset('dashboard/assets/js/jquery/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('dashboard/assets/js/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('dashboard/assets/js/popper.js/popper.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('dashboard/assets/js/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/popper.js/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap/js/bootstrap.min.js') }}"></script>
     <!-- waves js -->
-    <script src="{{ asset('dashboard/assets/pages/waves/js/waves.min.js') }}"></script>
+    <script src="{{ asset('assets/pages/waves/js/waves.min.js') }}"></script>
     <!-- jquery slimscroll js -->
-    <script type="text/javascript" src="{{ asset('dashboard/assets/js/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
 
     <!-- slimscroll js -->
-    <script src="{{ asset('dashboard/assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
 
     <!-- menu js -->
-    <script src="{{ asset('dashboard/assets/js/pcoded.min.js') }}"></script>
-    <script src="{{ asset('dashboard/assets/js/vertical/vertical-layout.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
+    <script src="assets/js/vertical/vertical-layout.min.js"></script>
 
-    <script type="text/javascript" src="{{ asset('dashboard/assets/js/script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/script.js') }}"></script>
 
     {{-- fontawesome --}}
     <script src="https://kit.fontawesome.com/63b8672806.js" crossorigin="anonymous"></script>

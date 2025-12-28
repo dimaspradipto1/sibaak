@@ -403,7 +403,7 @@ if (!window.CanvasRenderingContext2D) {
   }
 
   function createBrushObject(ctx, value) {
-    if (value instanceof CanvasMega_) {
+    if (value instanceof CanvasGradient_) {
       return value.createBrush_(ctx);
     } else if (value instanceof CanvasPattern_) {
       throw Error('Not implemented');
@@ -562,14 +562,14 @@ if (!window.CanvasRenderingContext2D) {
     this.currentPath_ = [];
   };
 
-  contextPrototype.createLinearMega = function(aX0, aY0, aX1, aY1) {
-    return new LinearCanvasMega_(aX0, aY0, aX1, aY1);
+  contextPrototype.createLinearGradient = function(aX0, aY0, aX1, aY1) {
+    return new LinearCanvasGradient_(aX0, aY0, aX1, aY1);
   };
 
-  contextPrototype.createRadialMega = function(x0, y0,
+  contextPrototype.createRadialGradient = function(x0, y0,
                                                    r0, x1,
                                                    y1, r1) {
-    return new RadialCanvasMega_(x0, y0, r0, x1, y1, r1);
+    return new RadialCanvasGradient_(x0, y0, r0, x1, y1, r1);
   };
 
   contextPrototype.drawImage = function (image, var_args) {
@@ -761,36 +761,36 @@ if (!window.CanvasRenderingContext2D) {
     return new CanvasPattern_;
   };
 
-  // Mega / Pattern Stubs
-  function CanvasMega_() {
+  // Gradient / Pattern Stubs
+  function CanvasGradient_() {
     this.colors_ = [];
   }
 
-  CanvasMega_.prototype.addColorStop = function(aOffset, aColor) {
+  CanvasGradient_.prototype.addColorStop = function(aOffset, aColor) {
     aColor = translateColor(aColor);
     this.colors_.push({offset: aOffset, color: aColor});
   };
 
-  CanvasMega_.prototype.createStops_ = function(ctx, brushObj, colors) {
+  CanvasGradient_.prototype.createStops_ = function(ctx, brushObj, colors) {
     var gradientStopCollection = brushObj.gradientStops;
     for (var i = 0, c; c = colors[i]; i++) {
       var color = translateColor(c.color);
       gradientStopCollection.add(create(ctx,
-          '<MegaStop Color="%1" Offset="%2"/>', [color, c.offset]));
+          '<GradientStop Color="%1" Offset="%2"/>', [color, c.offset]));
     }
   };
 
-  function LinearCanvasMega_(x0, y0, x1, y1) {
-    CanvasMega_.call(this);
+  function LinearCanvasGradient_(x0, y0, x1, y1) {
+    CanvasGradient_.call(this);
     this.x0_ = x0;
     this.y0_ = y0;
     this.x1_ = x1;
     this.y1_ = y1;
   }
-  LinearCanvasMega_.prototype = new CanvasMega_;
+  LinearCanvasGradient_.prototype = new CanvasGradient_;
 
-  LinearCanvasMega_.prototype.createBrush_ = function(ctx) {
-    var brushObj = create(ctx, '<LinearMegaBrush MappingMode="Absolute" ' +
+  LinearCanvasGradient_.prototype.createBrush_ = function(ctx) {
+    var brushObj = create(ctx, '<LinearGradientBrush MappingMode="Absolute" ' +
                           'StartPoint="%1,%2" EndPoint="%3,%4"/>',
                           [this.x0_, this.y0_, this.x1_, this.y1_]);
     this.createStops_(ctx, brushObj, this.colors_);
@@ -801,7 +801,7 @@ if (!window.CanvasRenderingContext2D) {
     return isNaN(v) || !isFinite(v);
   }
 
-  function RadialCanvasMega_(x0, y0, r0, x1, y1, r1) {
+  function RadialCanvasGradient_(x0, y0, r0, x1, y1, r1) {
     if (r0 < 0 || r1 < 0 || isNanOrInfinite(x0) || isNanOrInfinite(y0) ||
         isNanOrInfinite(x1) || isNanOrInfinite(y1)) {
       // IE does not support DOMException so this is as close as we get.
@@ -810,7 +810,7 @@ if (!window.CanvasRenderingContext2D) {
       throw error;
     }
 
-    CanvasMega_.call(this);
+    CanvasGradient_.call(this);
     this.x0_ = x0;
     this.y0_ = y0;
     this.r0_ = r0;
@@ -818,17 +818,17 @@ if (!window.CanvasRenderingContext2D) {
     this.y1_ = y1;
     this.r1_ = r1;
   }
-  RadialCanvasMega_.prototype = new CanvasMega_;
+  RadialCanvasGradient_.prototype = new CanvasGradient_;
 
-  CanvasMega_.prototype.createBrush_ = function(ctx) {
+  CanvasGradient_.prototype.createBrush_ = function(ctx) {
     if (this.x0_ == this.x1_ && this.y0_ == this.y1_ && this.r0_ == this.r1_) {
       return null;
     }
 
     var radius = Math.max(this.r0_, this.r1_);
     var minRadius = Math.min(this.r0_, this.r1_);
-    var brushObj = create(ctx, '<RadialMegaBrush MappingMode="Absolute" ' +
-                          'MegaOrigin="%1,%2" Center="%3,%4" ' +
+    var brushObj = create(ctx, '<RadialGradientBrush MappingMode="Absolute" ' +
+                          'GradientOrigin="%1,%2" Center="%3,%4" ' +
                           'RadiusX="%5" RadiusY="%5"/>',
                           [this.x0_, this.y0_, this.x1_, this.y1_, radius]);
 
@@ -864,7 +864,7 @@ if (!window.CanvasRenderingContext2D) {
   // set up externs
   G_vmlCanvasManager = G_vmlCanvasManager_;
   CanvasRenderingContext2D = CanvasRenderingContext2D_;
-  CanvasMega = CanvasMega_;
+  CanvasGradient = CanvasGradient_;
   CanvasPattern = CanvasPattern_;
 
 })();

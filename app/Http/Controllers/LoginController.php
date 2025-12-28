@@ -57,4 +57,10 @@ class LoginController extends Controller
         //     ->timerProgressBar();
         // return redirect()->route('mahasiswa.create');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
 }

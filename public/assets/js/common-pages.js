@@ -26,6 +26,17 @@ $(document).ready(function() {
         $('.theme-loader').remove();
     }, 2000);
     // $('.pcoded').addClass('loaded');
+
+    $('.form-control').on('blur', function() {
+        if ($(this).val().length > 0) {
+            $(this).addClass("fill");
+        } else {
+            $(this).removeClass("fill");
+        }
+    });
+    $('.form-control').on('focus', function() {
+        $(this).addClass("fill");
+    });
 });
 function toggleFullScreen() {
     var a = $(window).height() - 10;
