@@ -22,16 +22,18 @@ class LoginController extends Controller
         
         if (Auth::attempt($credentials)) {
             Alert::success('Berhasil', 'Login berhasil')
-                ->autoclose(2000)
+                ->autoclose(4000)
                 ->toToast()
-                ->timerProgressBar();
+                ->timerProgressBar()
+                ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
             return redirect()->route('dashboard');  
         }
         
         Alert::error('Gagal', 'Email atau password salah')
-            ->autoclose(2000)
+            ->autoclose(4000)
             ->toToast()
-            ->timerProgressBar();
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
         return redirect()->route('login')->withInput($request->only('email'));
     }
 
@@ -50,17 +52,23 @@ class LoginController extends Controller
             'is_mahasiswa' => 1,
         ]);
 
-        // Auth::login($user);
-        // Alert::success('Berhasil', 'Register berhasil')
-        //     ->autoclose(2000)
-        //     ->toToast()
-        //     ->timerProgressBar();
-        // return redirect()->route('mahasiswa.create');
+        Auth::login($user);
+        Alert::success('Berhasil', 'Register berhasil')
+            ->autoclose(4000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
+        return redirect()->route('mahasiswa.create');
     }
 
     public function logout()
     {
         Auth::logout();
+        Alert::success('Berhasil', 'Logout berhasil')
+            ->autoclose(4000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-check"></i>');
         return redirect()->route('login');
     }
 }

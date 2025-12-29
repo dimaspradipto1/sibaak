@@ -115,7 +115,7 @@
                                     <div class="col-md-8">
                                         <div class="page-header-title">
                                             <h5 class="m-b-10">Dashboard</h5>
-                                            <p class="m-b-0">Welcome to Sistem Informasi {{ env('APP_NAME') }} </p>
+                                            <p class="m-b-0">Welcome to {{ env('APP_NAME') }} </p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -167,7 +167,8 @@
 
     <!-- menu js -->
     <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
-    <script src="assets/js/vertical/vertical-layout.min.js"></script>
+    {{-- <script src="assets/js/vertical/vertical-layout.min.js"></script> --}}
+    <script src="{{ asset('assets/js/vertical/vertical-layout.min.js') }}"></script>
 
     <script type="text/javascript" src="{{ asset('assets/js/script.js') }}"></script>
 
@@ -181,8 +182,8 @@
   {{-- select2 --}}
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-  @stack('script')
-  @stack('style')
+  @stack('scripts')
+  @stack('styles')
 </body>
 
 </html>

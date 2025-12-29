@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SkController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\JenisSKController;
 use App\Http\Controllers\PedomanController;
