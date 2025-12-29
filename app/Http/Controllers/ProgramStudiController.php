@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
+use App\DataTables\ProgramStudiDataTable;
+use App\Http\Requests\ProgramStudiRequest;
 
 class ProgramStudiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ProgramStudiDataTable $dataTable)
     {
-        //
+        return $dataTable->render('pages.programStudi.index');
     }
 
     /**
@@ -20,15 +22,16 @@ class ProgramStudiController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.programStudi.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProgramStudiRequest $request)
     {
-        //
+        ProgramStudi::create($request->validated());
+        return redirect()->route('programStudi.index')->with('success', 'Program Studi berhasil ditambahkan');
     }
 
     /**
@@ -44,15 +47,16 @@ class ProgramStudiController extends Controller
      */
     public function edit(ProgramStudi $programStudi)
     {
-        //
+        return view('pages.programStudi.edit', compact('programStudi'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProgramStudi $programStudi)
+    public function update(ProgramStudiRequest $request, ProgramStudi $programStudi)
     {
-        //
+        $programStudi->update($request->validated());
+        return redirect()->route('programStudi.index')->with('success', 'Program Studi berhasil diupdate');
     }
 
     /**
@@ -60,6 +64,7 @@ class ProgramStudiController extends Controller
      */
     public function destroy(ProgramStudi $programStudi)
     {
-        //
+        $programStudi->delete();
+        return redirect()->route('programStudi.index')->with('success', 'Program Studi berhasil dihapus');
     }
 }

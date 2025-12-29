@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Mahasiswa;
+use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\DataTables\MahasiswaDataTable;
+use App\Http\Requests\MahasiswaRequest;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MahasiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(MahasiswaDataTable $dataTable)
     {
-        //
+        return $dataTable->render('pages.mahasiswa.index');
     }
 
     /**
@@ -20,15 +26,24 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        //
+       $isMahasiswa = Mahasiswa::where('users_id', Auth::id())->exists();
+        $programStudi = ProgramStudi::all();
+        $users = User::where('is_mahasiswa', true)->get();
+        return view('pages.mahasiswa.create', compact('users', 'programStudi', 'isMahasiswa'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MahasiswaRequest $request)
     {
-        //
+        Mahasiswa::create($request->validated());
+        Alert::success('Mahasiswa berhasil ditambahkan')
+            ->autoclose(4000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
+        return redirect()->route('mahasiswa.index');
     }
 
     /**
@@ -36,15 +51,21 @@ class MahasiswaController extends Controller
      */
     public function show(Mahasiswa $mahasiswa)
     {
-        //
+        // Memuat relasi 'user' dan 'programStudi'
+        $mahasiswa = Mahasiswa::with('user', 'programStudi')->findOrFail($mahasiswa->id);
+        $programStudi = ProgramStudi::all();
+        return view('pages.mahasiswa.show', compact('mahasiswa', 'programStudi'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Mahasiswa $mahasiswa)
     {
-        //
+        $users = User::where('is_mahasiswa', true)->get();
+        $programStudi = ProgramStudi::all();
+        return view('pages.mahasiswa.edit', compact('mahasiswa', 'programStudi', 'users'));
     }
 
     /**
@@ -52,7 +73,13 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        //
+        $mahasiswa->update($request->all());
+        Alert::success('Mahasiswa berhasil diupdate')
+            ->autoclose(4000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
+        return redirect()->route('mahasiswa.index');
     }
 
     /**
@@ -60,6 +87,12 @@ class MahasiswaController extends Controller
      */
     public function destroy(Mahasiswa $mahasiswa)
     {
-        //
+        $mahasiswa->delete();
+        Alert::success('Mahasiswa berhasil dihapus')
+            ->autoclose(4000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
+        return redirect()->route('mahasiswa.index');
     }
 }
