@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TahunAkademik;
 use Illuminate\Http\Request;
+use App\Models\TahunAkademik;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\DataTables\TahunAkademikDataTable;
+use App\Http\Requests\TahunAkademikRequest;
 
 class TahunAkademikController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(TahunAkademikDataTable $tahunAkademikDataTable)
     {
-        //
+        return $tahunAkademikDataTable->render('pages.tahunakademik.index');
     }
 
     /**
@@ -20,15 +23,21 @@ class TahunAkademikController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.tahunAkademik.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TahunAkademikRequest $request)
     {
-        //
+        TahunAkademik::create($request->validated());
+        Alert::success('success', 'data created successfully')
+            ->autoclose(4000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
+        return redirect()->route('tahunAkademik.index');
     }
 
     /**
@@ -44,15 +53,21 @@ class TahunAkademikController extends Controller
      */
     public function edit(TahunAkademik $tahunAkademik)
     {
-        //
+        return view('pages.tahunAkademik.edit', compact('tahunAkademik'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TahunAkademik $tahunAkademik)
+    public function update(TahunAkademikRequest $request, TahunAkademik $tahunAkademik)
     {
-        //
+        $tahunAkademik->update($request->validated());
+        Alert::success('success', 'data updated successfully')
+            ->autoclose(4000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
+        return redirect()->route('tahunAkademik.index');
     }
 
     /**
@@ -60,6 +75,12 @@ class TahunAkademikController extends Controller
      */
     public function destroy(TahunAkademik $tahunAkademik)
     {
-        //
+        $tahunAkademik->delete();
+        Alert::success('success', 'data deleted successfully')
+            ->autoclose(4000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
+        return redirect()->route('tahunAkademik.index');
     }
 }
