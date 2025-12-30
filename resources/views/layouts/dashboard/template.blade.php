@@ -16,25 +16,23 @@
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <!-- waves.css -->
-    <link rel="stylesheet" href="{{ asset('assets/pages/waves/css/waves.min.css') }}" type="text/css"
-        media="all">
+    <link rel="stylesheet" href="{{ asset('assets/pages/waves/css/waves.min.css') }}" type="text/css" media="all">
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap/css/bootstrap.min.css') }}">
     <!-- waves.css -->
-    <link rel="stylesheet" href="{{ asset('assets/pages/waves/css/waves.min.css') }}" type="text/css"
-        media="all">
+    <link rel="stylesheet" href="{{ asset('assets/pages/waves/css/waves.min.css') }}" type="text/css" media="all">
     <!-- themify icon -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/themify-icons/themify-icons.css') }}">
     <!-- font-awesome-n -->
-    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome-n.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome-n.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css') }}">
     <!-- scrollbar.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery.mCustomScrollbar.css') }}">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
 
-     {{--  datatables CSS  --}}
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
+    {{--  datatables CSS  --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.6/css/dataTables.bootstrap5.css">
 
     {{-- select2 CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -99,12 +97,12 @@
     <div id="pcoded" class="pcoded">
         <div class="pcoded-overlay-box"></div>
         <div class="pcoded-container navbar-wrapper">
-            
+
             @include('layouts.dashboard.navbar')
 
             <div class="pcoded-main-container">
                 <div class="pcoded-wrapper">
-                    
+
                     @include('layouts.dashboard.sidebar')
 
                     <div class="pcoded-content">
@@ -115,7 +113,7 @@
                                     <div class="col-md-8">
                                         <div class="page-header-title">
                                             <h5 class="m-b-10">Dashboard</h5>
-                                            <p class="m-b-0">Welcome to {{ env('APP_NAME') }} </p>
+                                            <p class="m-b-0">Welcome to Sistem Informasi {{ env('APP_NAME') }} </p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -167,7 +165,6 @@
 
     <!-- menu js -->
     <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
-    {{-- <script src="assets/js/vertical/vertical-layout.min.js"></script> --}}
     <script src="{{ asset('assets/js/vertical/vertical-layout.min.js') }}"></script>
 
     <script type="text/javascript" src="{{ asset('assets/js/script.js') }}"></script>
@@ -176,14 +173,16 @@
     <script src="https://kit.fontawesome.com/63b8672806.js" crossorigin="anonymous"></script>
 
     {{-- datatables --}}
-  <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
-  <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/2.3.6/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.6/js/dataTables.bootstrap5.js"></script>
 
-  {{-- select2 --}}
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-  @stack('scripts')
-  @stack('styles')
+    {{-- select2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    @stack('script')
+    @stack('scripts')
+    @stack('style')
 </body>
 
 </html>
