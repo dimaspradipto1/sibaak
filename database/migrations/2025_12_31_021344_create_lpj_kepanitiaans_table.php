@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('lpj_kepanitiaans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tahun_akademik_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('users_id')->constrained()->cascadeOnDelete();
+            $table->string('semester');
+            $table->text('nama_dokumen');
+            $table->string('ketua');
+            $table->string('sekretaris');
+            $table->string('prodi');
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }
