@@ -28,7 +28,7 @@ class SkKepanitiaanRequest extends FormRequest
             'nomor_sk' => 'required',
             'jenissk_id' => 'required',
             'prodi' => 'required',
-            'file' => 'required|file|mimes:pdf|max:51200',
+            'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }
 

@@ -100,19 +100,38 @@ class SkKepanitiaanController extends Controller
             $data['users_id'] = Auth::id();
 
             if ($request->hasFile('file')) {
+                // Hapus file lama jika ada
+                if ($skkepanitiaan->file) {
+                    $oldPath = public_path($skkepanitiaan->file);
+                    if (File::exists($oldPath)) {
+                        File::delete($oldPath);
+                    }
+                }
+
                 $file = $request->file('file');
                 $filename = $file->getClientOriginalName();
                 $path = $file->storeAs('sk_kepanitiaan', $filename, 'public');
                 $data['file'] = 'storage/' . $path;
+            } else {
+                unset($data['file']);
             }
 
             $skkepanitiaan->update($data);
 
-            Alert::success('Berhasil', 'Data Berhasil Diupdate');
+            Alert::success('Berhasil', 'Data Berhasil Diubah')
+                ->autoclose(3000)
+                ->toToast()
+                ->timerProgressBar()
+                ->iconHtml('<i class="fa fa-check-circle"></i>');
+
             return redirect()->route('skkepanitiaan.index');
         } catch (\Throwable $th) {
             Log::error('Error updating SkKepanitiaan: ' . $th->getMessage());
-            Alert::error('Gagal', 'Data Gagal Diupdate');
+            Alert::error('Gagal', 'Data Gagal Diubah')
+                ->autoclose(3000)
+                ->toToast()
+                ->timerProgressBar()
+                ->iconHtml('<i class="fa fa-times-circle"></i>');
             return redirect()->back()->withInput();
         }
     }
@@ -122,7 +141,7 @@ class SkKepanitiaanController extends Controller
      */
     public function destroy(SkKepanitiaan $skkepanitiaan)
     {
-         $skkepanitiaan = SkKepanitiaan::findOrFail($skkepanitiaan->id);
+        $skkepanitiaan = SkKepanitiaan::findOrFail($skkepanitiaan->id);
 
         if ($skkepanitiaan->file) {
             $fullPath = public_path($skkepanitiaan->file);

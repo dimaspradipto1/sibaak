@@ -6,7 +6,7 @@
             <!-- Basic Form Inputs card start -->
             <div class="card">
                 <div class="card-header">
-                    <h5>Form Edit SK Kepanitiaan</h5>
+                    <h5>Detail SK Kepanitiaan</h5>
                 </div>
                 <div class="card-block">
                     <div class="row">
@@ -63,14 +63,14 @@
                             <div class="form-group">
                                 <label for="file">File</label>
                                 <br>
-                                <a href="{{ asset($skkepanitiaan->file) }}" target="_blank" class="btn btn-primary btn-sm btn-block">
+                                <a href="{{ asset($skkepanitiaan->file) }}" target="_blank" class="btn btn-primary btn-sm rounded btn-block">
                                     <i class="fa fa-eye"></i> Lihat Dokumen
                                 </a>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <a href="{{ route('skkepanitiaan.index') }}" class="btn btn-secondary btn-sm">
-                                <i class="fa fa-arrow-left"></i> Kembali
+                            <a href="{{ route('skkepanitiaan.index') }}" class="btn btn-danger btn-sm rounded">
+                                <i class="fa fa-arrow-left"></i> Back
                             </a>
                         </div>
                     </div>

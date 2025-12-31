@@ -10,20 +10,38 @@
                 </div>
                 <div class="card-block">
                     <h4 class="sub-title">Form Inputs</h4>
-                    <form action="{{ route('sk.update', $sk->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('skkepanitiaan.update', $skkepanitiaan->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
-                        <!-- Nama SOP -->
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tahun Akademik</label>
                             <div class="col-sm-10">
-                                <select name="tahun_akademik_id" class="form-control rounded" required>
+                                <select name="tahun_akademik_id" class="form-control rounded">
                                     <option value="">Pilih Tahun Akademik</option>
                                     <option value="">=====================</option>
                                     @foreach ($tahunAkademik as $item)
-                                        <option value="{{ $item->id }}" {{ old('tahun_akademik_id', $sk->tahun_akademik_id) == $item->id ? 'selected' : '' }}>{{ $item->tahun_akademik }} </option>
+                                        <option value="{{ $item->id }}"
+                                            {{ old('tahun_akademik_id', $skkepanitiaan->tahun_akademik_id) == $item->id ? 'selected' : '' }}>
+                                            {{ $item->tahun_akademik }} </option>
                                     @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Semester</label>
+                            <div class="col-sm-10">
+                                <select name="semester" id="" class="form-control rounded">
+                                    <option value="">Pilih Semester</option>
+                                    <option value="">=====================</option>
+                                    <option value="Gasal"
+                                        {{ old('semester', $skkepanitiaan->semester) == 'Gasal' ? 'selected' : '' }}>Gasal
+                                    </option>
+                                    <option value="Genap"
+                                        {{ old('semester', $skkepanitiaan->semester) == 'Genap' ? 'selected' : '' }}>Genap
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -31,26 +49,29 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nama SK</label>
                             <div class="col-sm-10">
-                                <textarea name="nama_sk" class="form-control rounded" id="" cols="30" rows="3">{{ old('nama_sk') ?? $sk->nama_sk }}</textarea>
+                                <textarea name="nama_sk" class="form-control rounded" id="" cols="30" rows="3">{{ old('nama_sk') ?? $skkepanitiaan->nama_sk }}</textarea>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nomor SK</label>
                             <div class="col-sm-10">
-                                <input type="text" name="nomor_sk" value="{{ old('nomor_sk') ?? $sk->nomor_sk }}"
-                                    class="form-control rounded" placeholder="Masukkan nomor sk" required>
+                                <input type="text" name="nomor_sk"
+                                    value="{{ old('nomor_sk') ?? $skkepanitiaan->nomor_sk }}" class="form-control rounded"
+                                    placeholder="Masukkan nomor sk">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Jenis SK</label>
                             <div class="col-sm-10">
-                                <select name="jenissk_id" id="jenissk_id" class="form-control rounded" required>
-                                    <option value="">Pilih Jenis SK</option>
+                                <select name="jenissk_id" id="jenissk_id" class="form-control rounded">
+                                    <option value="">{{ old('jenissk_id') ?? $skkepanitiaan->jenissk_id }}</option>
                                     <option value="">=====================</option>
                                     @foreach ($jenissks as $jenissk)
-                                        <option value="{{ $jenissk->id }}" {{ old('jenissk_id', $sk->jenissk_id) == $jenissk->id ? 'selected' : '' }}>{{ $jenissk->nama_jenis_sk }}</option>
+                                        <option value="{{ $jenissk->id }}"
+                                            {{ old('jenissk_id', $skkepanitiaan->jenissk_id) == $jenissk->id ? 'selected' : '' }}>
+                                            {{ $jenissk->jenis_sk }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -59,17 +80,23 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Program Studi</label>
                             <div class="col-sm-10">
-                                <select name="prodi" id="prodi" class="form-control rounded" required>
+                                <select name="prodi" id="prodi" class="form-control rounded">
                                     <option value="">Pilih Program Studi</option>
                                     <option value="">=====================</option>
                                     <option value="Fakultas Ekonomi dan Bisnis"
-                                        {{ old('prodi') == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }} {{ $sk->prodi == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>Fakultas
+                                        {{ old('prodi') == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}
+                                        {{ $skkepanitiaan->prodi == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>
+                                        Fakultas
                                         Ekonomi dan Bisnis</option>
                                     <option value="Fakultas Sains dan Teknologi"
-                                        {{ old('prodi') == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }} {{ $sk->prodi == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>Fakultas
+                                        {{ old('prodi') == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}
+                                        {{ $skkepanitiaan->prodi == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>
+                                        Fakultas
                                         Sains dan Teknologi</option>
                                     <option value="Fakultas Ilmu Kesehatan"
-                                        {{ old('prodi') == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }} {{ $sk->prodi == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas Ilmu
+                                        {{ old('prodi') == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}
+                                        {{ $skkepanitiaan->prodi == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas
+                                        Ilmu
                                         Kesehatan</option>
                                 </select>
                             </div>
@@ -97,7 +124,7 @@
                         </button>
 
                         <!-- Back button -->
-                        <a href="{{ route('sk.index') }}" class="btn btn-danger rounded text-uppercase btn-sm">
+                        <a href="{{ route('skkepanitiaan.index') }}" class="btn btn-danger rounded text-uppercase btn-sm">
                             <i class="fa-solid fa-arrow-left"></i> Back
                         </a>
                     </form>
