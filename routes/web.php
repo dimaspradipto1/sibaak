@@ -15,8 +15,10 @@ use App\Http\Controllers\SuratAktifController;
 use App\Http\Controllers\KepanitiaanController;
 use App\Http\Controllers\SopAkademikController;
 use App\Http\Controllers\ProgramStudiController;
+use App\Http\Controllers\SkKepanitiaanController;
 use App\Http\Controllers\SuratAkademikController;
 use App\Http\Controllers\TahunAkademikController;
+use App\Http\Controllers\LpjKepanitiaanController;
 
 
 Route::controller(LoginController::class)->group(function () {
@@ -42,9 +44,9 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('suratAktif', SuratAktifController::class);
     Route::resource('suratAkademik', SuratAkademikController::class);
     Route::resource('SOPAkademik', SopAkademikController::class);
-    Route::resource('kepanitiaan', KepanitiaanController::class);
+    Route::resource('lpjkepanitiaan', LpjKepanitiaanController::class);
     Route::resource('pedoman', PedomanController::class);
-    Route::resource('sk', SkController::class);
+    Route::resource('skkepanitiaan', SkKepanitiaanController::class);
     Route::resource('kurikulum', KurikulumController::class);
     Route::resource('wasdalbin', WasdalbinController::class);
 });

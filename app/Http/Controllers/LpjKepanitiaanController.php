@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kepanitiaan;
+use App\Models\LpjKepanitiaan;
 use Illuminate\Http\Request;
 
-class KepanitiaanController extends Controller
+class LpjKepanitiaanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class KepanitiaanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Kepanitiaan $kepanitiaan)
+    public function show(LpjKepanitiaan $lpjKepanitiaan)
     {
         //
     }
@@ -42,7 +42,7 @@ class KepanitiaanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kepanitiaan $kepanitiaan)
+    public function edit(LpjKepanitiaan $lpjKepanitiaan)
     {
         //
     }
@@ -50,7 +50,7 @@ class KepanitiaanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kepanitiaan $kepanitiaan)
+    public function update(Request $request, LpjKepanitiaan $lpjKepanitiaan)
     {
         //
     }
@@ -58,7 +58,7 @@ class KepanitiaanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kepanitiaan $kepanitiaan)
+    public function destroy(LpjKepanitiaan $lpjKepanitiaan)
     {
         //
     }

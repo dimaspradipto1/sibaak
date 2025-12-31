@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Pegawai::class, 'users_id');
     }
+
+    public function skkepanitiaan()
+    {
+        return $this->hasMany(SkKepanitiaan::class);
+    }
 }

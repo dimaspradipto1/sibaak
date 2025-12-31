@@ -37,36 +37,29 @@ class PegawaiController extends Controller
     public function store(PegawaiRequest $request)
     {
         try {
-            // Membuat objek pegawai baru
             $pegawai = new Pegawai();
             $pegawai->users_id = $request->users_id;
             $pegawai->jabatan  = $request->jabatan;
             $pegawai->nidn     = $request->nidn;
 
-            // Cek jika ada file yang diupload
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
 
-                // Tentukan ekstensi dan nama file
                 $extension = $file->extension() ?: $file->getClientOriginalExtension();
                 $extension = $file->extension();
 
-                // Jika pegawai sudah memiliki file, hapus file lama
                 if ($pegawai->file && file_exists(public_path('storage/pegawai/' . $pegawai->file))) {
                     unlink(public_path('storage/pegawai/' . $pegawai->file));  // Menghapus file lama
                 }
 
-                // Simpan file baru
                 $path = $file->storeAs('pegawai', $file->getClientOriginalName(), 'public');
                 $pegawai->file = 'storage/' . $path;
             } else {
                 $pegawai->file = null;
             }
 
-            // Simpan data pegawai
             $pegawai->save();
 
-            // Menampilkan notifikasi sukses
             Alert::success('Success', 'Data created successfully')
                 ->autoclose(3000)
                 ->toToast()
@@ -75,7 +68,6 @@ class PegawaiController extends Controller
 
             return redirect()->route('pegawai.index');
         } catch (\Throwable $e) {
-            // Menangani error dan menampilkan pesan error
             Log::error('Gagal menyimpan pegawai: ' . $e->getMessage());
             Alert::error('Error', 'Gagal menyimpan data: ' . $e->getMessage())
                 ->autoclose(3000)
