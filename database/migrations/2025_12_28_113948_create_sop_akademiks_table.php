@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('sop_akademiks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
+            $table->string('nama_sop');
+            $table->string('file');
             $table->timestamps();
         });
     }

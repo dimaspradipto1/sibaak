@@ -43,7 +43,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('pegawai', PegawaiController::class);
     Route::resource('suratAktif', SuratAktifController::class);
     Route::resource('suratAkademik', SuratAkademikController::class);
-    Route::resource('SOPAkademik', SopAkademikController::class);
+    Route::resource('sopakademik', SopAkademikController::class);
     Route::resource('lpjkepanitiaan', LpjKepanitiaanController::class);
     Route::resource('pedoman', PedomanController::class);
     Route::resource('skkepanitiaan', SkKepanitiaanController::class);

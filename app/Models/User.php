@@ -75,4 +75,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pedoman::class);
     }
+
+    public function sopakademik()
+    {
+        return $this->hasMany(SopAkademik::class);
+    }
 }

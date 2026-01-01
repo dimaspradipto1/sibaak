@@ -108,7 +108,7 @@
                             </a>
                         </li>
                         <li class=" ">
-                            <a href="{{ route('SOPAkademik.index') }}" class="waves-effect waves-dark">
+                            <a href="{{ route('sopakademik.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext text-capitalize">SOP akademik</span>
                                 <span class="pcoded-mcaret"></span>
