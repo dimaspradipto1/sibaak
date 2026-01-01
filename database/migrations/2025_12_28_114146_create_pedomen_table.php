@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('pedomen', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('users_id')->constrained()->cascadeOnDelete();
+            $table->string('tahun');
+            $table->string('nama_pedoman');
+            $table->string('file');
             $table->timestamps();
         });
     }
