@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('kurikulums', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('users_id')->constrained('users')->cascadeOnDelete();
+            $table->string('tahun');
+            $table->string('nama_kurikulum');
+            $table->string('prodi');
+            $table->string('file');
             $table->timestamps();
         });
     }

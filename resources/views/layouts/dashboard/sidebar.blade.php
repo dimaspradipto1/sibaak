@@ -92,13 +92,7 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-                        <li class=" ">
-                            <a href="{{ route('wasdalbin.index') }}" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext text-capitalize">wasdalbin</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
-                        </li>
+                                                
                         <li class=" ">
                             <a href="{{ route('kurikulum.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -117,6 +111,13 @@
                             <a href="{{ route('SOPAkademik.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext text-capitalize">SOP akademik</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
+                            <a href="{{ route('wasdalbin.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext text-capitalize">wasdalbin</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
