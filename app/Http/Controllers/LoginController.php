@@ -13,7 +13,8 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('layouts.auth.index');
+        // return view('layouts.auth.index');
+        return view('layouts.auth.login');
     }
 
     public function loginproses(LoginRequest $request)

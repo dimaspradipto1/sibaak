@@ -80,4 +80,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(SopAkademik::class);
     }
+
+    public function wasdalbin()
+    {
+        return $this->hasMany(Wasdalbin::class);
+    }
 }
