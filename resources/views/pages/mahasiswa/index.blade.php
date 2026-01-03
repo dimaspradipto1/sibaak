@@ -31,7 +31,7 @@
                 </button>
             </form>
 
-            <a href="{{ route('suratAkademik.create') }}" class="btn btn-secondary rounded btn-sm">
+            <a href="{{ route('suratAkademik.create') }}" class="btn btn-secondary rounded btn-sm my-2">
                 <i class="fa-solid fa-plus"></i> Pengajuan Surat Akademik
             </a>
         @endif

@@ -13,21 +13,21 @@
                     <form action="{{ route('mahasiswa.update', $mahasiswa->id) }}" method="POST">
                         @csrf
                         @method('PUT')
+                        @if(Auth::user()->is_admin)
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nama Mahasiswa</label>
                             <div class="col-sm-10">
                                 <select name="users_id" id="users_id" class="form-control rounded" data-live-search="true">
-                                    <option selected disabled>
-                                        {{ $mahasiswa->user ? $mahasiswa->user->name : 'User tidak ditemukan' }}</option>
+                                    <option value="">Pilih Mahasiswa</option>
                                     @foreach ($users as $user)
-                                        <option value="{{ $user->id }}"
-                                            {{ old('users_id', $mahasiswa->users_id) == $user->id ? 'selected' : '' }}>
+                                        <option value="{{ $user->id }}" {{ old('users_id', $mahasiswa->users_id) == $user->id ? 'selected' : '' }}>
                                             {{ $user->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
+                        @endif
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tempat Lahir</label>
