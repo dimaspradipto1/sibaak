@@ -186,6 +186,7 @@
 <body onload="window.print()">
     <?php
     use Carbon\Carbon;
+    Carbon::setLocale('id');
     
     $bulan = Carbon::now()->format('F Y');
     $petaRomawi = [
@@ -208,7 +209,7 @@
     <!-- Kop Surat Section -->
     <div class="kop-surat">
         <!-- Logo Universitas Ibnu Sina -->
-        <img src="{{ asset('dashboard/assets/images/logouis.png') }}" alt="Logo Universitas Ibnu Sina">
+        <img src="{{ asset('assets/images/logouis.png') }}" alt="Logo Universitas Ibnu Sina">
 
         <!-- Informasi Universitas -->
         <div class="text-center">
@@ -334,7 +335,7 @@
 
         <!-- Signature 2: Hormat Saya -->
         <div class="signature-item" style="margin-top: -60px;">
-            <p>Batam, {{ \Carbon\Carbon::now()->format('d F Y') }}</p>
+             <p>Batam, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
             <p style="margin-top: -10px;">Hormat Saya</p>
             <p style="margin-top: 70px;">{{ $suratAkademik->user->name }}</p>
         </div>

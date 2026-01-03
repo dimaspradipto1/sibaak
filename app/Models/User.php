@@ -85,4 +85,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wasdalbin::class);
     }
+
+    public function suratAktif()
+    {
+        return $this->hasMany(SuratAktif::class);
+    }
 }

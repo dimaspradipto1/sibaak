@@ -38,6 +38,12 @@ class LoginController extends Controller
         return redirect()->route('login')->withInput($request->only('email'));
     }
 
+    public function register()
+    {
+        // return view('layouts.auth.register');
+        return view('layouts.auth.register');
+    }
+
     public function registerproses(Request $request)
     {
         $request->validate([

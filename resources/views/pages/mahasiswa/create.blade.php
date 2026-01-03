@@ -12,6 +12,8 @@
                     <h4 class="sub-title">Form Inputs</h4>
                     <form action="{{ route('mahasiswa.store') }}" method="POST">
                         @csrf
+
+                        @if(Auth::user()->is_admin)
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nama Mahasiswa</label>
                             <div class="col-sm-10">
@@ -23,6 +25,7 @@
                                 </select>
                             </div>
                         </div>
+                        @endif
                         
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tempat Lahir</label>

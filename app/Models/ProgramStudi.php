@@ -12,4 +12,14 @@ class ProgramStudi extends Model
     {
         return $this->hasMany(Mahasiswa::class);
     }
+
+    public function suratAktif()
+    {
+        return $this->hasMany(SuratAktif::class);
+    }
+
+    public function suratAkademik()
+    {
+        return $this->hasMany(SuratAkademik::class);
+    }
 }

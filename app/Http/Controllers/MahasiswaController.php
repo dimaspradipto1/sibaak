@@ -26,7 +26,7 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-       $isMahasiswa = Mahasiswa::where('users_id', Auth::id())->exists();
+        $isMahasiswa = Mahasiswa::where('users_id', Auth::id())->exists();
         $programStudi = ProgramStudi::all();
         $users = User::where('is_mahasiswa', true)->get();
         return view('pages.mahasiswa.create', compact('users', 'programStudi', 'isMahasiswa'));
@@ -37,7 +37,14 @@ class MahasiswaController extends Controller
      */
     public function store(MahasiswaRequest $request)
     {
-        Mahasiswa::create($request->validated());
+        $data = $request->validated();
+
+        if (Auth::user()->is_mahasiswa) {
+            // Menambahkan `users_id` dari user yang login
+            $data['users_id'] = Auth::id();
+        }
+
+        Mahasiswa::create($data);
         Alert::success('Mahasiswa berhasil ditambahkan')
             ->autoclose(4000)
             ->toToast()

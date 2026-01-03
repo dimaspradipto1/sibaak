@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Login SIBAAK</title>
+    <link rel="icon" href="{{ asset('assets/images/logouis.png') }}" type="image/x-icon">
     <style>
         * {
             margin: 0;
@@ -32,7 +34,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 87.2%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.5);
             /* Dark overlay */
         }
@@ -101,7 +103,9 @@
             /* Yellow color on hover */
         }
 
-        .alternative-actions p, .remember-me, .new-to-baak p {
+        .alternative-actions p,
+        .remember-me,
+        .new-to-baak p {
             text-align: left;
             margin-bottom: 10px;
         }
@@ -127,7 +131,7 @@
         }
 
         footer {
-            position: absolute;
+            position: fixed;
             bottom: 0;
             width: 100%;
             height: 94px;
@@ -137,7 +141,8 @@
             text-align: center;
             font-size: 12px;
             color: white;
-            /* Adjusted text color for readability */
+            z-index: 10;
+            /* Ensure footer is on top of other content */
         }
 
         footer a {
@@ -147,6 +152,24 @@
 
         footer a:hover {
             text-decoration: underline;
+        }
+
+        /* Mengatur posisi logo untuk tampilan mobile */
+        @media (max-width: 768px) {
+            .logo-container {
+                position: absolute;
+                top: 10%;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 2;
+            }
+
+            .logo {
+                width: 80px;
+                /* Ukuran logo lebih kecil pada mobile */
+            }
+
+
         }
     </style>
 </head>
@@ -171,7 +194,7 @@
             </div> --}}
         </form>
         <div class="new-to-baak">
-        <p>Baru di SIBAAK? <a href="{{ route('register') }}">Daftar sekarang.</a></p>
+            <p>Baru di SIBAAK? <a href="{{ route('register') }}">Daftar sekarang.</a></p>
         </div>
     </div>
 

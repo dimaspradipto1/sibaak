@@ -22,13 +22,7 @@ class MahasiswaDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        // if (Auth::user()->is_admin) {
-        //     $query = Mahasiswa::with('user', 'programStudi')->get(); 
-        // }
-
-        // if (Auth::user()->is_mahasiswa) {
-        //     $query = Mahasiswa::with('user', 'programStudi')->where('users_id', Auth::id())->get(); 
-        // }
+        
 
         return (new EloquentDataTable($query))
             ->addIndexColumn()
@@ -77,7 +71,24 @@ class MahasiswaDataTable extends DataTable
      */
     public function query(Mahasiswa $model): QueryBuilder
     {
-        return $model->newQuery();
+        // return $model->newQuery();
+        // Query awal
+        $query = $model->newQuery()->with('user', 'programStudi'); // eager load
+
+        // Periksa apakah user adalah admin
+        if (Auth::user()->is_admin) {
+            // Admin bisa melihat semua data mahasiswa
+            return $query;
+        }
+
+        // Periksa apakah user adalah mahasiswa
+        if (Auth::user()->is_mahasiswa) {
+            // Mahasiswa hanya melihat data miliknya sendiri
+            return $query->where('users_id', Auth::id());
+        }
+
+        // Default: jika role tidak dikenali, tidak menampilkan data apapun
+        return $query->whereRaw('1=0'); 
     }
 
     /**

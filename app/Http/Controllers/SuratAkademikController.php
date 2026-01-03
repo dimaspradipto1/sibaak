@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SuratAkademik;
+use App\Models\User;
+use App\Models\Mahasiswa;
+use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
+use App\Models\SuratAkademik;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\DataTables\SuratAkademikDataTable;
 
 class SuratAkademikController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(SuratAkademikDataTable $dataTable)
     {
-        //
+        return $dataTable->render('pages.suratAkademik.index');
     }
 
     /**
@@ -20,7 +25,9 @@ class SuratAkademikController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::where('is_mahasiswa', true)->get();
+        $programStudi = ProgramStudi::all();
+        return view('pages.suratAkademik.create', compact('users', 'programStudi'));
     }
 
     /**
@@ -28,7 +35,36 @@ class SuratAkademikController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mahasiswa = Mahasiswa::where('users_id', $request->users_id)->first();
+
+        if (!$mahasiswa) {
+            return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan!');
+        }
+
+        if (!$mahasiswa->programStudi) {
+            return redirect()->back()->with('error', 'Program studi mahasiswa tidak ditemukan!');
+        }
+
+        $data = [
+            'users_id' => $request->users_id,
+            'program_studi_id' => $mahasiswa->programStudi->id,
+            'npm' => $mahasiswa->npm,
+            'status_cuti' => 'Belum Pernah Cuti',
+            'alamat' => $mahasiswa->alamat,
+            'no_wa' => $mahasiswa->no_wa,
+            'semester' => $request->semester,
+            'permohonan' => $request->permohonan,
+            'alasan_cuti' => $request->alasan_cuti,
+        ];
+
+        SuratAkademik::create($data);
+        Alert::success('success', 'Data berhasil dibuat')
+            ->autoclose(3000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-circle-check"></i>');
+
+        return redirect()->route('suratAkademik.index');
     }
 
     /**
@@ -36,7 +72,17 @@ class SuratAkademikController extends Controller
      */
     public function show(SuratAkademik $suratAkademik)
     {
-        //
+        $mahasiswa = Mahasiswa::where('users_id', $suratAkademik->users_id)->first();
+
+        if (!$mahasiswa) {
+            return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan!');
+        }
+
+        $programStudi = ProgramStudi::find($mahasiswa->program_studi_id);
+        $fakultas = $mahasiswa->fakultas;
+        $user = User::find($suratAkademik->users_id);
+        $no_surat = SuratAkademik::count();
+        return view('pages.suratAkademik.show', compact('suratAkademik', 'mahasiswa', 'programStudi', 'user', 'no_surat', 'fakultas')); //
     }
 
     /**
@@ -44,7 +90,7 @@ class SuratAkademikController extends Controller
      */
     public function edit(SuratAkademik $suratAkademik)
     {
-        //
+         return view('pages.suratAkademik.edit', compact('suratAkademik'));
     }
 
     /**
@@ -52,7 +98,9 @@ class SuratAkademikController extends Controller
      */
     public function update(Request $request, SuratAkademik $suratAkademik)
     {
-        //
+        $suratAkademik->update($request->all());
+        Alert::success('success', 'data updated successfully')->autoclose(3000)->toToast();
+        return redirect()->route('suratAkademik.index');
     }
 
     /**
@@ -60,6 +108,8 @@ class SuratAkademikController extends Controller
      */
     public function destroy(SuratAkademik $suratAkademik)
     {
-        //
+        $suratAkademik->delete();
+        Alert::success('success', 'data deleted successfully')->autoclose(3000)->toToast();
+        return redirect()->route('suratAkademik.index');
     }
 }

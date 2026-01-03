@@ -11,9 +11,28 @@
     <div class="card-header">
         {{-- <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary rounded btn-sm"><i class="fa-solid fa-plus"></i> Tambah</a> --}}
 
-        @if (Auth::user()->is_admin || !Mahasiswa::where('users_id', Auth::id())->exists())
+        {{-- @if (Auth::user()->is_admin || !Mahasiswa::where('users_id', Auth::id())->exists())
             <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary rounded btn-sm">
                 <i class="fa-solid fa-plus"></i> Tambah
+            </a>
+        @endif --}}
+        @if (Auth::user()->is_admin)
+            <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary rounded btn-sm">
+                <i class="fa-solid fa-plus"></i> Tambah
+            </a>
+        @endif
+
+         @if(auth()->user()->is_mahasiswa)
+            <!-- Tombol hanya untuk mahasiswa: Pengajuan -->
+            <form action="{{ route('suratAktif.pengajuan') }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-success rounded btn-sm">
+                    <i class="fa-solid fa-plus"></i> Pengajuan Surat Aktif
+                </button>
+            </form>
+
+            <a href="{{ route('suratAkademik.create') }}" class="btn btn-secondary rounded btn-sm">
+                <i class="fa-solid fa-plus"></i> Pengajuan Surat Akademik
             </a>
         @endif
 

@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('surat_aktifs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('users_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('program_studi_id')->constrained()->cascadeOnDelete();
+            $table->integer('no_surat');
+            $table->string('tempat_lahir');
+            $table->date('tgl_lahir');
+            $table->string('npm');
+            $table->string('jenjang_pendidikan');
+            $table->string('fakultas');
+            $table->string('status')->default('pending');
+            $table->string('semester');
+            $table->string('status_semester')->nullable();
+            $table->string('tahun_akademik')->nullable();
             $table->timestamps();
         });
     }

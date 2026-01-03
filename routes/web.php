@@ -29,6 +29,8 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'logout')->name('logout');
 });
 
+Route::post('/suratAktif/pengajuan', [SuratAktifController::class, 'pengajuan'])->name('suratAktif.pengajuan');
+Route::post('/suratAkademik/pengajuan', [SuratAkademikController::class, 'pengajuan'])->name('suratAkademik.pengajuan');
 
 Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
