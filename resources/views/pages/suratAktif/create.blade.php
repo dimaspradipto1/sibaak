@@ -60,6 +60,26 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Semester Saat ini</label>
+                            <div class="col-sm-10">
+                                <select name="semester" id="semester" class="form-control rounded" required>
+                                    <option selected disabled>Pilih Semester</option>
+                                    <option value="I (Satu)">I (Satu)</option>
+                                    <option value="II (Dua)">II (Dua)</option>
+                                    <option value="III (Tiga)">III (Tiga)</option>
+                                    <option value="IV (Empat)">IV (Empat)</option>
+                                    <option value="V (Lima)">V (Lima)</option>
+                                    <option value="VI (Enam)">VI (Enam)</option>
+                                    <option value="VII (Tujuh)">VII (Tujuh)</option>
+                                    <option value="VIII (Delapan)">VIII (Delapan)</option>
+                                    <option value="IX (Sembilan)">IX (Sembilan)</option>
+                                    <option value="X (Sepuluh)">X (Sepuluh)</option>
+                                    <option value="XI (Sebelas)">XI (Sebelas)</option>
+                                    <option value="XII (Dua Belas)">XII (Dua Belas)</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Jenjang Pendidikan</label>

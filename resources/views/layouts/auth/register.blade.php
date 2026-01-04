@@ -195,7 +195,7 @@
             </div> --}}
         </form>
         <div class="new-to-baak">
-            <p>Baru di SIBAAK? <a href="{{ route('register') }}">Daftar sekarang.</a></p>
+            <p>Baru di SIBAAK? <a href="{{ route('login') }}">Masuk sekarang.</a></p>
         </div>
     </div>
 

@@ -18,7 +18,7 @@ class Mahasiswa extends Model
         return $this->belongsTo(ProgramStudi::class);
     }
 
-     public function suratAkademik()
+    public function suratAkademik()
     {
         return $this->hasMany(SuratAkademik::class);
     }

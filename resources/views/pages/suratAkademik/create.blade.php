@@ -70,7 +70,7 @@
                         <input type="hidden" name="users_id" value="{{ Auth::id() }}">
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Semester</label>
+                            <label class="col-sm-2 col-form-label">Semester Saat ini</label>
                             <div class="col-sm-10">
                                 <select name="semester" id="semester" class="form-control rounded" required>
                                     <option selected disabled>Pilih Semester</option>

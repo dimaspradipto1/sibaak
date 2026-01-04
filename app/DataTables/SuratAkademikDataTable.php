@@ -25,33 +25,34 @@ class SuratAkademikDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
-             ->addColumn('users_id', function ($item) {
-                    return $item->users ? $item->users->name : '-';
-                })
-                ->addColumn('program_studi_id', function ($item) {
-                    return $item->programStudi ? $item->programStudi->program_studi : '-';
-                })
-                ->addColumn('action', function ($item) {
-                    $editButton = '';
-                    $deleteButton = '';
-                    $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-dark text-white px-3 mr-2 rounded" title="show"><i class="fa-solid fa-print"></i></a>';
+            ->addColumn('users_id', function ($item) {
+                return $item->user ? $item->user->name : '-';
+            })
+            ->addColumn('program_studi_id', function ($item) {
+                return $item->programStudi ? $item->programStudi->program_studi : '-';
+            })
+            ->addColumn('action', function ($item) {
+                $editButton = '';
+                $deleteButton = '';
+                $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-dark text-white px-3 mr-2 rounded" title="show"><i class="fa-solid fa-print"></i></a>';
 
-                    if (Auth::user()->is_admin || Auth::user()->is_staffbaak) {
-                        $editButton = '<a href="' . route('suratAkademik.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 mr-2 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a>';
-                        $deleteButton = '
-                        <form action="' . route('suratAkademik.destroy', $item->id) . '" method="POST" class="d-inline">
-                            ' . csrf_field() . '
-                            ' . method_field('delete') . '
-                            <button type="submit" class="btn btn-danger btn-sm px-3 mr-2 rounded" title="hapus"><i class="fa-solid fa-trash-can" ></i></button>
-                        </form>
-                    ';
-                    }
+                if (Auth::user()->is_admin || Auth::user()->is_staffbaak) {
+                    $editButton = '<a href="' . route('suratAkademik.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 mr-2 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a>';
+                    $deleteButton = '
+                <form action="' . route('suratAkademik.destroy', $item->id) . '" method="POST" class="d-inline">
+                    ' . csrf_field() . '
+                    ' . method_field('delete') . '
+                    <button type="submit" class="btn btn-danger btn-sm px-3 mr-2 rounded" title="hapus"><i class="fa-solid fa-trash-can" ></i></button>
+                </form>
+            ';
+                }
 
-                    return $showButton . $editButton . $deleteButton;
-                })
+                return $showButton . $editButton . $deleteButton;
+            })
             ->setRowId('DT_RowIndex')
             ->rawColumns(['action', 'users_id', 'program_studi_id']);
     }
+
 
     /**
      * Get the query source of dataTable.
@@ -60,7 +61,13 @@ class SuratAkademikDataTable extends DataTable
      */
     public function query(SuratAkademik $model): QueryBuilder
     {
-        return $model->newQuery();
+        $query = $model->newQuery()->with(['user', 'programStudi']);
+
+        if (Auth::user()->is_mahasiswa) {
+            $query->where('users_id', Auth::id());
+        }
+
+        return $query;
     }
 
     /**
@@ -69,19 +76,19 @@ class SuratAkademikDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('suratakademik-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-            Button::make('csv'),
-            Button::make('pdf'),
-            Button::make('print'),
-            Button::make('reset'),
-            Button::make('reload')
-                    ]);
+            ->setTableId('suratakademik-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -94,7 +101,7 @@ class SuratAkademikDataTable extends DataTable
                 ->title('NO')
                 ->width('5%')
                 ->addClass('text-center'),
-             Column::make('users_id')
+            Column::make('users_id')
                 ->title('NAMA MAHASISWA')
                 ->width('15%')
                 ->addClass('text-start'),
@@ -104,10 +111,10 @@ class SuratAkademikDataTable extends DataTable
                 ->addClass('text-start'),
             Column::computed('action')
                 ->title('AKSI')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width('15%')
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width('15%')
+                ->addClass('text-center'),
         ];
     }
 
