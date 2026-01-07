@@ -36,37 +36,37 @@ class SopAkademikController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SopAkademikRequest $request)
-    {
-        try {
-            $data = $request->validated();
-            $data['users_id'] = Auth::id();
+    // public function store(SopAkademikRequest $request)
+    // {
+    //     try {
+    //         $data = $request->validated();
+    //         $data['users_id'] = Auth::id();
 
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $filename = $file->getClientOriginalName();
-                $path = $file->storeAs('sopakademik', $filename, 'public');
-                $data['file'] = 'storage/' . $path;
-            }
+    //         if ($request->hasFile('file')) {
+    //             $file = $request->file('file');
+    //             $filename = $file->getClientOriginalName();
+    //             $path = $file->storeAs('sopakademik', $filename, 'public');
+    //             $data['file'] = 'storage/' . $path;
+    //         }
 
-            SopAkademik::create($data);
+    //         SopAkademik::create($data);
 
-            Alert::success('Berhasil', 'Data Berhasil Ditambahkan')
-                ->autoclose(3000)
-                ->toToast()
-                ->timerProgressBar()
-                ->iconHtml('<i class="fa fa-check-circle"></i>');
-            return redirect()->route('sopakademik.index');
-        } catch (\Throwable $th) {
-            Log::error('Error storing SOP Akademik: ' . $th->getMessage());
-            Alert::error('Gagal', 'Data Gagal Ditambahkan')
-                ->autoclose(3000)
-                ->toToast()
-                ->timerProgressBar()
-                ->iconHtml('<i class="fa fa-times-circle"></i>');
-            return redirect()->back()->withInput();
-        }
-    }
+    //         Alert::success('Berhasil', 'Data Berhasil Ditambahkan')
+    //             ->autoclose(3000)
+    //             ->toToast()
+    //             ->timerProgressBar()
+    //             ->iconHtml('<i class="fa fa-check-circle"></i>');
+    //         return redirect()->route('sopakademik.index');
+    //     } catch (\Throwable $th) {
+    //         Log::error('Error storing SOP Akademik: ' . $th->getMessage());
+    //         Alert::error('Gagal', 'Data Gagal Ditambahkan')
+    //             ->autoclose(3000)
+    //             ->toToast()
+    //             ->timerProgressBar()
+    //             ->iconHtml('<i class="fa fa-times-circle"></i>');
+    //         return redirect()->back()->withInput();
+    //     }
+    // }
 
     // TODO: SUBMIT TO GOOGLE DRIVE
     // public function store(SopAkademikRequest $request)
@@ -194,6 +194,101 @@ class SopAkademikController extends Controller
     //     ]);
     // }
     // TODO: END SUBMIT TO GOOGLE DRIVE
+
+    //? fix code
+    public function store(SopAkademikRequest $request)
+    {
+        try {
+            $data = $request->validated();
+            $data['users_id'] = Auth::id();
+
+            if ($request->hasFile('file')) {
+                $uploaded = $request->file('file');
+                $safeOriginal = preg_replace('/[^A-Za-z0-9\.\-_ ]/', '', $uploaded->getClientOriginalName());
+                $filename = $safeOriginal;
+
+                // Upload via Google Drive API
+                $service = $this->driveService();
+                $sopakademikFolderId = env('GOOGLE_DRIVE_SOP_FOLDER_ID');
+
+                if (!$sopakademikFolderId) {
+                    throw new \Exception('GOOGLE_DRIVE_SOP_FOLDER_ID tidak ditemukan di .env');
+                }
+
+                $fileMetadata = new \Google\Service\Drive\DriveFile([
+                    'name' => $filename,
+                    'parents' => [$sopakademikFolderId],
+                ]);
+
+                $content = File::get($uploaded->getRealPath());
+
+                $file = $service->files->create($fileMetadata, [
+                    'data' => $content,
+                    'uploadType' => 'multipart',
+                    'fields' => 'id',
+                ]);
+
+                $fileId = $file->getId();
+
+                // Jadikan public
+                $this->makeDriveFilePublic($fileId);
+
+                // Simpan link (tanpa spasi!)
+                $data['file'] = "https://drive.google.com/file/d/{$fileId}/view";
+            }
+
+            SopAkademik::create($data);
+
+            Alert::success('Berhasil', 'SOP Akademik Berhasil Ditambahkan')
+                ->autoclose(4000)
+                ->toToast()
+                ->timerProgressBar()
+                ->iconHtml('<i class="fa fa-check-circle"></i>');
+
+            return redirect()->route('sopakademik.index');
+
+        } catch (\Throwable $th) {
+            Log::error('Error storing SOP Akademik: ' . $th->getMessage());
+
+            Alert::error('Gagal', 'Gagal menambahkan data: ' . $th->getMessage())
+                ->autoclose(5000)
+                ->toToast()
+                ->timerProgressBar()
+                ->iconHtml('<i class="fa fa-times-circle"></i>');
+
+            return redirect()->back()->withInput();
+        }
+    }
+
+    private function driveService(): GoogleDrive
+    {
+        $client = new GoogleClient();
+        $client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
+        $client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
+
+        $refreshToken = env('GOOGLE_DRIVE_REFRESH_TOKEN');
+        if (!$refreshToken) {
+            throw new \Exception('Refresh token tidak ditemukan di .env');
+        }
+
+        $client->fetchAccessTokenWithRefreshToken($refreshToken);
+        return new GoogleDrive($client);
+    }
+
+    private function makeDriveFilePublic(string $fileId): void
+    {
+        $service = $this->driveService();
+        $permission = new Permission([
+            'type' => 'anyone',
+            'role' => 'reader',
+        ]);
+
+        $service->permissions->create($fileId, $permission, [
+            'fields' => 'id',
+            'supportsAllDrives' => true,
+        ]);
+    }
+    //? end fix code drive
 
     /**
      * Display the specified resource.
