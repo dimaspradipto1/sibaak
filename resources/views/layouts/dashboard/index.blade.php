@@ -1,6 +1,9 @@
 @extends('layouts.dashboard.template')
 
+@section('title', 'Dashboard')
+
 @section('content')
+
     @if (Auth::user()->is_admin || Auth::user()->is_staffbaak)
         <div class="row">
             <!-- Material statustic card start -->

@@ -25,7 +25,8 @@ class SkKepanitiaanController extends Controller
      */
     public function index(SkKepanitiaanDataTable $dataTable)
     {
-        return $dataTable->render('pages.skkepanitiaan.index');
+        $title = 'SK Kepanitiaan';
+        return $dataTable->render('pages.skkepanitiaan.index', compact('title'));
     }
 
     /**
@@ -33,9 +34,10 @@ class SkKepanitiaanController extends Controller
      */
     public function create()
     {
+        $title = 'Form SK Kepanitiaan';
         $jenissks = JenisSK::all();
         $tahunAkademik = TahunAkademik::all();
-        return view('pages.skkepanitiaan.create', compact('jenissks', 'tahunAkademik'));
+        return view('pages.skkepanitiaan.create', compact('jenissks', 'tahunAkademik', 'title'));
     }
 
     /**
@@ -305,9 +307,10 @@ class SkKepanitiaanController extends Controller
      */
     public function edit(SkKepanitiaan $skkepanitiaan)
     {
+        $title = 'Form SK Kepanitiaan';
         $jenissks = JenisSK::all();
         $tahunAkademik = TahunAkademik::all();
-        return view('pages.skkepanitiaan.edit', compact('skkepanitiaan', 'jenissks', 'tahunAkademik'));
+        return view('pages.skkepanitiaan.edit', compact('skkepanitiaan', 'jenissks', 'tahunAkademik', 'title'));
     }
 
     /**

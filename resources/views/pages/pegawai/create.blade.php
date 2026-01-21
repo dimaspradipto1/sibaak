@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Upload Dokumen</label>
+                            <label class="col-sm-2 col-form-label">Upload TTD</label>
                             <div class="col-sm-10">
                                 <input type="file" name="file" accept="image/*"
                                     class="form-control rounded @error('file') is-invalid @enderror" id="file-input">

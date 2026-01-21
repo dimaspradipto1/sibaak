@@ -17,7 +17,8 @@ class SuratAkademikController extends Controller
      */
     public function index(SuratAkademikDataTable $dataTable)
     {
-        return $dataTable->render('pages.suratAkademik.index');
+        $title = 'Surat Akademik';
+        return $dataTable->render('pages.suratAkademik.index', compact('title'));
     }
 
     /**
@@ -25,9 +26,10 @@ class SuratAkademikController extends Controller
      */
     public function create()
     {
+        $title = 'Form Surat Akademik';
         $users = User::where('is_mahasiswa', true)->get();
         $programStudi = ProgramStudi::all();
-        return view('pages.suratAkademik.create', compact('users', 'programStudi'));
+        return view('pages.suratAkademik.create', compact('users', 'programStudi', 'title'));
     }
 
     /**
@@ -90,7 +92,8 @@ class SuratAkademikController extends Controller
      */
     public function edit(SuratAkademik $suratAkademik)
     {
-         return view('pages.suratAkademik.edit', compact('suratAkademik'));
+        $title = 'Form Surat Akademik';
+        return view('pages.suratAkademik.edit', compact('suratAkademik', 'title'));
     }
 
     /**

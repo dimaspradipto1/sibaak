@@ -22,7 +22,8 @@ class WasdalbinController extends Controller
      */
     public function index(WasdalbinDataTable $dataTable)
     {
-        return $dataTable->render('pages.wasdalbin.index');
+        $title = 'Wasdalbin';
+        return $dataTable->render('pages.wasdalbin.index', compact('title'));
     }
 
     /**
@@ -30,7 +31,8 @@ class WasdalbinController extends Controller
      */
     public function create()
     {
-        return view('pages.wasdalbin.create');
+        $title = 'Form Wasdalbin';
+        return view('pages.wasdalbin.create', compact('title'));
     }
 
     /**
@@ -303,7 +305,8 @@ class WasdalbinController extends Controller
      */
     public function edit(Wasdalbin $wasdalbin)
     {
-        return view('pages.wasdalbin.edit', compact('wasdalbin'));
+        $title = 'Form Wasdalbin';
+        return view('pages.wasdalbin.edit', compact('wasdalbin', 'title'));
     }
 
     /**

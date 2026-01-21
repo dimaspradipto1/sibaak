@@ -26,7 +26,8 @@ class LpjKepanitiaanController extends Controller
      */
     public function index(LpjKepanitiaanDataTable $dataTable)
     {
-        return $dataTable->render('pages.lpjkepanitiaan.index');
+        $title = 'LPJ Kepanitiaan';
+        return $dataTable->render('pages.lpjkepanitiaan.index', compact('title'));
     }
 
     /**
@@ -34,9 +35,10 @@ class LpjKepanitiaanController extends Controller
      */
     public function create()
     {
+        $title = 'Form LPJ Kepanitiaan';
         $tahunAkademik = TahunAkademik::all();
         $users = User::all();
-        return view('pages.lpjkepanitiaan.create', compact('tahunAkademik', 'users'));
+        return view('pages.lpjkepanitiaan.create', compact('tahunAkademik', 'users', 'title'));
     }
 
     /**
@@ -304,9 +306,10 @@ class LpjKepanitiaanController extends Controller
      */
     public function edit(LpjKepanitiaan $lpjkepanitiaan)
     {
+        $title = 'Form LPJ Kepanitiaan';
         $tahunAkademik = TahunAkademik::all();
         $users = User::all();
-        return view('pages.lpjkepanitiaan.edit', compact('lpjkepanitiaan', 'tahunAkademik', 'users'));
+        return view('pages.lpjkepanitiaan.edit', compact('lpjkepanitiaan', 'tahunAkademik', 'users', 'title'));
     }
 
     /**

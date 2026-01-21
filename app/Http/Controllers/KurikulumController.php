@@ -23,7 +23,8 @@ class KurikulumController extends Controller
      */
     public function index(KurikulumDataTable $dataTable)
     {
-        return $dataTable->render('pages.kurikulum.index');
+        $title = 'Kurikulum';
+        return $dataTable->render('pages.kurikulum.index', compact('title'));
     }
 
     /**
@@ -31,8 +32,9 @@ class KurikulumController extends Controller
      */
     public function create()
     {
+        $title = 'Form Kurikulum';
         $users = User::all();
-        return view('pages.kurikulum.create', compact('users'));
+        return view('pages.kurikulum.create', compact('users', 'title'));
     }
 
     /**
@@ -305,7 +307,8 @@ class KurikulumController extends Controller
      */
     public function edit(Kurikulum $kurikulum)
     {
-        return view('pages.kurikulum.edit', compact('kurikulum'));
+        $title = 'Form Kurikulum';
+        return view('pages.kurikulum.edit', compact('kurikulum', 'title'));
     }
 
     /**

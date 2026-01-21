@@ -20,7 +20,8 @@ class SuratAktifController extends Controller
      */
     public function index(SuratAktifDataTable $dataTable)
     {
-        return $dataTable->render('pages.suratAktif.index');
+        $title = 'Surat Aktif';
+        return $dataTable->render('pages.suratAktif.index', compact('title'));
     }
 
     /**
@@ -28,9 +29,10 @@ class SuratAktifController extends Controller
      */
     public function create()
     {
+        $title = 'Form Surat Aktif';
         $users = User::where('is_mahasiswa', true)->get();
         $programStudi = ProgramStudi::all();
-        return view('pages.suratAktif.create', compact('users', 'programStudi'));
+        return view('pages.suratAktif.create', compact('users', 'programStudi', 'title'));
     }
 
         public function pengajuan()
@@ -148,8 +150,9 @@ class SuratAktifController extends Controller
      */
     public function edit(SuratAktif $suratAktif)
     {
+        $title = 'Form Surat Aktif';
         $tahunAkademik = TahunAkademik::all();
-        return view('pages.suratAktif.edit', compact('suratAktif', 'tahunAkademik'));
+        return view('pages.suratAktif.edit', compact('suratAktif', 'tahunAkademik', 'title'));
     }
 
     /**

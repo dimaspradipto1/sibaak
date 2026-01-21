@@ -123,7 +123,7 @@ class UserDataTable extends DataTable
             Column::make('email')
                 ->title('Email'),
             Column::make('status')
-                ->title('Status'),
+                ->title('Hak Akses'),
             Column::computed('action')
                 ->title('AKSI')
                 ->exportable(false)

@@ -18,7 +18,8 @@ class MahasiswaController extends Controller
      */
     public function index(MahasiswaDataTable $dataTable)
     {
-        return $dataTable->render('pages.mahasiswa.index');
+        $title ='Mahasiswa';
+        return $dataTable->render('pages.mahasiswa.index', compact('title'));
     }
 
     /**
@@ -26,10 +27,11 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
+        $title = 'Form Mahasiswa';
         $isMahasiswa = Mahasiswa::where('users_id', Auth::id())->exists();
         $programStudi = ProgramStudi::all();
         $users = User::where('is_mahasiswa', true)->get();
-        return view('pages.mahasiswa.create', compact('users', 'programStudi', 'isMahasiswa'));
+        return view('pages.mahasiswa.create', compact('users', 'programStudi', 'isMahasiswa', 'title'));
     }
 
     /**
@@ -70,9 +72,10 @@ class MahasiswaController extends Controller
      */
     public function edit(Mahasiswa $mahasiswa)
     {
+        $title = 'Form Mahasiswa';
         $users = User::where('is_mahasiswa', true)->get();
         $programStudi = ProgramStudi::all();
-        return view('pages.mahasiswa.edit', compact('mahasiswa', 'programStudi', 'users'));
+        return view('pages.mahasiswa.edit', compact('mahasiswa', 'programStudi', 'users', 'title'));
     }
 
     /**

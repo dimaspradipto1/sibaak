@@ -14,7 +14,8 @@ class ProgramStudiController extends Controller
      */
     public function index(ProgramStudiDataTable $dataTable)
     {
-        return $dataTable->render('pages.programStudi.index');
+        $title = 'Program Studi';
+        return $dataTable->render('pages.programStudi.index', compact('title'));
     }
 
     /**
@@ -22,7 +23,8 @@ class ProgramStudiController extends Controller
      */
     public function create()
     {
-        return view('pages.programStudi.create');
+        $title = 'Form Program Studi';
+        return view('pages.programStudi.create', compact('title'));
     }
 
     /**
@@ -47,7 +49,8 @@ class ProgramStudiController extends Controller
      */
     public function edit(ProgramStudi $programStudi)
     {
-        return view('pages.programStudi.edit', compact('programStudi'));
+        $title = 'Form Program Studi';
+        return view('pages.programStudi.edit', compact('programStudi', 'title'));
     }
 
     /**

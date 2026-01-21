@@ -15,7 +15,8 @@ class JenisSKController extends Controller
      */
     public function index( JenisSKDataTable $dataTable)
     {
-        return $dataTable->render('pages.jenissk.index');
+        $title = 'Jenis SK';
+        return $dataTable->render('pages.jenissk.index', compact('title'));
     }
 
     /**
@@ -23,7 +24,8 @@ class JenisSKController extends Controller
      */
     public function create()
     {
-        return view('pages.jenissk.create');
+        $title = 'Form Jenis SK';
+        return view('pages.jenissk.create', compact('title'));
     }
 
     /**
@@ -54,7 +56,8 @@ class JenisSKController extends Controller
      */
     public function edit(JenisSK $jenissk)
     {
-        return view('pages.jenissk.edit', compact('jenissk'));
+        $title = 'Form Jenis SK';
+        return view('pages.jenissk.edit', compact('jenissk', 'title'));
     }
 
     /**

@@ -19,7 +19,8 @@ class PegawaiController extends Controller
      */
     public function index(PegawaiDataTable $pegawaiDataTable)
     {
-        return $pegawaiDataTable->render('pages.pegawai.index');
+        $title = 'Pegawai';
+        return $pegawaiDataTable->render('pages.pegawai.index', compact('title'));
     }
 
     /**
@@ -27,8 +28,9 @@ class PegawaiController extends Controller
      */
     public function create()
     {
+        $title = 'Form Pegawai';
         $users = User::all();
-        return view('pages.pegawai.create', compact('users'));
+        return view('pages.pegawai.create', compact('users', 'title'));
     }
 
     /**
@@ -93,8 +95,9 @@ class PegawaiController extends Controller
      */
     public function edit(Pegawai $pegawai)
     {
+        $title = 'Form Pegawai';
         $users = User::all();
-        return view('pages.pegawai.edit', compact('pegawai', 'users'));
+        return view('pages.pegawai.edit', compact('pegawai', 'users', 'title'));
     }
 
     /**

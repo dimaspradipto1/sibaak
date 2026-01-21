@@ -1,5 +1,6 @@
 @extends('layouts.dashboard.template')
 
+@section('title', 'Jenis SK')
 
 @section('content')
 <div class="card">

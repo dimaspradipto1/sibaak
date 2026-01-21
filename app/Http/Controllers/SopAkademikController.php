@@ -22,7 +22,8 @@ class SopAkademikController extends Controller
      */
     public function index(SopAkademikDataTable $datatable)
     {
-        return $datatable->render('pages.sopakademik.index');
+        $title = 'SOP Akademik';
+        return $datatable->render('pages.sopakademik.index', compact('title'));
     }
 
     /**
@@ -30,7 +31,8 @@ class SopAkademikController extends Controller
      */
     public function create()
     {
-        return view('pages.sopakademik.create');
+        $title = 'Form SOP Akademik';
+        return view('pages.sopakademik.create', compact('title'));
     }
 
     /**
@@ -303,7 +305,8 @@ class SopAkademikController extends Controller
      */
     public function edit(SopAkademik $sopakademik)
     {
-        return view('pages.sopakademik.edit', compact('sopakademik'));
+        $title = 'Form SOP Akademik';
+        return view('pages.sopakademik.edit', compact('sopakademik', 'title'));
     }
 
     /**

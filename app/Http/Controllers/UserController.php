@@ -17,7 +17,8 @@ class UserController extends Controller
      */
     public function index(UserDataTable $dataTable)
     {
-        return $dataTable->render('pages.users.index');
+        $title = 'Pengguna';
+        return $dataTable->render('pages.users.index', compact('title'));
     }
 
     /**
@@ -25,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-       return view('pages.users.create');
+        return view('pages.users.create');
     }
 
     /**
@@ -125,7 +126,7 @@ class UserController extends Controller
         $users = User::findOrFail($id);
         return view('pages.users.updatePassword', compact('users'));
     }
-    
+
     public function updatePassword(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -135,5 +136,4 @@ class UserController extends Controller
         Alert::success('success', 'data updated successfully')->autoclose(2000)->toToast();
         return redirect()->route('users.index');
     }
-
 }

@@ -23,7 +23,8 @@ class PedomanController extends Controller
      */
     public function index(PedomanDataTable $dataTable)
     {
-        return $dataTable->render('pages.pedoman.index');
+        $title = 'Pedoman';
+        return $dataTable->render('pages.pedoman.index', compact('title'));
     }
 
     /**
@@ -31,8 +32,9 @@ class PedomanController extends Controller
      */
     public function create()
     {
+        $title = 'Form Pedoman';
         $users = User::all();
-        return view('pages.pedoman.create', compact('users'));
+        return view('pages.pedoman.create', compact('users', 'title'));
     }
 
     /**
@@ -305,8 +307,9 @@ class PedomanController extends Controller
      */
     public function edit(Pedoman $pedoman)
     {
+        $title = 'Form Pedoman';
         $users = User::all();
-        return view('pages.pedoman.edit', compact('users', 'pedoman'));
+        return view('pages.pedoman.edit', compact('users', 'pedoman', 'title'));
     }
 
     /**

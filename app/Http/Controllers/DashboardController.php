@@ -13,6 +13,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $title = 'Dashboard';
+
         $user = User::count();
         $pegawai = Pegawai::count();
         $mahasiswa = Mahasiswa::count();
@@ -64,7 +66,8 @@ class DashboardController extends Controller
             'pegawai',
             'suratAkademik',
             'chartData',
-            'latestSuratAktif'
+            'latestSuratAktif',
+            'title' 
         ));
     }
 }

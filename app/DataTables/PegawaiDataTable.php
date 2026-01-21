@@ -106,7 +106,7 @@ class PegawaiDataTable extends DataTable
                 ->addClass('text-center'),
             Column::make('jabatan')
                 ->title('JABATAN')
-                ->addClass('text-center'),
+                ->addClass('text-start'),
             Column::make('file')
                 ->title('TTD')
                 ->addClass('text-center'),
