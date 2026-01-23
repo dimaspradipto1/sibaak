@@ -22,4 +22,9 @@ class ProgramStudi extends Model
     {
         return $this->hasMany(SuratAkademik::class);
     }
+
+    public function dosen()
+    {
+        return $this->hasMany(Dosen::class);
+    }
 }

@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surat Layanan Akademik</title>
+    <!-- Favicon icon -->
+    <link rel="icon" href="{{ asset('assets/images/logouis.png') }}" type="image/x-icon">
     <style>
         body {
             /* font-family: Arial, sans-serif;
@@ -330,14 +332,16 @@
         <div class="signature-item" style="margin-top: -60px;">
             <p>Mengetahui/Menyetujui</p>
             <p style="margin-top: -10px;">Pembimbing Akademik</p>
-            <p style="margin-top: 70px;">(.......................................)</p>
+            <p style="margin-top: 70px; text-decoration: underline; font-weight: bold;">{{ $dosen->nama_dosen }}</p>
+            <p style="margin-top: -12px;">NIDN: {{ $dosen->nidn }}</p>
         </div>
 
         <!-- Signature 2: Hormat Saya -->
         <div class="signature-item" style="margin-top: -60px;">
              <p>Batam, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
             <p style="margin-top: -10px;">Hormat Saya</p>
-            <p style="margin-top: 70px;">{{ $suratAkademik->user->name }}</p>
+            <p style="margin-top: 70px; text-decoration: underline; font-weight: bold;">{{ $suratAkademik->user->name }}</p>
+            <p style="margin-top: -12px;">{{ $suratAkademik->npm }}</p>
         </div>
     </div>
 
@@ -346,7 +350,8 @@
         <!-- Signature 3: Ka. Prodi (Centered) -->
         <div class="signature-item center">
             <p>Ketua Prodi</p>
-            <p style="margin-top: 70px;">(.......................................)</p>
+            <p style="margin-top: 70px; text-decoration: underline; font-weight: bold;">{{ $kaprodi->nama_dosen }}</p>
+            <p style="margin-top: -12px;">NUP: {{ $kaprodi->nup }}</p>
         </div>
     </div>
 

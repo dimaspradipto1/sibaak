@@ -24,9 +24,16 @@ class SkKepanitiaanDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
+            // ->editColumn('tahun_akademik_id', function ($item) {
+            //     return $item->tahunAkademik->tahun_akademik;
+            // })
             ->editColumn('tahun_akademik_id', function ($item) {
-                return $item->tahunAkademik->tahun_akademik;
+                $ta  = optional($item->tahunAkademik)->tahun_akademik;
+                $smt = $item->semester;
+
+                return trim($ta . ' - ' . $smt, ' -');
             })
+
             ->editColumn('users_id', function ($item) {
                 return $item->users ? $item->users->name : '-';
             })
@@ -67,7 +74,8 @@ class SkKepanitiaanDataTable extends DataTable
      */
     public function query(SkKepanitiaan $model): QueryBuilder
     {
-        return $model->newQuery();
+        // return $model->newQuery();
+        return $model->newQuery()->with(['tahunAkademik', 'users', 'jenissk']);
     }
 
     /**
@@ -103,8 +111,8 @@ class SkKepanitiaanDataTable extends DataTable
                 ->addClass('text-center'),
             Column::make('tahun_akademik_id')
                 ->title('TAHUN AKADEMIK'),
-            // Column::make('nama_sk')
-            //     ->title('NAMA SK'),
+            // Column::make('semester')
+            //     ->title('SEMESTER'),
             Column::make('jenissk_id')
                 ->title('JENIS SK'),
             Column::make('users_id')

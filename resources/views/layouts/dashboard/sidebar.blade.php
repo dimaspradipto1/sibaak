@@ -152,6 +152,13 @@
                             </a>
                         </li>
                         <li class="">
+                            <a href="{{ route('dosen.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="fa-solid fa-user-gear"></i></span>
+                                <span class="pcoded-mtext text-capitalize">dosen</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class="">
                             <a href="{{ route('mahasiswa.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-users-gear"></i></span>
                                 <span class="pcoded-mtext text-capitalize">mahasiswa</span>

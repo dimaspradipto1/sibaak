@@ -17,4 +17,9 @@ class LpjKepanitiaan extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function jenissk()
+    {
+        return $this->belongsTo(JenisSk::class);
+    }
 }

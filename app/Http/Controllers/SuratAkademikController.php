@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Dosen;
 use App\Models\Mahasiswa;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
@@ -26,10 +27,11 @@ class SuratAkademikController extends Controller
      */
     public function create()
     {
+        $dosens = Dosen::all();
         $title = 'Form Surat Akademik';
         $users = User::where('is_mahasiswa', true)->get();
         $programStudi = ProgramStudi::all();
-        return view('pages.suratAkademik.create', compact('users', 'programStudi', 'title'));
+        return view('pages.suratAkademik.create', compact('users', 'programStudi', 'title', 'dosens'));
     }
 
     /**
@@ -57,6 +59,8 @@ class SuratAkademikController extends Controller
             'semester' => $request->semester,
             'permohonan' => $request->permohonan,
             'alasan_cuti' => $request->alasan_cuti,
+            'dosen_pembimbing_akademik' => $request->dosen_pembimbing_akademik,
+            'kaprodi' => $request->kaprodi,
         ];
 
         SuratAkademik::create($data);
@@ -74,17 +78,20 @@ class SuratAkademikController extends Controller
      */
     public function show(SuratAkademik $suratAkademik)
     {
+
         $mahasiswa = Mahasiswa::where('users_id', $suratAkademik->users_id)->first();
 
         if (!$mahasiswa) {
             return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan!');
         }
 
+        $dosen = Dosen::find($suratAkademik->dosen_pembimbing_akademik);
+        $kaprodi = Dosen::find($suratAkademik->kaprodi);
         $programStudi = ProgramStudi::find($mahasiswa->program_studi_id);
         $fakultas = $mahasiswa->fakultas;
         $user = User::find($suratAkademik->users_id);
         $no_surat = SuratAkademik::count();
-        return view('pages.suratAkademik.show', compact('suratAkademik', 'mahasiswa', 'programStudi', 'user', 'no_surat', 'fakultas')); //
+        return view('pages.suratAkademik.show', compact('suratAkademik', 'mahasiswa', 'programStudi', 'user', 'no_surat', 'fakultas', 'dosen', 'kaprodi')); //
     }
 
     /**

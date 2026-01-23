@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SkController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\JenisSKController;
 use App\Http\Controllers\PedomanController;
@@ -43,6 +44,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('programStudi', ProgramStudiController::class);
     Route::resource('jenissk', JenisSKController::class);
     Route::resource('pegawai', PegawaiController::class);
+    Route::resource('dosen', DosenController::class);
     Route::resource('suratAktif', SuratAktifController::class);
     Route::resource('suratAkademik', SuratAkademikController::class);
     Route::resource('sopakademik', SopAkademikController::class);

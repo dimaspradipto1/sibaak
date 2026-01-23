@@ -24,20 +24,26 @@ class LpjKepanitiaanDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
+            // ->editColumn('tahun_akademik_id', function ($item) {
+            //     return $item->tahunAkademik->tahun_akademik;
+            // })
             ->editColumn('tahun_akademik_id', function ($item) {
-                    return $item->tahunAkademik->tahun_akademik;
-                })
-                ->editColumn('users_id', function ($item) {
-                    return $item->users ? $item->users->name : '-';
-                })
-               ->addColumn('file', function ($item) {
-                    return '<a href="' . asset($item->file) . '" target="_blank"
+                $ta  = optional($item->tahunAkademik)->tahun_akademik;
+                $smt = $item->semester;
+
+                return trim($ta . ' - ' . $smt, ' -');
+            })
+            ->editColumn('users_id', function ($item) {
+                return $item->users ? $item->users->name : '-';
+            })
+            ->addColumn('file', function ($item) {
+                return '<a href="' . asset($item->file) . '" target="_blank"
                             class="btn btn-sm btn-success text-white px-3 rounded">
                             <i class="fa-solid fa-eye"></i> Lihat Dokumen
                         </a>';
-                })
-                ->addColumn('action', function ($item) {
-                    return '
+            })
+            ->addColumn('action', function ($item) {
+                return '
                     <a href="' . route('lpjkepanitiaan.show', $item->id) . '" class="btn btn-dark btn-sm px-3 rounded" title="show">
                         <i class="fa-solid fa-eye"></i>
                     </a>
@@ -52,7 +58,7 @@ class LpjKepanitiaanDataTable extends DataTable
                         </button>
                     </form>
                 ';
-                })
+            })
             ->setRowId('DT_RowIndex')
             ->rawColumns(['action', 'file', 'users_id', 'tahun_akademik_id', 'semester']);
     }
@@ -64,7 +70,7 @@ class LpjKepanitiaanDataTable extends DataTable
      */
     public function query(LpjKepanitiaan $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with(['tahunAkademik', 'users', 'jenissk']);
     }
 
     /**
@@ -73,19 +79,19 @@ class LpjKepanitiaanDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('lpjkepanitiaan-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-            Button::make('csv'),
-            Button::make('pdf'),
-            Button::make('print'),
-            Button::make('reset'),
-            Button::make('reload')
-                    ]);
+            ->setTableId('lpjkepanitiaan-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -113,8 +119,8 @@ class LpjKepanitiaanDataTable extends DataTable
                 ->title('AKSI')
                 ->exportable(false)
                 ->printable(false)
-                  ->width('15%')
-                  ->addClass('text-center'),
+                ->width('15%')
+                ->addClass('text-center'),
         ];
     }
 

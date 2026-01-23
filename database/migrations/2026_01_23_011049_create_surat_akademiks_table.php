@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('semester')->nullable();
             $table->string('permohonan')->nullable();
             $table->text('alasan_cuti')->nullable();
+            $table->foreignId('dosen_pembimbing_akademik')->constrained('dosens')->cascadeOnDelete();
+            $table->foreignId('kaprodi')->constrained('dosens')->cascadeOnDelete();
             $table->timestamps();
         });
     }

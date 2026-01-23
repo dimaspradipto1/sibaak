@@ -106,6 +106,11 @@
                             </a>
                         </li>
                         <li class="waves-effect waves-light">
+                            <a href="#">
+                                <i class="ti-user"></i> Feedback
+                            </a>
+                        </li>
+                        <li class="waves-effect waves-light">
                             <a href="{{ route('logout') }}">
                                 <i class="ti-layout-sidebar-left"></i> Logout
                             </a>

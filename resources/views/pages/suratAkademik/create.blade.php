@@ -70,7 +70,7 @@
                         <input type="hidden" name="users_id" value="{{ Auth::id() }}">
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Semester Saat ini</label>
+                            <label class="col-sm-2 col-form-label">Semester Saat Ini</label>
                             <div class="col-sm-10">
                                 <select name="semester" id="semester" class="form-control rounded" required>
                                     <option selected disabled>Pilih Semester</option>
@@ -103,6 +103,30 @@
                         </div>
 
                         <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Dosen PA</label>
+                            <div class="col-sm-10">
+                                <select name="dosen_pembimbing_akademik" id="dosen_pembimbing_akademik" class="form-control rounded" data-live-search="true" required>
+                                    <option value="">Pilih Dosen Pembimbing Akademik</option>
+                                    @foreach ($dosens as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_dosen }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Ka. Prodi</label>
+                            <div class="col-sm-10">
+                                <select name="kaprodi" id="kaprodi" class="form-control rounded"required>
+                                    <option value="">Pilih Ka. Prodi</option>
+                                    @foreach ($dosens as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_dosen }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Alasan Cuti Akademik</label>
                             <div class="col-sm-10">
                                 <textarea name="alasan_cuti" class="form-control rounded" id="alasan_cuti" cols="30" rows="4" required></textarea>
@@ -127,7 +151,8 @@
 @push('script')
     <script>
         $(document).ready(function() {
-            $('#users_id').select2();
+            $('#dosen_pembimbing_akademik').select2();
+            $('#kaprodi').select2();
         });
     </script>
 @endpush
