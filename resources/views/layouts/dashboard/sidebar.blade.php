@@ -3,8 +3,7 @@
     <div class="pcoded-inner-navbar main-menu">
         <div class="">
             <div class="main-menu-header">
-                <img class="img-80 img-radius" src="{{ asset('assets/images/user.png') }}"
-                    alt="User-Profile-Image">
+                <img class="img-80 img-radius" src="{{ asset('assets/images/user.png') }}" alt="User-Profile-Image">
                 <div class="user-details">
                     <span id="more-details">{{ Auth::user()->name }}<i class="fa fa-caret-down"></i></span>
                 </div>
@@ -50,7 +49,7 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
-                    <li class=" ">
+                        <li class=" ">
                             <a href="{{ route('suratAktif.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext text-capitalize">surat keterangan aktif</span>
@@ -92,7 +91,7 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-                                                
+
                         <li class=" ">
                             <a href="{{ route('kurikulum.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -147,7 +146,7 @@
                         <li class="">
                             <a href="{{ route('pegawai.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-user-gear"></i></span>
-                                <span class="pcoded-mtext text-capitalize">pegawai</span>
+                                <span class="pcoded-mtext text-capitalize">Staff</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>

@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             TahunAkademikSeeder::class,
             JenisskSeeder::class,
             ProgramStudiSeeder::class,
+            PegawaiSeeder::class,
         ]);
     }
 }

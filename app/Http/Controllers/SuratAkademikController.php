@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Dosen;
+use App\Models\Pegawai;
 use App\Models\Mahasiswa;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
@@ -49,6 +50,17 @@ class SuratAkademikController extends Controller
             return redirect()->back()->with('error', 'Program studi mahasiswa tidak ditemukan!');
         }
 
+        $kabaak = Pegawai::where('jabatan', 'KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)')->first();
+        $kabauk = Pegawai::where('jabatan', 'KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN')->first();
+
+        if (!$kabaak) {
+            return redirect()->back()->with('error', 'Data KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK) tidak ditemukan!');
+        }
+
+        if (!$kabauk) {
+            return redirect()->back()->with('error', 'Data KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN tidak ditemukan!');
+        }
+
         $data = [
             'users_id' => $request->users_id,
             'program_studi_id' => $mahasiswa->programStudi->id,
@@ -61,8 +73,8 @@ class SuratAkademikController extends Controller
             'alasan_cuti' => $request->alasan_cuti,
             'dosen_pembimbing_akademik' => $request->dosen_pembimbing_akademik,
             'kaprodi' => $request->kaprodi,
-            'kabaak'=>$request->kabaak,
-            'kabauk'=>$request->kabauk,
+            'kabaak' => $kabaak->id,
+            'kabauk' => $kabauk->id,
         ];
 
         SuratAkademik::create($data);
@@ -89,11 +101,13 @@ class SuratAkademikController extends Controller
 
         $dosen = Dosen::find($suratAkademik->dosen_pembimbing_akademik);
         $kaprodi = Dosen::find($suratAkademik->kaprodi);
+        $kabaak = Pegawai::find($suratAkademik->kabaak);
+        $kabauk = Pegawai::find($suratAkademik->kabauk);
         $programStudi = ProgramStudi::find($mahasiswa->program_studi_id);
         $fakultas = $mahasiswa->fakultas;
         $user = User::find($suratAkademik->users_id);
         $no_surat = SuratAkademik::count();
-        return view('pages.suratAkademik.show', compact('suratAkademik', 'mahasiswa', 'programStudi', 'user', 'no_surat', 'fakultas', 'dosen', 'kaprodi')); //
+        return view('pages.suratAkademik.show', compact('suratAkademik', 'mahasiswa', 'programStudi', 'user', 'no_surat', 'fakultas', 'dosen', 'kaprodi', 'kabaak', 'kabauk')); //
     }
 
     /**

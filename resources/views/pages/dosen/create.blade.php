@@ -50,7 +50,7 @@
                             <label class="col-sm-2 col-form-label">NIDN</label>
                             <div class="col-sm-10">
                                 <input type="number" name="nidn" value="{{ old('nidn') }}"
-                                    class="form-control rounded @error('nidn') is-invalid @enderror" placeholder="Masukkan NIDN: boleh dikosongkan jika pakai NUPTK atau NUP">
+                                    class="form-control rounded @error('nidn') is-invalid @enderror" placeholder="Masukkan NIDN">
                                 @error('nidn')
                                     <span class="text-danger small">{{ $message }}</span>
                                 @enderror
@@ -61,7 +61,7 @@
                             <label class="col-sm-2 col-form-label">NUP</label>
                             <div class="col-sm-10">
                                 <input type="number" name="nup" value="{{ old('nup') }}"
-                                    class="form-control rounded @error('nup') is-invalid @enderror" placeholder="Masukkan NUP: boleh dikosongkan jika pakai NIDN atau NUPTK">
+                                    class="form-control rounded @error('nup') is-invalid @enderror" placeholder="Masukkan NUP">
                                 @error('nup')
                                     <span class="text-danger small">{{ $message }}</span>
                                 @enderror

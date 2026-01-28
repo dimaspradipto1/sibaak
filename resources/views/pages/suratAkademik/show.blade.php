@@ -338,9 +338,10 @@
 
         <!-- Signature 2: Hormat Saya -->
         <div class="signature-item" style="margin-top: -60px;">
-             <p>Batam, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
+            <p>Batam, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
             <p style="margin-top: -10px;">Hormat Saya</p>
-            <p style="margin-top: 70px; text-decoration: underline; font-weight: bold;">{{ $suratAkademik->user->name }}</p>
+            <p style="margin-top: 70px; text-decoration: underline; font-weight: bold;">
+                {{ $suratAkademik->user->name }}</p>
             <p style="margin-top: -12px;">{{ $suratAkademik->npm }}</p>
         </div>
     </div>
@@ -360,16 +361,17 @@
         <!-- Signature 4: Ka. BAAK -->
         <div class="signature-item" style="margin-top: -130px;">
             <p>Ka. BAAK</p>
-            <p style="margin-top: 90px; text-decoration: underline; font-weight: bold;">Leni Utami,MKM</p>
-            <p style="margin-top: -12px;">NUP. </p>
+            <p style="margin-top: 90px; text-decoration: underline; font-weight: bold;">
+                {{ $kabaak->nama_staff ?? '-' }}</p>
+            <p style="margin-top: -12px;">NUP. {{ $kabaak->nup ?? '-' }}</p>
         </div>
 
         <!-- Signature 5: Ka. BAUK -->
         <div class="signature-item" style="margin-top: -130px;">
             <p>Ka. BAUK</p>
-            <p style="margin-top: 90px; margin-left: -10px; text-decoration: underline; font-weight: bold;">Andi
-                Hidayatul Fadila, SE., M.Si.AK</p>
-            <p style="margin-top: -12px;">NUP. </p>
+            <p style="margin-top: 90px; margin-left: -10px; text-decoration: underline; font-weight: bold;">
+                {{ $kabauk->nama_staff ?? '-' }}</p>
+            <p style="margin-top: -12px;">NUP. {{ $kabauk->nup ?? '-' }}</p>
         </div>
     </div>
 
