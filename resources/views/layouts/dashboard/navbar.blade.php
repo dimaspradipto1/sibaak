@@ -106,6 +106,11 @@
                             </a>
                         </li>
                         <li class="waves-effect waves-light">
+                            <a href="{{ route('userGuide.index') }}">
+                               <i class="fa-regular fa-file-lines"></i> User Guide
+                            </a>
+                        </li>
+                        <li class="waves-effect waves-light">
                             <a href="#">
                                 <i class="ti-user"></i> Feedback
                             </a>

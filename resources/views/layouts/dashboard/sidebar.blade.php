@@ -3,7 +3,8 @@
     <div class="pcoded-inner-navbar main-menu">
         <div class="">
             <div class="main-menu-header">
-                <img class="img-80 img-radius" src="{{ asset('assets/images/user.png') }}" alt="User-Profile-Image">
+                <img class="img-80 img-radius" src="{{ asset('assets/images/user.png') }}"
+                    alt="User-Profile-Image">
                 <div class="user-details">
                     <span id="more-details">{{ Auth::user()->name }}<i class="fa fa-caret-down"></i></span>
                 </div>
@@ -49,7 +50,7 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li class=" ">
+                    <li class=" ">
                             <a href="{{ route('suratAktif.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext text-capitalize">surat keterangan aktif</span>
@@ -91,7 +92,7 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-
+                                                
                         <li class=" ">
                             <a href="{{ route('kurikulum.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -146,7 +147,7 @@
                         <li class="">
                             <a href="{{ route('pegawai.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-user-gear"></i></span>
-                                <span class="pcoded-mtext text-capitalize">Staff</span>
+                                <span class="pcoded-mtext text-capitalize">pegawai</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
@@ -190,55 +191,36 @@
             </ul>
         @endif
 
-        {{-- @if (Auth::user()->is_admin)
-        <div class="pcoded-navigation-label">Forms</div>
+        <div class="pcoded-navigation-label">User Guide</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="">
-                <a href="{{ route('tahunAkademik.index') }}" class="waves-effect waves-dark">
-                    <span class="pcoded-micon"><i class="fa-solid fa-calendar-days"></i></span>
-                    <span class="pcoded-mtext">tahun akademik</span>
-                    <span class="pcoded-mcaret"></span>
-                </a>
-            </li>
-        </ul>
-        <div class="pcoded-navigation-label">Tables</div>
-        <ul class="pcoded-item pcoded-left-item">
-            <li class="">
-                <a href="{{ route('users.index') }}" class="waves-effect waves-dark">
-                    <span class="pcoded-micon"><i class="fa-solid fa-users-gear"></i></span>
-                    <span class="pcoded-mtext text-capitalize">pengguna</span>
+                <a href="#" class="waves-effect waves-dark">
+                    <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
+                    <span class="pcoded-mtext text-capitalize">Tata Usaha</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
         </ul>
         <ul class="pcoded-item pcoded-left-item">
             <li class="">
-                <a href="{{ route('programStudi.index') }}" class="waves-effect waves-dark">
-                    <span class="pcoded-micon"><i class="fa-solid fa-folder-closed"></i></span>
-                    <span class="pcoded-mtext text-capitalize">program studi</span>
+                <a href="#" class="waves-effect waves-dark">
+                    <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
+                    <span class="pcoded-mtext text-capitalize">Mahasiswa</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
         </ul>
         <ul class="pcoded-item pcoded-left-item">
             <li class="">
-                <a href="{{ route('mahasiswa.index') }}" class="waves-effect waves-dark">
-                    <span class="pcoded-micon"><i class="fa-solid fa-users-gear"></i></span>
-                    <span class="pcoded-mtext text-capitalize">mahasiswa</span>
+                <a href="{{ route('faq.index') }}" class="waves-effect waves-dark">
+                    <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
+                    <span class="pcoded-mtext text-capitalize">FAQ</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
         </ul>
-        <ul class="pcoded-item pcoded-left-item">
-            <li class="">
-                <a href="{{ route('pegawai.index') }}" class="waves-effect waves-dark">
-                    <span class="pcoded-micon"><i class="fa-solid fa-user-gear"></i></span>
-                    <span class="pcoded-mtext text-capitalize">pegawai</span>
-                    <span class="pcoded-mcaret"></span>
-                </a>
-            </li>
-        </ul>
-        @endif --}}
+
+
         {{-- <div class="pcoded-navigation-label">Chart And Maps</div> --}}
         {{-- <ul class="pcoded-item pcoded-left-item">
             <li class="">

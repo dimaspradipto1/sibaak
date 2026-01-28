@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SkController;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LoginController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\UserGuideController;
 use App\Http\Controllers\WasdalbinController;
 use App\Http\Controllers\SuratAktifController;
 use App\Http\Controllers\KepanitiaanController;
@@ -53,4 +55,6 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('skkepanitiaan', SkKepanitiaanController::class);
     Route::resource('kurikulum', KurikulumController::class);
     Route::resource('wasdalbin', WasdalbinController::class);
+    Route::resource('userGuide', UserGuideController::class);
+    Route::resource('faq', FAQController::class);
 });
