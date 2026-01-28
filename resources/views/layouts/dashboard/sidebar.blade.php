@@ -3,8 +3,7 @@
     <div class="pcoded-inner-navbar main-menu">
         <div class="">
             <div class="main-menu-header">
-                <img class="img-80 img-radius" src="{{ asset('assets/images/user.png') }}"
-                    alt="User-Profile-Image">
+                <img class="img-80 img-radius" src="{{ asset('assets/images/user.png') }}" alt="User-Profile-Image">
                 <div class="user-details">
                     <span id="more-details">{{ Auth::user()->name }}<i class="fa fa-caret-down"></i></span>
                 </div>
@@ -50,7 +49,7 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
-                    <li class=" ">
+                        <li class=" ">
                             <a href="{{ route('suratAktif.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext text-capitalize">surat keterangan aktif</span>
@@ -92,7 +91,7 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-                                                
+
                         <li class=" ">
                             <a href="{{ route('kurikulum.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -189,6 +188,35 @@
                     </ul>
                 </li>
             </ul>
+
+            <div class="pcoded-navigation-label">User Guide</div>
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="">
+                    <a href="#" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
+                        <span class="pcoded-mtext text-capitalize">Tata Usaha</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="">
+                    <a href="#" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
+                        <span class="pcoded-mtext text-capitalize">Mahasiswa</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="">
+                    <a href="{{ route('faq.index') }}" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
+                        <span class="pcoded-mtext text-capitalize">FAQ</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                </li>
+            </ul>
         @endif
 
         <div class="pcoded-navigation-label">User Guide</div>
@@ -219,7 +247,6 @@
                 </a>
             </li>
         </ul>
-
 
         {{-- <div class="pcoded-navigation-label">Chart And Maps</div> --}}
         {{-- <ul class="pcoded-item pcoded-left-item">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserGuide;
+use App\Models\FAQ;
 use Illuminate\Http\Request;
 
 class UserGuideController extends Controller
@@ -12,7 +13,10 @@ class UserGuideController extends Controller
      */
     public function index()
     {
-        return view('pages.userguide.index');
+        $title = 'User Guide';
+        $userguides = UserGuide::all();
+        $faqs = FAQ::all();
+        return view('pages.userguide.index', compact('userguides', 'faqs', 'title'));
     }
 
     /**
