@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Dosen;
 use App\Models\Pegawai;
 use App\Models\Mahasiswa;
 use App\Models\SuratAktif;
@@ -19,6 +20,7 @@ class DashboardController extends Controller
         $pegawai = Pegawai::count();
         $mahasiswa = Mahasiswa::count();
         $suratAkademik = SuratAkademik::count();
+        $dosen = Dosen::count();
 
         $suratAktifpending = SuratAktif::where('status', 'pending')->count() ?: 0;
         $suratAktifDiterima = SuratAktif::where('status', 'diterima')->count() ?: 0;
@@ -64,6 +66,7 @@ class DashboardController extends Controller
             'user',
             'mahasiswa',
             'pegawai',
+            'dosen',
             'suratAkademik',
             'chartData',
             'latestSuratAktif',

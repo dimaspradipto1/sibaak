@@ -50,15 +50,17 @@ class SuratAkademikController extends Controller
             return redirect()->back()->with('error', 'Program studi mahasiswa tidak ditemukan!');
         }
 
-        $kabaak = Pegawai::where('jabatan', 'KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)')->first();
-        $kabauk = Pegawai::where('jabatan', 'KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN')->first();
+        $kabaak = Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)%')->first();
+        $kabauk = Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN%')->first();
 
         if (!$kabaak) {
-            return redirect()->back()->with('error', 'Data KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK) tidak ditemukan!');
+            Alert::error('Gagal', 'Data KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK) tidak ditemukan!')->autoclose(3000)->toToast();
+            return redirect()->back();
         }
 
         if (!$kabauk) {
-            return redirect()->back()->with('error', 'Data KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN tidak ditemukan!');
+            Alert::error('Gagal', 'Data KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN tidak ditemukan!')->autoclose(3000)->toToast();
+            return redirect()->back();
         }
 
         $data = [

@@ -34,7 +34,7 @@ class SuratAkademikDataTable extends DataTable
             ->addColumn('action', function ($item) {
                 $editButton = '';
                 $deleteButton = '';
-                $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-dark text-white px-3 mr-2 rounded" title="show"><i class="fa-solid fa-print"></i></a>';
+                $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-success text-white px-3 mr-2 rounded" title="show"><i class="fa-solid fa-print"></i> Silahkan Print Surat</a>';
 
                 if (Auth::user()->is_admin || Auth::user()->is_staffbaak) {
                     $editButton = '<a href="' . route('suratAkademik.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 mr-2 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a>';

@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             JenisskSeeder::class,
             ProgramStudiSeeder::class,
             PegawaiSeeder::class,
+            DosenSeeder::class,
         ]);
     }
 }

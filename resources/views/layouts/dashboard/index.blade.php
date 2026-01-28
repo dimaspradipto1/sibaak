@@ -46,17 +46,17 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="col-sm-6 p-b-20 p-t-20">
-                        <div class="row align-items-center text-center">
-                            <div class="col-4 p-r-0">
-                                <i class="far fa-envelope-open text-c-yellow f-24"></i>
+                            <div class="col-sm-6 p-b-20 p-t-20">
+                                <div class="row align-items-center text-center">
+                                    <div class="col-4 p-r-0">
+                                        <i class="fa-solid fa-user-group text-c-purple f-24"></i>
+                                    </div>
+                                    <div class="col-8 p-l-0">
+                                        <h5>{{$dosen}}</h5>
+                                        <p class="text-muted m-b-0">Dosen</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-8 p-l-0">
-                                <h5>{{$suratAktifpending}}</h5>
-                                <p class="text-muted m-b-0">Surat Aktif pending</p>
-                            </div>
-                        </div>
-                    </div> --}}
                         </div>
                     </div>
                 </div>
