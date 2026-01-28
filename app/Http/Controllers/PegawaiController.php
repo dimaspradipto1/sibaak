@@ -40,9 +40,12 @@ class PegawaiController extends Controller
     {
         try {
             $pegawai = new Pegawai();
-            $pegawai->users_id = $request->users_id;
+            // $pegawai->users_id = $request->users_id;
+            $pegawai->nama_staff = $request->nama_staff;
             $pegawai->jabatan  = $request->jabatan;
             $pegawai->nidn     = $request->nidn;
+            $pegawai->nup      = $request->nup;
+            $pegawai->homebase = $request->homebase;
 
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
@@ -108,15 +111,18 @@ class PegawaiController extends Controller
     // Validasi input
     $request->validate([
         'url'         => 'nullable|image|mimes:jpeg,jpg,png|max:2048', // File opsional
-        'users_id'    => 'required|exists:users,id',
+        // 'users_id'    => 'required|exists:users,id',
+        'nama_staff'  => 'required|string',
         'jabatan'     => 'required|string',
         'nidn'        => 'required|string',
+        'nup'         => 'required|string',
     ]);
 
     // Mengupdate data lainnya
-    $pegawai->users_id = $request->users_id;
+    // $pegawai->users_id = $request->users_id;
     $pegawai->jabatan  = $request->jabatan;
     $pegawai->nidn     = $request->nidn;
+    $pegawai->nup      = $request->nup;
 
     // Cek jika ada file gambar yang diupload
     if ($request->hasFile('url')) {

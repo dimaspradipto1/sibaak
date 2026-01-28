@@ -22,7 +22,7 @@
                     <form action="{{ route('pegawai.update', $pegawai->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Pegawai</label>
                             <div class="col-sm-10">
                                 <select name="users_id" id="users_id"
@@ -36,6 +36,17 @@
                                     @endforeach
                                 </select>
                                 @error('users_id')
+                                    <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div> --}}
+
+                         <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Nama Staff Lengkap dengan Gelar</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="nama_staff" value="{{ old('nama_staff', $pegawai->nama_staff) }}"
+                                    class="form-control rounded @error('nama_staff') is-invalid @enderror">
+                                @error('nama_staff')
                                     <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -63,6 +74,33 @@
                             </div>
                         </div>
 
+                         <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">NUP</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="nup" value="{{ old('nup', $pegawai->nup) }}"
+                                    class="form-control rounded @error('nup') is-invalid @enderror">
+                                @error('nup')
+                                    <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                         <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">HOMEBASE</label>
+                            <div class="col-sm-10">
+                               <select name="homebase" id="homebase" class="form-control rounded">
+                                <option value="">Pilih Program Studi</option>
+                                <option value="">=====================</option>
+                                <option value='Fakultas Ekonomi dan Bisnis (FEB)' {{ old('homebase', $pegawai->homebase) == 'Fakultas Ekonomi dan Bisnis (FEB)' ? 'selected' : '' }}>Fakultas Ekonomi dan Bisnis (FEB)</option>
+                                <option value='Fakultas Sains dan Teknologi (FST)' {{ old('homebase', $pegawai->homebase) ==  'Fakultas Sains dan Teknologi (FST)' ?  'selected' : ''}}>Fakultas Sains dan Teknologi (FST)</option>
+                                <option value="Fakultas Ilmu Kesehatan (FIKES)" {{ old('homebase', $pegawai->homebase) == 'Fakultas Ilmu Kesehatan (FIKES)' ? 'selected' : '' }}>Fakultas Ilmu Kesehatan (FIKES)</option>
+                               </select>
+                               @error('homebase')
+                                    <span class="text-danger small">{{ $message }}</span>
+                               @enderror
+                            </div>
+                        </div>
+                        
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">URL TTD</label>
                             <div class="col-sm-10">

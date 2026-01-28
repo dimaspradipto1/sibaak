@@ -27,4 +27,9 @@ class SuratAkademik extends Model
     {
         return $this->belongsTo(Dosen::class, 'dosen_id');
     }
+
+    public function pegawai()
+    {
+        return $this->belongsTo(Pegawai::class, 'pegawai_id');
+    } 
 }

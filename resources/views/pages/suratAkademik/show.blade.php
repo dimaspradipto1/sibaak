@@ -361,7 +361,7 @@
         <div class="signature-item" style="margin-top: -130px;">
             <p>Ka. BAAK</p>
             <p style="margin-top: 90px; text-decoration: underline; font-weight: bold;">Leni Utami,MKM</p>
-            <p style="margin-top: -12px;">NIDN. 1001057904</p>
+            <p style="margin-top: -12px;">NUP. </p>
         </div>
 
         <!-- Signature 5: Ka. BAUK -->
@@ -369,7 +369,7 @@
             <p>Ka. BAUK</p>
             <p style="margin-top: 90px; margin-left: -10px; text-decoration: underline; font-weight: bold;">Andi
                 Hidayatul Fadila, SE., M.Si.AK</p>
-            <p style="margin-top: -12px;">NIDN. 1011088401</p>
+            <p style="margin-top: -12px;">NUP. </p>
         </div>
     </div>
 

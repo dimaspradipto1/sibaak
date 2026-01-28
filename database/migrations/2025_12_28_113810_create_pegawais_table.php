@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('pegawais', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_id')->constrained()->cascadeOnDelete();
+            // $table->foreignId('users_id')->constrained()->cascadeOnDelete();
+            $table->string('nama_staff');
             $table->string('jabatan');
             $table->string('nidn');
+            $table->string('nup');
+            $table->string('homebase');
             $table->string('file')->nullable(true);
             $table->timestamps();
         });

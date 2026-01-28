@@ -61,6 +61,8 @@ class SuratAkademikController extends Controller
             'alasan_cuti' => $request->alasan_cuti,
             'dosen_pembimbing_akademik' => $request->dosen_pembimbing_akademik,
             'kaprodi' => $request->kaprodi,
+            'kabaak'=>$request->kabaak,
+            'kabauk'=>$request->kabauk,
         ];
 
         SuratAkademik::create($data);

@@ -98,14 +98,20 @@ class PegawaiDataTable extends DataTable
                 ->title('No')
                 ->width('5%')
                 ->addClass('text-center'),
-            Column::make('users_name')
+            Column::make('nama_staff')
                 ->title('NAMA PEGAWAI')
                 ->addClass('text-start'),
             Column::make('nidn')
                 ->title('NIDN')
                 ->addClass('text-center'),
+            Column::make('nup')
+                ->title('NUP')
+                ->addClass('text-center'),
             Column::make('jabatan')
                 ->title('JABATAN')
+                ->addClass('text-start'),
+            Column::make('homebase')
+                ->title('HOMEBASE')
                 ->addClass('text-start'),
             Column::make('file')
                 ->title('TTD')

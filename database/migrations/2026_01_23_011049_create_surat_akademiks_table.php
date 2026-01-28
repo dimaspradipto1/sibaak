@@ -24,6 +24,8 @@ return new class extends Migration
             $table->text('alasan_cuti')->nullable();
             $table->foreignId('dosen_pembimbing_akademik')->constrained('dosens')->cascadeOnDelete();
             $table->foreignId('kaprodi')->constrained('dosens')->cascadeOnDelete();
+            $table->foreignId('kabaak')->constrained('pegawais')->cascadeOnDelete();
+            $table->foreignId('kabauk')->constrained('pegawais')->cascadeOnDelete();
             $table->timestamps();
         });
     }

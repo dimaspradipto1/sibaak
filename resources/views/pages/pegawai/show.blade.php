@@ -10,10 +10,15 @@
                 </div>
                 <div class="card-block">
                     <table class="table table-bordered table-striped table-hover">
-                        <tr>
+                        {{-- <tr>
                             <td width="20%">Nama Pegawai</td>
                             <td width="1%">:</td>
                             <td width="79%">{{ $pegawai->user->name }}</td>
+                        </tr> --}}
+                        <tr>
+                            <td width="20%">Nama Staff</td>
+                            <td width="1%">:</td>
+                            <td width="79%">{{ $pegawai->nama_staff }}</td>
                         </tr>
                         <tr>
                             <td width="20%">Jabatan</td>
@@ -26,11 +31,21 @@
                             <td width="79%">{{ $pegawai->nidn }}</td>
                         </tr>
                         <tr>
+                            <td width="20%">NUP</td>
+                            <td width="1%">:</td>
+                            <td width="79%">{{ $pegawai->nup }}</td>
+                        </tr>
+                        <tr>
+                            <td width="20%">HOMEBASE</td>
+                            <td width="1%">:</td>
+                            <td width="79%">{{ $pegawai->homebase }}</td>
+                        </tr>
+                        <tr>
                             <td width="20%">Digital Signature (TTD)</td>
                             <td width="1%">:</td>
                             <td width="79%">
-                                @if ($pegawai->url)
-                                    <img src="{{ asset($pegawai->url) }}" alt="TTD" width="200"
+                                @if ($pegawai->file)
+                                    <img src="{{ asset($pegawai->file) }}" alt="TTD" width="200"
                                         class="img-thumbnail">
                                 @else
                                     <span class="text-muted">Tidak ada tanda tangan</span>
