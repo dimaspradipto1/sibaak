@@ -96,8 +96,8 @@ class WasdalbinDataTable extends DataTable
                 ->title('TAHUN'),
             Column::make('nama_wasdalbin')
                 ->title('NAMA WASDALBIN'),
-            Column::make('prodi')
-                ->title('PRODI'),
+            Column::make('fakultas')
+                ->title('FAKULTAS'),
             Column::make('file')
                 ->title('DOKUMEN')
                 ->addClass('text-center'),

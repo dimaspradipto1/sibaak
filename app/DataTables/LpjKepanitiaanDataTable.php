@@ -105,14 +105,14 @@ class LpjKepanitiaanDataTable extends DataTable
                 ->width('5%'),
             Column::make('tahun_akademik_id')
                 ->title('TAHUN AKADEMIK'),
-            // Column::make('semester')
-            //     ->title('SEMESTER'),
             Column::make('nama_dokumen')
                 ->title('NAMA LPJ'),
             Column::make('ketua')
                 ->title('KETUA'),
             Column::make('sekretaris')
                 ->title('SEKRETARIS'),
+            Column::make('fakultas')
+                ->title('FAKULTAS'),
             Column::make('file')
                 ->title('DOKUMEN'),
             Column::computed('action')

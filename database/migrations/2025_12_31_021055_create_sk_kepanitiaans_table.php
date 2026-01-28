@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nama_sk');
             $table->string('semester');
             $table->string('nomor_sk');
-            $table->string('prodi');
+            $table->string('fakultas');
             $table->string('file');
             $table->timestamps();
         });

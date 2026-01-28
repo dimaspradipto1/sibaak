@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('users_id')->constrained('users')->cascadeOnDelete();
             $table->string('tahun');
             $table->string('nama_kurikulum');
-            $table->string('prodi');
+            $table->string('fakultas');
             $table->string('file');
             $table->timestamps();
         });

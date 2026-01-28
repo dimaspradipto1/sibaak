@@ -86,10 +86,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Program Studi</label>
+                            <label class="col-sm-2 col-form-label">Fakultas</label>
                             <div class="col-sm-10">
                                <select name="prodi" id="prodi" class="form-control rounded">
-                                   <option value="">Pilih Program Studi</option>
+                                   <option value="">Pilih Fakultas</option>
                                    <option value="">=====================</option>
                                    <option value="Fakultas Ekonomi dan Bisnis" {{ old('prodi') == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>Fakultas Ekonomi dan Bisnis</option>
                                    <option value="Fakultas Sains dan Teknologi" {{ old('prodi') == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>Fakultas Sains dan Teknologi</option>

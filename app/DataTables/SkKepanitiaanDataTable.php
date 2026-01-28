@@ -111,12 +111,12 @@ class SkKepanitiaanDataTable extends DataTable
                 ->addClass('text-center'),
             Column::make('tahun_akademik_id')
                 ->title('TAHUN AKADEMIK'),
-            // Column::make('semester')
-            //     ->title('SEMESTER'),
             Column::make('jenissk_id')
                 ->title('JENIS SK'),
             Column::make('users_id')
                 ->title('NAMA STAFF'),
+            Column::make('fakultas')
+                ->title('FAKULTAS'),
             Column::make('file')
                 ->title('DOKUMEN'),
             Column::computed('action')

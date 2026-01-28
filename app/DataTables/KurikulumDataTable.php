@@ -100,10 +100,10 @@ class KurikulumDataTable extends DataTable
             Column::make('nama_kurikulum')
                 ->title('NAMA KURIKULUM')
                 ->width('15%'),
-            Column::make('prodi')
-                ->title('PRODI')
+            Column::make('fakultas')
+                ->title('FAKULTAS')
                 ->width('15%'),
-            Column::make('users_id')  // Menampilkan nama pengguna di sini
+            Column::make('users_id')
                 ->title('DIKIRIM OLEH')
                 ->width('15%'),
             Column::make('file')
