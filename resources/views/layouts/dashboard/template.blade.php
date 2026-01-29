@@ -37,6 +37,9 @@
     {{-- select2 CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+
+
+
 </head>
 
 <body>
@@ -119,9 +122,11 @@
                                     <div class="col-md-4">
                                         <ul class="breadcrumb">
                                             <li class="breadcrumb-item">
-                                                <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i>  Dashboard </a>
+                                                <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Dashboard
+                                                </a>
                                             </li>
-                                            <li class="breadcrumb-item"><a href="#!">{{ $title ?? 'Dashboard' }}</a>
+                                            <li class="breadcrumb-item"><a
+                                                    href="#!">{{ $title ?? 'Dashboard' }}</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -179,6 +184,11 @@
 
     {{-- select2 --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    {{-- ckeditor --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.16.2/ckeditor.js"></script>
+
+
 
     @stack('script')
     @stack('scripts')

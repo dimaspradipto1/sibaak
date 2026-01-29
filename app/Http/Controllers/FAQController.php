@@ -83,4 +83,12 @@ class FAQController extends Controller
             ->timerProgressBar();
         return redirect()->route('faq.index');
     }
+
+    public function userguidepengguna()
+    {
+        $title = 'User Guide';
+        $faqs = FAQ::all();
+
+        return view('pages.userguidepengguna.index', compact('title', 'faqs'));
+    }
 }

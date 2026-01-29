@@ -10,12 +10,13 @@
                 </div>
                 <div class="card-block">
                     <h4 class="sub-title">Form {{ $title }}</h4>
-                    <form action="{{ route('faq.store') }}" method="POST">
+                    <form action="{{ route('userGuideMahasiswa.update', $userGuideMahasiswa->id) }}" method="POST">
                         @csrf
+                        @method('PUT')
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Title</label>
                             <div class="col-sm-10">
-                                <input type="text" name="title" value="{{ old('title') }}"
+                                <input type="text" name="title" value="{{ old('title') ?? $userGuideMahasiswa->title }}"
                                     class="form-control rounded" placeholder="Masukkan title">
                                 @error('title')
                                     <span class="text-danger">{{ $message }}</span>
@@ -25,18 +26,27 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Deskripsi</label>
                             <div class="col-sm-10">
-                                <textarea name="deskripsi" id="editor_deskripsi" class="form-control rounded" placeholder="Masukkan deskripsi">{{ old('deskripsi') }}</textarea>
+                                <textarea name="deskripsi" id="editor_deskripsi" class="form-control rounded" placeholder="Masukkan deskripsi">{{ old('deskripsi') ?? $userGuideMahasiswa->deskripsi }}</textarea>
                                 @error('deskripsi')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
-
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Link Dokumen</label>
+                            <div class="col-sm-10">
+                                <textarea name="link_dokumen" id="editor_link_dokumen" class="form-control rounded" placeholder="Masukkan link dokumen">{{ old('link_dokumen') ?? $userGuideMahasiswa->link_dokumen }}</textarea>
+                                @error('link_dokumen')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                         <!-- Submit buttons -->
                         <button type="submit" class="btn btn-primary rounded text-uppercase btn-sm">
                             <i class="fa-solid fa-save"></i> Submit
                         </button>
-                        <a href="{{ route('faq.index') }}" class="btn btn-danger rounded text-uppercase btn-sm">
+                        <a href="{{ route('userGuideMahasiswa.index') }}"
+                            class="btn btn-danger rounded text-uppercase btn-sm">
                             <i class="fa-solid fa-arrow-left"></i> Back
                         </a>
                     </form>

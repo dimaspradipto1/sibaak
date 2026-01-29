@@ -189,7 +189,7 @@
                 </li>
             </ul>
 
-            <div class="pcoded-navigation-label">User Guide</div>
+            <div class="pcoded-navigation-label">User Guide Admin</div>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="">
                     <a href="#" class="waves-effect waves-dark">
@@ -201,7 +201,7 @@
             </ul>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="">
-                    <a href="#" class="waves-effect waves-dark">
+                    <a href="{{ route('userGuideMahasiswa.index') }}" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
                         <span class="pcoded-mtext text-capitalize">Mahasiswa</span>
                         <span class="pcoded-mcaret"></span>
@@ -231,7 +231,7 @@
         </ul>
         <ul class="pcoded-item pcoded-left-item">
             <li class="">
-                <a href="#" class="waves-effect waves-dark">
+                <a href="{{ route('userGuidePenggunaMahasiswa') }}" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
                     <span class="pcoded-mtext text-capitalize">Mahasiswa</span>
                     <span class="pcoded-mcaret"></span>
@@ -240,7 +240,7 @@
         </ul>
         <ul class="pcoded-item pcoded-left-item">
             <li class="">
-                <a href="{{ route('faq.index') }}" class="waves-effect waves-dark">
+                <a href="{{ route('userguidepengguna') }}" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
                     <span class="pcoded-mtext text-capitalize">FAQ</span>
                     <span class="pcoded-mcaret"></span>

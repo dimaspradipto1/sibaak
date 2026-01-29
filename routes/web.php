@@ -22,6 +22,8 @@ use App\Http\Controllers\SkKepanitiaanController;
 use App\Http\Controllers\SuratAkademikController;
 use App\Http\Controllers\TahunAkademikController;
 use App\Http\Controllers\LpjKepanitiaanController;
+use App\Http\Controllers\UserGuideMahasiswaController;
+use App\Http\Controllers\UserGuidePenggunaMahasiswaController;
 
 
 Route::controller(LoginController::class)->group(function () {
@@ -57,4 +59,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('wasdalbin', WasdalbinController::class);
     Route::resource('userGuide', UserGuideController::class);
     Route::resource('faq', FAQController::class);
+    Route::get('/userguidepengguna', [FAQController::class, 'userguidepengguna'])->name('userguidepengguna');
+    Route::resource('userGuideMahasiswa', UserGuideMahasiswaController::class);
+    Route::get('userGuidePenggunaMahasiswa', [UserGuidePenggunaMahasiswaController::class, 'index'])->name('userGuidePenggunaMahasiswa');
 });

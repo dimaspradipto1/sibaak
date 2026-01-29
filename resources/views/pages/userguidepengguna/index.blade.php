@@ -15,35 +15,12 @@
         </div>
         <div class="card-block table-border-style">
             <div class="table-responsive">
-                <h3 style="color: #104819; font-weight: bold; font-size: 30px;">Panduan Umum</h3>
-                <div class="card-block accordion-block">
-                    <div id="accordion-guide" role="tablist" aria-multiselectable="true">
-                        @foreach ($userguides as $userguide)
-                            <div class="accordion-panel">
-                                <div class="accordion-heading" role="tab" id="headingGuide{{ $loop->iteration }}">
-                                    <h1 class="card-title accordion-title">
-                                        <a class="accordion-msg waves-effect waves-dark collapsed d-flex justify-content-between align-items-center"
-                                            data-toggle="collapse" data-parent="#accordion-guide"
-                                            href="#collapseGuide{{ $loop->iteration }}" aria-expanded="false"
-                                            aria-controls="collapseGuide{{ $loop->iteration }}"
-                                            style="color: #104819; font-weight: bold; font-size: 20px;">
-                                            {{ $userguide->title }}
-                                            <i class="fa fa-angle-down"></i>
-                                        </a>
-                                    </h1>
-                                </div>
-                                <div id="collapseGuide{{ $loop->iteration }}" class="panel-collapse collapse"
-                                    role="tabpanel" aria-labelledby="headingGuide{{ $loop->iteration }}">
-                                    <div class="accordion-content accordion-desc">
-                                        <p>
-                                            {{ $userguide->description }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+                <h3 style="color: #104819; font-weight: bold; font-size: 30px; text-align: center;">Frequently Asked
+                    Questions</h3>
+                <hr>
+                <br>
+                <p style="color: #9F1717; font-weight: bold; font-size: 12px;">Catatan: Data pada halaman ini didasarkan
+                    pada aktivitas pengguna di website SIBAAK</p>
                 <br>
                 <h4 style="color: #104819; font-weight: bold; font-size: 30px;">FAQ</h4>
                 <div class="card-block accordion-block">

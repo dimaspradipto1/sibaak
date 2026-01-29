@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\FAQ;
+use App\Models\UserGuideMahasiswa;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,12 +12,12 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class FAQDataTable extends DataTable
+class UserGuideMahasiswaDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
      *
-     * @param QueryBuilder<FAQ> $query Results from query() method.
+     * @param QueryBuilder<UserGuideMahasiswa> $query Results from query() method.
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -25,8 +25,8 @@ class FAQDataTable extends DataTable
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
             ->addColumn('action', function ($item) {
-                return '<a href="' . route('faq.edit', $item->id) . '") class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
-                        <form action="' . route('faq.destroy', $item->id) . '") method="POST" class="d-inline">
+                return '<a href="' . route('userGuideMahasiswa.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
+                        <form action="' . route('userGuideMahasiswa.destroy', $item->id) . '" method="POST" class="d-inline">
                         ' . csrf_field() . '
                         ' . method_field('delete') . '
                         <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus"><i class="fa-solid fa-trash-can" ></i></button>
@@ -35,16 +35,19 @@ class FAQDataTable extends DataTable
             ->editColumn('deskripsi', function ($item) {
                 return strip_tags($item->deskripsi);
             })
+            ->addColumn('liat_dokumen', function ($item) {
+                return '<a href="' . $item->link_dokumen . '" target="_blank" style="background-color: #104819; color: #ffffff;" class="btn btn-sm px-3 rounded" title="Lihat Dokumen"><i class="fa-solid fa-eye"></i> Detail</a>';
+            })
             ->setRowId('DT_RowIndex')
-            ->rawColumns(['action']);
+            ->rawColumns(['action', 'liat_dokumen']);
     }
 
     /**
      * Get the query source of dataTable.
      *
-     * @return QueryBuilder<FAQ>
+     * @return QueryBuilder<UserGuideMahasiswa>
      */
-    public function query(FAQ $model): QueryBuilder
+    public function query(UserGuideMahasiswa $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -55,7 +58,7 @@ class FAQDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('faq-table')
+            ->setTableId('userguidemahasiswa-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->orderBy(1)
@@ -83,6 +86,9 @@ class FAQDataTable extends DataTable
                 ->title('Title'),
             Column::make('deskripsi')
                 ->title('Deskripsi'),
+            Column::computed('liat_dokumen')
+                ->title('Link Dokumen')
+                ->addClass('text-center'),
             Column::computed('action')
                 ->title('Aksi')
                 ->exportable(false)
@@ -97,6 +103,6 @@ class FAQDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'FAQ_' . date('YmdHis');
+        return 'UserGuideMahasiswa_' . date('YmdHis');
     }
 }

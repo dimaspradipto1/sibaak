@@ -17,23 +17,23 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Title</label>
                             <div class="col-sm-10">
-                                <input type="text" name="title" value="{{ old('title', $faq->title) }}" class="form-control rounded"
-                                    placeholder="Masukkan title">
-                                    @error('title')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                <input type="text" name="title" value="{{ old('title', $faq->title) }}"
+                                    class="form-control rounded" placeholder="Masukkan title">
+                                @error('title')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Deskripsi</label>
                             <div class="col-sm-10">
-                                <textarea name="deskripsi" class="form-control rounded" placeholder="Masukkan deskripsi">{{ old('deskripsi', $faq->deskripsi) }}</textarea>
+                                <textarea name="deskripsi" id="editor_deskripsi" class="form-control rounded" placeholder="Masukkan deskripsi">{{ old('deskripsi', $faq->deskripsi) }}</textarea>
                                 @error('deskripsi')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <!-- Submit buttons -->
                         <button type="submit" class="btn btn-primary rounded text-uppercase btn-sm">
                             <i class="fa-solid fa-pen-to-square"></i> Update
@@ -48,3 +48,11 @@
     </div>
     <!-- Basic Form Inputs card end -->
 @endsection
+
+@push('script')
+    <script>
+        CKEDITOR.replace('editor_deskripsi', {
+            versionCheck: false
+        });
+    </script>
+@endpush
