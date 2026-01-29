@@ -192,7 +192,7 @@
             <div class="pcoded-navigation-label">User Guide Admin</div>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="">
-                    <a href="#" class="waves-effect waves-dark">
+                    <a href="{{ route('userGuideTatausaha.index') }}" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
                         <span class="pcoded-mtext text-capitalize">Tata Usaha</span>
                         <span class="pcoded-mcaret"></span>
@@ -222,7 +222,7 @@
         <div class="pcoded-navigation-label">User Guide</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="">
-                <a href="#" class="waves-effect waves-dark">
+                <a href="{{ route('userGuidePenggunaTatausaha') }}" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
                     <span class="pcoded-mtext text-capitalize">Tata Usaha</span>
                     <span class="pcoded-mcaret"></span>

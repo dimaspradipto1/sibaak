@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\UserGuideMahasiswa;
+use App\Models\UserGuideTatausaha;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,12 +12,12 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UserGuideMahasiswaDataTable extends DataTable
+class UserGuideTatausahaDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
      *
-     * @param QueryBuilder<UserGuideMahasiswa> $query Results from query() method.
+     * @param QueryBuilder<UserGuideTatausaha> $query Results from query() method.
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -25,8 +25,8 @@ class UserGuideMahasiswaDataTable extends DataTable
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
             ->addColumn('action', function ($item) {
-                return '<a href="' . route('userGuideMahasiswa.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
-                        <form action="' . route('userGuideMahasiswa.destroy', $item->id) . '" method="POST" class="d-inline">
+                return '<a href="' . route('userGuideTatausaha.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
+                        <form action="' . route('userGuideTatausaha.destroy', $item->id) . '" method="POST" class="d-inline">
                         ' . csrf_field() . '
                         ' . method_field('delete') . '
                         <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus"><i class="fa-solid fa-trash-can" ></i></button>
@@ -42,9 +42,9 @@ class UserGuideMahasiswaDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      *
-     * @return QueryBuilder<UserGuideMahasiswa>
+     * @return QueryBuilder<UserGuideTatausaha>
      */
-    public function query(UserGuideMahasiswa $model): QueryBuilder
+    public function query(UserGuideTatausaha $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -55,19 +55,19 @@ class UserGuideMahasiswaDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('userguidemahasiswa-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            ->orderBy(1)
-            ->selectStyleSingle()
-            ->buttons([
-                Button::make('excel'),
-                Button::make('csv'),
-                Button::make('pdf'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            ]);
+                    ->setTableId('userguidetatausaha-table')
+                    ->columns($this->getColumns())
+                    ->minifiedAjax()
+                    ->orderBy(1)
+                    ->selectStyleSingle()
+                    ->buttons([
+                        Button::make('excel'),
+            Button::make('csv'),
+            Button::make('pdf'),
+            Button::make('print'),
+            Button::make('reset'),
+            Button::make('reload')
+                    ]);
     }
 
     /**
@@ -98,6 +98,6 @@ class UserGuideMahasiswaDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'UserGuideMahasiswa_' . date('YmdHis');
+        return 'UserGuideTatausaha_' . date('YmdHis');
     }
 }

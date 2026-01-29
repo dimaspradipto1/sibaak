@@ -17,14 +17,14 @@
             <div class="table-responsive">
                 <h3 class="text-capitalize"
                     style="background-color: #104819; color: #ffffff; font-weight: bold; font-size: 30px; text-align: center; padding: 15px; border-radius: 5px;">
-                    academic service letter
+                    archive service letter
                 </h3>
                 <br>
                 <br>
-                <h5 style="color: #104819; font-weight: bold; font-size: 30px;">Manajeman Layanan Akademik</h5>
+                <h5 style="color: #104819; font-weight: bold; font-size: 30px;">Manajeman Arsip BAAK</h5>
                 <div class="card-block">
                     <div class="list-group">
-                        @foreach ($userguardemahasiswa as $item)
+                        @foreach ($userguidepenggunatatausaha as $item)
                             <div class="list-group-item d-flex justify-content-between align-items-center border-0 py-3"
                                 style="border-bottom: 2px solid #f0f0f0 !important;">
                                 <h5 style="color: #019C24; font-weight: bold; font-size: 20px; margin: 0;">

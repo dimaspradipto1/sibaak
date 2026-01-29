@@ -10,13 +10,13 @@
                 </div>
                 <div class="card-block">
                     <h4 class="sub-title">Form {{ $title }}</h4>
-                    <form action="{{ route('userGuideMahasiswa.update', $userGuideMahasiswa->id) }}" method="POST">
+                    <form action="{{ route('userGuideTatausaha.update', $userGuideTatausaha->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Title</label>
                             <div class="col-sm-10">
-                                <input type="text" name="title" value="{{ old('title') ?? $userGuideMahasiswa->title }}"
+                                <input type="text" name="title" value="{{ old('title') ?? $userGuideTatausaha->title }}"
                                     class="form-control rounded" placeholder="Masukkan title">
                                 @error('title')
                                     <span class="text-danger">{{ $message }}</span>
@@ -26,7 +26,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Link Dokumen Gdrive</label>
                             <div class="col-sm-10">
-                                <textarea name="link_dokumen" id="editor_link_dokumen" class="form-control rounded" placeholder="Masukkan link dokumen google drive">{{ old('link_dokumen') ?? $userGuideMahasiswa->link_dokumen }}</textarea>
+                                <textarea name="link_dokumen" id="editor_link_dokumen" class="form-control rounded" placeholder="Masukkan link dokumen google drive">{{ old('link_dokumen') ?? $userGuideTatausaha->link_dokumen }}</textarea>
                                 @error('link_dokumen')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -36,7 +36,7 @@
                         <button type="submit" class="btn btn-primary rounded text-uppercase btn-sm">
                             <i class="fa-solid fa-save"></i> Submit
                         </button>
-                        <a href="{{ route('userGuideMahasiswa.index') }}"
+                        <a href="{{ route('userGuideTatausaha.index') }}"
                             class="btn btn-danger rounded text-uppercase btn-sm">
                             <i class="fa-solid fa-arrow-left"></i> Back
                         </a>

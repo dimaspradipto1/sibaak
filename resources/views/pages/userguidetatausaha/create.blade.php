@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-block">
                         <h4 class="sub-title">Form {{ $title }}</h4>
-                        <form action="{{ route('userGuideMahasiswa.store') }}" method="POST">
+                        <form action="{{ route('userGuideTatausaha.store') }}" method="POST">
                             @csrf
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Title</label>
@@ -35,7 +35,7 @@
                             <button type="submit" class="btn btn-primary rounded text-uppercase btn-sm">
                                 <i class="fa-solid fa-save"></i> Submit
                             </button>
-                            <a href="{{ route('userGuideMahasiswa.index') }}" class="btn btn-danger rounded text-uppercase btn-sm">
+                            <a href="{{ route('userGuideTatausaha.index') }}" class="btn btn-danger rounded text-uppercase btn-sm">
                                 <i class="fa-solid fa-arrow-left"></i> Back
                             </a>
                         </form>
