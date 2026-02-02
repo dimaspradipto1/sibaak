@@ -189,6 +189,17 @@
                 </li>
             </ul>
 
+            <div class="pcoded-navigation-label">Rekapitulasi</div>
+            <ul class="pcoded-item pcoded-left-item">
+                <li class="">
+                    <a href="{{ route('rekapitulasiarsip.index') }}" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
+                        <span class="pcoded-mtext text-capitalize">Rekapitulasi Arsip</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                </li>
+            </ul>
+
             <div class="pcoded-navigation-label">User Guide Admin</div>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="">

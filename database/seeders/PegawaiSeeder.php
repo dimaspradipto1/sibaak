@@ -16,6 +16,7 @@ class PegawaiSeeder extends Seeder
     {
         $pegawai = [
             [
+                'users_id' => 2,
                 'nama_staff' => 'LENI UTAMI, S.Si., M.KM',
                 'jabatan' => 'KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)',
                 'nidn' => '1001057904',
@@ -23,6 +24,7 @@ class PegawaiSeeder extends Seeder
                 'homebase' => 'Fakultas Ilmu Kesehatan (FIKES)',
             ],
             [
+                'users_id' => 3,
                 'nama_staff' => 'Andi Hidayatul Fadlilah, SE,M. Si.AK',
                 'jabatan' => 'KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN',
                 'nidn' => '1011088401',

@@ -40,7 +40,7 @@ class PegawaiController extends Controller
     {
         try {
             $pegawai = new Pegawai();
-            // $pegawai->users_id = $request->users_id;
+            $pegawai->users_id = $request->users_id;
             $pegawai->nama_staff = $request->nama_staff;
             $pegawai->jabatan  = $request->jabatan;
             $pegawai->nidn     = $request->nidn;
@@ -106,61 +106,61 @@ class PegawaiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   public function update(Request $request, Pegawai $pegawai)
-{
-    // Validasi input
-    $request->validate([
-        'url'         => 'nullable|image|mimes:jpeg,jpg,png|max:2048', // File opsional
-        // 'users_id'    => 'required|exists:users,id',
-        'nama_staff'  => 'required|string',
-        'jabatan'     => 'required|string',
-        'nidn'        => 'required|string',
-        'nup'         => 'required|string',
-    ]);
+    public function update(Request $request, Pegawai $pegawai)
+    {
+        // Validasi input
+        $request->validate([
+            'url'         => 'nullable|image|mimes:jpeg,jpg,png|max:2048', // File opsional
+            'users_id'    => 'required|exists:users,id',
+            'nama_staff'  => 'required|string',
+            'jabatan'     => 'required|string',
+            'nidn'        => 'required|string',
+            'nup'         => 'required|string',
+        ]);
 
-    // Mengupdate data lainnya
-    // $pegawai->users_id = $request->users_id;
-    $pegawai->jabatan  = $request->jabatan;
-    $pegawai->nidn     = $request->nidn;
-    $pegawai->nup      = $request->nup;
+        // Mengupdate data lainnya
+        $pegawai->users_id = $request->users_id;
+        $pegawai->jabatan  = $request->jabatan;
+        $pegawai->nidn     = $request->nidn;
+        $pegawai->nup      = $request->nup;
 
-    // Cek jika ada file gambar yang diupload
-    if ($request->hasFile('url')) {
-        // Cek jika pegawai sudah memiliki file
-        if ($pegawai->file && file_exists(public_path('storage/pegawai/' . $pegawai->file))) {
-            // Hapus file lama jika ada
-            unlink(public_path('storage/pegawai/' . $pegawai->file));  // Menghapus file lama
-            Log::info('File lama dihapus: ' . public_path('storage/pegawai/' . $pegawai->file)); // Log penghapusan file
+        // Cek jika ada file gambar yang diupload
+        if ($request->hasFile('url')) {
+            // Cek jika pegawai sudah memiliki file
+            if ($pegawai->file && file_exists(public_path('storage/pegawai/' . $pegawai->file))) {
+                // Hapus file lama jika ada
+                unlink(public_path('storage/pegawai/' . $pegawai->file));  // Menghapus file lama
+                Log::info('File lama dihapus: ' . public_path('storage/pegawai/' . $pegawai->file)); // Log penghapusan file
+            }
+
+            // Mengambil file yang diupload
+            $file = $request->file('url');
+
+            // Mendapatkan nama asli file yang diupload
+            $filename = $file->getClientOriginalName();  // Nama file yang asli
+
+            // Log nama file yang diupload
+            Log::info('File baru yang diupload: ' . $filename);
+
+            // Simpan file baru dengan nama asli di folder 'pegawai' di storage
+            $file->storeAs('pegawai', $filename, 'public');
+
+            // Memperbarui path file di database
+            $pegawai->file = 'storage/pegawai/' . $filename;
         }
 
-        // Mengambil file yang diupload
-        $file = $request->file('url');
+        // Simpan perubahan data pegawai
+        $pegawai->save();
 
-        // Mendapatkan nama asli file yang diupload
-        $filename = $file->getClientOriginalName();  // Nama file yang asli
+        // Menampilkan notifikasi sukses
+        Alert::success('Success', 'Data updated successfully')
+            ->autoclose(3000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa fa-check-circle"></i>');
 
-        // Log nama file yang diupload
-        Log::info('File baru yang diupload: ' . $filename); 
-
-        // Simpan file baru dengan nama asli di folder 'pegawai' di storage
-        $file->storeAs('pegawai', $filename, 'public');
-
-        // Memperbarui path file di database
-        $pegawai->file = 'storage/pegawai/' . $filename;
+        return redirect()->route('pegawai.index');
     }
-
-    // Simpan perubahan data pegawai
-    $pegawai->save();
-
-    // Menampilkan notifikasi sukses
-    Alert::success('Success', 'Data updated successfully')
-        ->autoclose(3000)
-        ->toToast()
-        ->timerProgressBar()
-        ->iconHtml('<i class="fa fa-check-circle"></i>');
-
-    return redirect()->route('pegawai.index');
-}
 
 
     /**

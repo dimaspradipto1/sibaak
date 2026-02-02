@@ -12,4 +12,9 @@ class TahunAkademik extends Model
     {
         return $this->hasMany(SkKepanitiaan::class);
     }
+
+    public function rekapitulasiarsip()
+    {
+        return $this->hasMany(RekapitulasiArsip::class);
+    }
 }

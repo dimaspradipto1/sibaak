@@ -29,7 +29,19 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Leni Utami, S.Si.,M.KM',
-                'email' => 'leniutami@gmail.com',
+                'email' => 'leni@uis.ac.id',
+                'password' => Hash::make('password'),
+                'is_admin' => false,
+                'is_staffbaak' => false,
+                'is_mahasiswa' => false,
+                'is_tata_usaha' => false,
+                'is_approval' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Andi Hidayatul Fadlilah, SE,M. Si.AK',
+                'email' => 'andihidayatul@uis.ac.id',
                 'password' => Hash::make('password'),
                 'is_admin' => false,
                 'is_staffbaak' => false,
@@ -41,7 +53,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Staff BAAK',
-                'email' => 'baak@gmail.com',
+                'email' => 'baak@uis.ac.id',
                 'password' => Hash::make('password'),
                 'is_admin' => false,
                 'is_staffbaak' => true,
@@ -53,7 +65,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Mahasiswa',
-                'email' => 'mahasiswa@gmail.com',
+                'email' => 'mahasiswa@uis.ac.id',
                 'password' => Hash::make('password'),
                 'is_admin' => false,
                 'is_staffbaak' => false,
@@ -65,7 +77,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Mahasiswa 2',
-                'email' => 'mahasiswa2@gmail.com',
+                'email' => 'mahasiswa2@uis.ac.id',
                 'password' => Hash::make('password'),
                 'is_admin' => false,
                 'is_staffbaak' => false,
@@ -77,7 +89,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Tata Usaha rektorat',
-                'email' => 'tatausaha@gmail.com',
+                'email' => 'tatausaha@uis.ac.id',
                 'password' => Hash::make('password'),
                 'is_admin' => false,
                 'is_staffbaak' => false,

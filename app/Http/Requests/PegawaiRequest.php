@@ -14,11 +14,11 @@ class PegawaiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'users_id' => 'required|exists:users,id',
+            'users_id' => 'required|exists:users,id',
             'nama_staff'    => 'required',
             'jabatan'       => 'required',
             'nidn'          => 'nullable',
-            'nup'           =>'required',
+            'nup'           => 'required',
             'homebase'      => 'required',
             'file'          => 'nullable|image|mimes:jpg,png|max:2048',
         ];
@@ -32,7 +32,7 @@ class PegawaiRequest extends FormRequest
             'jabatan.required'      => 'Jabatan wajib diisi',
             'nup.required'          => 'NUP wajib diisi',
             'file.mimes'            => 'File harus berformat JPEG, PNG, JPG, GIF, atau SVG',
-            'file.max'              => 'Ukuran file tidak boleh melebihi 2MB',   
+            'file.max'              => 'Ukuran file tidak boleh melebihi 2MB',
         ];
     }
 }

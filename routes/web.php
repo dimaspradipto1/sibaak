@@ -22,6 +22,7 @@ use App\Http\Controllers\SkKepanitiaanController;
 use App\Http\Controllers\SuratAkademikController;
 use App\Http\Controllers\TahunAkademikController;
 use App\Http\Controllers\LpjKepanitiaanController;
+use App\Http\Controllers\RekapitulasiArsipController;
 use App\Http\Controllers\UserGuideMahasiswaController;
 use App\Http\Controllers\UserGuideTatausahaController;
 use App\Http\Controllers\UserGuidePenggunaMahasiswaController;
@@ -66,4 +67,5 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('userGuidePenggunaMahasiswa', [UserGuidePenggunaMahasiswaController::class, 'index'])->name('userGuidePenggunaMahasiswa');
     Route::resource('userGuideTatausaha', UserGuideTatausahaController::class);
     Route::get('userGuidePenggunaTatausaha', [UserGuidePenggunaTatausahaController::class, 'index'])->name('userGuidePenggunaTatausaha');
+    Route::resource('rekapitulasiarsip', RekapitulasiArsipController::class);
 });

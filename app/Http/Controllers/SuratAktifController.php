@@ -35,7 +35,7 @@ class SuratAktifController extends Controller
         return view('pages.suratAktif.create', compact('users', 'programStudi', 'title'));
     }
 
-        public function pengajuan()
+    public function pengajuan()
     {
         $mahasiswa = Mahasiswa::where('users_id', Auth::id())->first();
 
@@ -104,7 +104,7 @@ class SuratAktifController extends Controller
         return redirect()->route('suratAktif.index');
     }
 
-      /**
+    /**
      * Display the specified resource.
      */
     public function getBulanRomawi()
@@ -134,13 +134,11 @@ class SuratAktifController extends Controller
      */
     public function show(SuratAktif $suratAktif)
     {
-       $no_surat = $suratAktif->no_surat;
+        $no_surat = $suratAktif->no_surat;
         $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
         $user = User::with('pegawai')->where('is_approval', 1)->first();
 
-        // Ambil data pegawai untuk mendapatkan TTD
         $pegawai = $user ? $user->pegawai : null;
-
         $bulanRomawi = $this->getBulanRomawi();
         return view('pages.suratAktif.show', compact('suratAktif', 'no_surat', 'program_studi', 'bulanRomawi', 'user', 'pegawai'));
     }

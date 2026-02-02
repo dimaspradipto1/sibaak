@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surat Keterangan Aktif</title>
+    <!-- Favicon icon -->
+    <link rel="icon" href="{{ asset('assets/images/logouis.png') }}" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -292,7 +294,7 @@
 
     <!-- Signature Section with Stamp -->
     <div class="signature-section">
-        <div class="text" style="text-align: left; margin-top: 20px;">
+        <div class="text" style="text-align: left; margin-top: -20px;">
             <p>Batam, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
             <p style="margin: 0;">Universitas Ibnu Sina</p>
             <p style="margin: 0;">Kepala BAAK</p>
@@ -318,7 +320,8 @@
                         <p
                             style="margin: 0; font-weight: bold; text-decoration: underline; margin-top: 10px; margin-right: 30px">
                             {{ $pegawai->user->name ?? 'Data tidak ditemukan' }}</p>
-                        <p style="margin: 0; margin-right: 30px;">NIDN. {{ $pegawai->nidn ?? 'Data tidak ditemukan' }}</p>
+                        <p style="margin: 0; margin-right: 30px;">NUP. {{ $pegawai->nup ?? 'Data tidak ditemukan' }}
+                        </p>
 
                     </div>
                 </div>
@@ -327,9 +330,16 @@
     </div>
 
     <!-- Footer Section -->
-    <div class="footer" style="margin-top: 90px;">
+    <div class="footer" style="margin-top: 20px;">
         <p>Tembusan:</p>
-        <p style="margin-left: 25px; margin-bottom: 30px; margin-top: -10px;">- Arsip</p>
+        <p style="margin-left: 25px; margin-bottom: 10px; margin-top: -10px;">- Arsip</p>
+    </div>
+
+    <!-- catatan Section -->
+    <div class="catatan"
+        style="margin-top: 40px; padding-top: 5px; font-size: 11px; font-style: italic; justify-content: center;">
+        <p>Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Biro Administrasi Akademik dan
+            Kemahasiswaan (BAAK) Universitas Ibnu Sina (UIS)</p>
     </div>
 
     <script>
