@@ -34,6 +34,9 @@ class KurikulumDataTable extends DataTable
                         <i class="fa-solid fa-eye"></i> Lihat Dokumen
                     </a>';
             })
+            ->editColumn('users_id', function ($item) {
+                return $item->user ? $item->user->name : '-';
+            })
             ->addColumn('action', function ($item) {
                 return '
                 <a href="' . route('kurikulum.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded" title="edit">
@@ -73,6 +76,9 @@ class KurikulumDataTable extends DataTable
             ->minifiedAjax()
             ->orderBy(1)
             ->selectStyleSingle()
+            ->parameters([
+                'scrollX' => true,
+            ])
             ->buttons([
                 Button::make('excel'),
                 Button::make('csv'),
@@ -93,6 +99,9 @@ class KurikulumDataTable extends DataTable
                 ->title('No')
                 ->width('5%')
                 ->addClass('text-center'),
+            Column::make('users_id')
+                ->title('NAMA STAFF')
+                ->width('15%'),
             Column::make('tahun')
                 ->title('TAHUN')
                 ->width('15%')

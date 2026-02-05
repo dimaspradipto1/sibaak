@@ -15,10 +15,13 @@
                         @method('PUT')
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Tahun Akademik</label>
+                            <label class="col-sm-2 col-form-label">Tahun</label>
                             <div class="col-sm-10">
                                 <input type="number" name="tahun" value="{{ old('tahun') ?? $kurikulum->tahun }}"
-                                    class="form-control rounded" placeholder="Masukkan tahun akademik">
+                                    class="form-control rounded" placeholder="Masukkan tahun contoh: 2025">
+                                @error('tahun')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -26,28 +29,34 @@
                             <label class="col-sm-2 col-form-label">Nama Kurikulum</label>
                             <div class="col-sm-10">
                                 <textarea name="nama_kurikulum" class="form-control rounded" id="" cols="30" rows="3">{{ old('nama_kurikulum') ?? $kurikulum->nama_kurikulum }}</textarea>
+                                @error('nama_kurikulum')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
                        <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Fakultas</label>
                             <div class="col-sm-10">
-                                <select name="prodi" id="prodi" class="form-control rounded">
+                                <select name="fakultas" id="fakultas" class="form-control rounded" required>
                                     <option value="">Pilih Fakultas</option>
                                     <option value="">=====================</option>
                                     <option value="Fakultas Ekonomi dan Bisnis"
-                                        {{ old('prodi') == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}
-                                        {{ $kurikulum->prodi == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>Fakultas
+                                        {{ old('fakultas') == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}
+                                        {{ $kurikulum->fakultas == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>Fakultas
                                         Ekonomi dan Bisnis</option>
                                     <option value="Fakultas Sains dan Teknologi"
-                                        {{ old('prodi') == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}
-                                        {{ $kurikulum->prodi == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>Fakultas
+                                        {{ old('fakultas') == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}
+                                        {{ $kurikulum->fakultas == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>Fakultas
                                         Sains dan Teknologi</option>
                                     <option value="Fakultas Ilmu Kesehatan"
-                                        {{ old('prodi') == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}
-                                        {{ $kurikulum->prodi == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas Ilmu
+                                        {{ old('fakultas') == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}
+                                        {{ $kurikulum->fakultas == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas Ilmu
                                         Kesehatan</option>
                                 </select>
+                                @error('fakultas')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -55,6 +64,9 @@
                             <label class="col-sm-2 col-form-label">Upload Dokumen</label>
                             <div class="col-sm-10">
                                 <input type="file" name="file" class="form-control rounded" id="file-input">
+                                @error('file')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 

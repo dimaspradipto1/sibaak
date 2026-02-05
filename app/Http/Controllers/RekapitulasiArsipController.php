@@ -11,6 +11,8 @@ use App\Models\SkKepanitiaan;
 use App\Models\TahunAkademik;
 use App\Models\LpjKepanitiaan;
 use App\Models\RekapitulasiArsip;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RekapitulasiArsipExport;
 
 class RekapitulasiArsipController extends Controller
 {
@@ -22,6 +24,23 @@ class RekapitulasiArsipController extends Controller
         $title = 'Rekapitulasi Arsip';
         $tahunAkademik = TahunAkademik::all();
         return view('pages.rekapitulasiarsip.index', compact('title', 'tahunAkademik'));
+    }
+
+    /**
+     * Export data to Excel
+     */
+    public function export(Request $request)
+    {
+        $tahun = $request->input('tahun');
+        $tahunAkademikId = $request->input('tahun_akademik_id');
+        $semester = $request->input('semester');
+        $jenisArsip = $request->input('users_id'); // View menggunakan users_id untuk jenis arsip
+        $fakultas = $request->input('homebase');   // View menggunakan homebase untuk fakultas
+
+        return Excel::download(
+            new RekapitulasiArsipExport($tahun, $tahunAkademikId, $semester, $jenisArsip, $fakultas),
+            'rekapitulasi_arsip_' . date('Y-m-d_His') . '.xlsx'
+        );
     }
 
     /**

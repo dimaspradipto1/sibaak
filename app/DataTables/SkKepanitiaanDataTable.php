@@ -89,6 +89,9 @@ class SkKepanitiaanDataTable extends DataTable
             ->minifiedAjax()
             ->orderBy(1)
             ->selectStyleSingle()
+            ->parameters([
+                'scrollX' => true,
+            ])
             ->buttons([
                 Button::make('excel'),
                 Button::make('csv'),

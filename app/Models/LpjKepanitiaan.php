@@ -22,4 +22,22 @@ class LpjKepanitiaan extends Model
     {
         return $this->belongsTo(JenisSk::class);
     }
+
+    public function rekapitulasiArsip()
+    {
+        return $this->hasOne(RekapitulasiArsip::class);
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($lpjKepanitiaan) {
+            RekapitulasiArsip::create([
+                'tahun_akademik_id' => $lpjKepanitiaan->tahun_akademik_id,
+                'semester' => $lpjKepanitiaan->semester,
+                'jenis_arsip' => 'LpjKepanitiaan',
+                'fakultas' => $lpjKepanitiaan->fakultas,
+                'lpj_kepanitiaan_id' => $lpjKepanitiaan->id,
+            ]);
+        });
+    }
 }

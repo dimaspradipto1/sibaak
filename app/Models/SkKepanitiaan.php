@@ -6,16 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SkKepanitiaan extends Model
 {
-    protected $fillable = [
-        'tahun_akademik_id',
-        'users_id',
-        'jenissk_id',
-        'nama_sk',
-        'semester',
-        'nomor_sk',
-        'prodi',
-        'file',
-    ];
+
+    protected $guarded = [];
 
     public function tahunAkademik()
     {
@@ -30,5 +22,23 @@ class SkKepanitiaan extends Model
     public function jenissk()
     {
         return $this->belongsTo(JenisSK::class, 'jenissk_id', 'id');
+    }
+
+    public function rekapitulasiArsip()
+    {
+        return $this->hasOne(RekapitulasiArsip::class);
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($skKepanitiaan) {
+            RekapitulasiArsip::create([
+                'tahun_akademik_id' => $skKepanitiaan->tahun_akademik_id,
+                'semester' => $skKepanitiaan->semester,
+                'jenis_arsip' => 'SkKepanitiaan',
+                'fakultas' => $skKepanitiaan->fakultas,
+                'sk_kepanitiaan_id' => $skKepanitiaan->id,
+            ]);
+        });
     }
 }

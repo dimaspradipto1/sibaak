@@ -44,7 +44,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
     Route::resource('users', UserController::class);
-    Route::get('/user/{id}/update-password',[UserController::class, 'showUpdatePasswordForm'])->name('users.showUpdatePasswordForm');
+    Route::get('/user/{id}/update-password', [UserController::class, 'showUpdatePasswordForm'])->name('users.showUpdatePasswordForm');
     Route::put('/user/{id}/update-password', [UserController::class, 'updatePassword'])->name('users.updatePassword');
     Route::resource('tahunAkademik', TahunAkademikController::class);
     Route::resource('mahasiswa', MahasiswaController::class);
@@ -67,5 +67,6 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('userGuidePenggunaMahasiswa', [UserGuidePenggunaMahasiswaController::class, 'index'])->name('userGuidePenggunaMahasiswa');
     Route::resource('userGuideTatausaha', UserGuideTatausahaController::class);
     Route::get('userGuidePenggunaTatausaha', [UserGuidePenggunaTatausahaController::class, 'index'])->name('userGuidePenggunaTatausaha');
+    Route::get('rekapitulasiarsip/export', [RekapitulasiArsipController::class, 'export'])->name('rekapitulasiarsip.export');
     Route::resource('rekapitulasiarsip', RekapitulasiArsipController::class);
 });

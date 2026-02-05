@@ -11,17 +11,29 @@
                 </div>
                 <div class="card-block">
                     {{-- <h4 class="sub-title">Form Inputs</h4> --}}
-                    <form>
+                    <form action="{{ route('rekapitulasiarsip.index') }}" method="GET" id="filterForm">
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Tahun Akademik</label>
+                            <label class="col-sm-2 col-form-label">Tahun</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="tahun" id="tahun"
+                                    class="form-control rounded @error('tahun') is-invalid @enderror"
+                                    value="{{ request('tahun') }}" placeholder="masukkan tahun: contoh 2026">
+                                @error('tahun')
+                                    <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Periode Akademik</label>
                             <div class="col-sm-10">
                                 <select name="tahun_akademik_id" id="tahun_akademik_id"
                                     class="form-control rounded @error('tahun_akademik_id') is-invalid @enderror"
                                     data-live-search="true">
-                                    <option value="">Pilih Tahun Akademik</option>
+                                    <option value="">Pilih Periode Akademik</option>
                                     @foreach ($tahunAkademik as $item)
                                         <option value="{{ $item->id }}"
-                                            {{ old('tahun_akademik_id') == $item->id ? 'selected' : '' }}>
+                                            {{ request('tahun_akademik_id') == $item->id ? 'selected' : '' }}>
                                             {{ $item->tahun_akademik }}</option>
                                     @endforeach
                                 </select>
@@ -32,18 +44,44 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Arsip</label>
+                            <label class="col-sm-2 col-form-label">Semester</label>
+                            <div class="col-sm-10">
+                                <select name="semester" id="semester"
+                                    class="form-control rounded @error('semester') is-invalid @enderror"
+                                    data-live-search="true">
+                                    <option value="">Pilih Semester</option>
+                                    <option value="Ganjil" {{ request('semester') == 'Ganjil' ? 'selected' : '' }}>Ganjil
+                                    </option>
+                                    <option value="Genap" {{ request('semester') == 'Genap' ? 'selected' : '' }}>Genap
+                                    </option>
+                                </select>
+                                @error('semester')
+                                    <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Jenis Arsip</label>
                             <div class="col-sm-10">
                                 <select name="users_id" id="users_id"
                                     class="form-control rounded @error('users_id') is-invalid @enderror"
                                     data-live-search="true">
                                     <option value="">Pilih Arsip</option>
-                                    <option value="SkKepanitiaan">SK Kepanitiaan</option>
-                                    <option value="LpjKepanitiaan">LPJ Kepanitiaan</option>
-                                    <option value="Kurikulum">Kurikulum</option>
-                                    <option value="Pedoman">Pedoman</option>
-                                    <option value="SopAkademik">SOP Akademik</option>
-                                    <option value="Wasdalbin">Wasdalbin</option>
+                                    <option value="SkKepanitiaan"
+                                        {{ request('users_id') == 'SkKepanitiaan' ? 'selected' : '' }}>SK Kepanitiaan
+                                    </option>
+                                    <option value="LpjKepanitiaan"
+                                        {{ request('users_id') == 'LpjKepanitiaan' ? 'selected' : '' }}>LPJ Kepanitiaan
+                                    </option>
+                                    <option value="Kurikulum" {{ request('users_id') == 'Kurikulum' ? 'selected' : '' }}>
+                                        Kurikulum</option>
+                                    <option value="Pedoman" {{ request('users_id') == 'Pedoman' ? 'selected' : '' }}>
+                                        Pedoman</option>
+                                    <option value="SOP Akademik"
+                                        {{ request('users_id') == 'SOP Akademik' ? 'selected' : '' }}>SOP Akademik</option>
+                                    <option value="Wasdalbin" {{ request('users_id') == 'Wasdalbin' ? 'selected' : '' }}>
+                                        Wasdalbin</option>
                                 </select>
                                 @error('users_id')
                                     <span class="text-danger small">{{ $message }}</span>
@@ -51,20 +89,20 @@
                             </div>
                         </div>
 
-                         <div class="form-group row">
+                        <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Fakultas</label>
                             <div class="col-sm-10">
                                 <select name="homebase" id="homebase" class="form-control rounded">
                                     <option value="">Pilih Fakultas</option>
                                     <option value="">=====================</option>
-                                    <option value='Fakultas Ekonomi dan Bisnis (FEB)'
-                                        {{ old('homebase') == 'Fakultas Ekonomi dan Bisnis (FEB)' ? 'selected' : '' }}>
+                                    <option value='Fakultas Ekonomi dan Bisnis'
+                                        {{ request('homebase') == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>
                                         Fakultas Ekonomi dan Bisnis (FEB)</option>
-                                    <option value='Fakultas Sains dan Teknologi (FST)'
-                                        {{ old('homebase') == 'Fakultas Sains dan Teknologi (FST)' ? 'selected' : '' }}>
+                                    <option value='Fakultas Sains dan Teknologi'
+                                        {{ request('homebase') == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>
                                         Fakultas Sains dan Teknologi (FST)</option>
-                                    <option value="Fakultas Ilmu Kesehatan (FIKES)"
-                                        {{ old('homebase') == 'Fakultas Ilmu Kesehatan (FIKES)' ? 'selected' : '' }}>
+                                    <option value="Fakultas Ilmu Kesehatan"
+                                        {{ request('homebase') == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>
                                         Fakultas Ilmu Kesehatan (FIKES)</option>
                                 </select>
                                 @error('homebase')
@@ -73,13 +111,32 @@
                             </div>
                         </div>
 
-                        <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary rounded text-uppercase btn-sm">
-                            <i class="fa-solid fa-eye"></i> Tampilkan
-                        </button>
+                        <!-- Submit buttons -->
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-success rounded text-uppercase btn-sm"
+                                    onclick="setFormAction('export')">
+                                    <i class="fa-solid fa-eye"></i> Tampilkan
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
+    </div>
+
+    <script>
+        function setFormAction(type) {
+            const form = document.getElementById('filterForm');
+            if (type === 'export') {
+                form.action = "{{ route('rekapitulasiarsip.export') }}";
+            } else {
+                form.action = "{{ route('rekapitulasiarsip.index') }}";
+            }
+        }
+    </script>
+    </div>
+    </div>
     </div>
 @endsection

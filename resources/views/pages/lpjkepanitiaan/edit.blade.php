@@ -68,11 +68,11 @@
                          <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Fakultas</label>
                             <div class="col-sm-10">
-                               <select name="prodi" class="form-control rounded">
+                               <select name="fakultas" class="form-control rounded">
                                    <option value="">Pilih Fakultas</option>
-                                   <option value="Fakultas Ekonomi dan Bisnis" {{ old('prodi', $lpjkepanitiaan->prodi) == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>Fakultas Ekonomi dan Bisnis</option>
-                                   <option value="Fakultas Sains dan Teknologi" {{ old('prodi', $lpjkepanitiaan->prodi) == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>Fakultas Sains dan Teknologi</option>
-                                   <option value="Fakultas Ilmu Kesehatan" {{ old('prodi', $lpjkepanitiaan->prodi) == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas Ilmu Kesehatan</option>
+                                   <option value="Fakultas Ekonomi dan Bisnis" {{ old('fakultas', $lpjkepanitiaan->fakultas) == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>Fakultas Ekonomi dan Bisnis</option>
+                                   <option value="Fakultas Sains dan Teknologi" {{ old('fakultas', $lpjkepanitiaan->fakultas) == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>Fakultas Sains dan Teknologi</option>
+                                   <option value="Fakultas Ilmu Kesehatan" {{ old('fakultas', $lpjkepanitiaan->fakultas) == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas Ilmu Kesehatan</option>
                                </select>
                             </div>
                         </div>

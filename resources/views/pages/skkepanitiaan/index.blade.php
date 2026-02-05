@@ -17,8 +17,8 @@
     <div class="card-block table-border-style">
         <div class="table-responsive">
             {{ $dataTable->table([
-                'class' => 'table table-striped table-bordered table-hover',
-                'style'=>'width:100%; overflow-x: auto',
+                'class' => 'table table-striped table-bordered table-hover text-nowrap',
+                'style'=>'width:100%',
             ]) }}
         </div>
     </div>

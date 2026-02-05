@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\RekapitulasiArsip;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SkKepanitiaanRequest extends FormRequest
@@ -24,10 +25,10 @@ class SkKepanitiaanRequest extends FormRequest
         return [
             'tahun_akademik_id' => 'required',
             'semester' => 'required',
-            'nama_sk' => 'required',
+            'nama_dokumen' => 'required',
             'nomor_sk' => 'required',
             'jenissk_id' => 'required',
-            'prodi' => 'required',
+            'fakultas' => 'required',
             'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }
@@ -37,10 +38,10 @@ class SkKepanitiaanRequest extends FormRequest
         return [
             'tahun_akademik_id.required' => 'Tahun Akademik wajib diisi',
             'semester.required' => 'Semester wajib diisi',
-            'nama_sk.required' => 'Nama SK wajib diisi',
+            'nama_dokumen.required' => 'Nama Dokumen wajib diisi',
             'nomor_sk.required' => 'Nomor SK wajib diisi',
             'jenissk_id.required' => 'Jenis SK wajib diisi',
-            'prodi.required' => 'Program Studi wajib diisi',
+            'fakultas.required' => 'Fakultas wajib diisi',
             'file.required' => 'File wajib diisi',
             'file.file' => 'File harus berupa file',
             'file.mimes' => 'File harus berupa PDF',

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
             $table->string('nama_sop');
+            $table->string('fakultas');
             $table->string('file');
             $table->timestamps();
         });

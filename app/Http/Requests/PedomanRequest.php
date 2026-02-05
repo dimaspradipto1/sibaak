@@ -24,6 +24,7 @@ class PedomanRequest extends FormRequest
         return [
             'tahun' => 'required',
             'nama_pedoman' => 'required',
+            'fakultas' => 'required',
             'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }
@@ -33,6 +34,7 @@ class PedomanRequest extends FormRequest
         return [
             'tahun.required' => 'Tahun harus diisi',
             'nama_pedoman.required' => 'Nama Pedoman harus diisi',
+            'fakultas.required' => 'Fakultas harus diisi',
             'file.required' => 'File harus diisi',
             'file.mimes' => 'File harus berformat PDF',
             'file.max' => 'File tidak boleh lebih dari 50MB',

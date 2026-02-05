@@ -94,6 +94,8 @@ class SopAkademikDataTable extends DataTable
                 ->width('5%'),
             Column::make('nama_sop')
                 ->title('NAMA SOP'),
+            Column::make('fakultas')
+                ->title('FAKULTAS'),
             Column::make('file')
                 ->title('DOKUMEN'),
             Column::make('users_id')

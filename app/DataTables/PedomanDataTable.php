@@ -94,6 +94,8 @@ class PedomanDataTable extends DataTable
                 ->title('TAHUN'),
             Column::make('nama_pedoman')
                 ->title('NAMA PEDOMAN'),
+            Column::make('fakultas')
+                ->title('FAKULTAS'),
             Column::make('users_id')
                 ->title('DIKIRIM OLEH')
                 ->width('15%'),

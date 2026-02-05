@@ -84,6 +84,9 @@ class LpjKepanitiaanDataTable extends DataTable
             ->minifiedAjax()
             ->orderBy(1)
             ->selectStyleSingle()
+            ->parameters([
+                'scrollX' => true,
+            ])
             ->buttons([
                 Button::make('excel'),
                 Button::make('csv'),
@@ -103,14 +106,19 @@ class LpjKepanitiaanDataTable extends DataTable
             Column::make('DT_RowIndex')
                 ->title('NO')
                 ->width('5%'),
+            Column::make('users_id')
+                ->title('NAMA STAFF'),
             Column::make('tahun_akademik_id')
-                ->title('TAHUN AKADEMIK'),
+                ->title('TAHUN AKADEMIK')
+                ->width('20%'),
             Column::make('nama_dokumen')
                 ->title('NAMA LPJ'),
             Column::make('ketua')
-                ->title('KETUA'),
+                ->title('KETUA')
+                ->width('30%'),
             Column::make('sekretaris')
-                ->title('SEKRETARIS'),
+                ->title('SEKRETARIS')
+                ->width('30%'),
             Column::make('fakultas')
                 ->title('FAKULTAS'),
             Column::make('file')

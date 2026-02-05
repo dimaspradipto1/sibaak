@@ -10,6 +10,7 @@
         "google/apiclient": "2.15",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
+        "maatwebsite/excel": "^3.1",
         "realrashid/sweet-alert": "^7.3",
         "yajra/laravel-datatables": "^12",
         "yaza/laravel-google-drive-storage": "^4.1"

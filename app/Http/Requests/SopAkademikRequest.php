@@ -23,6 +23,7 @@ class SopAkademikRequest extends FormRequest
     {
         return [
             'nama_sop' => 'required',
+            'fakultas' => 'required',
             'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }
@@ -31,6 +32,7 @@ class SopAkademikRequest extends FormRequest
     {
         return [
             'nama_sop.required' => 'Nama SOP Wajib Diisi',
+            'fakultas.required' => 'Fakultas Wajib Diisi',
             'file.required' => 'File Wajib Diisi',
             'file.mimes' => 'File Harus PDF',
             'file.max' => 'File Maksimal 50MB',

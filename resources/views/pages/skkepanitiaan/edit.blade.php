@@ -47,9 +47,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Nama SK</label>
+                            <label class="col-sm-2 col-form-label">Nama Dokumen</label>
                             <div class="col-sm-10">
-                                <textarea name="nama_sk" class="form-control rounded" id="" cols="30" rows="3">{{ old('nama_sk') ?? $skkepanitiaan->nama_sk }}</textarea>
+                                <textarea name="nama_dokumen" class="form-control rounded" id="" cols="30" rows="3">{{ old('nama_dokumen') ?? $skkepanitiaan->nama_dokumen }}</textarea>
+                                @error('nama_dokumen')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -59,6 +62,9 @@
                                 <input type="text" name="nomor_sk"
                                     value="{{ old('nomor_sk') ?? $skkepanitiaan->nomor_sk }}" class="form-control rounded"
                                     placeholder="Masukkan nomor sk">
+                                @error('nomor_sk')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -80,25 +86,30 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Fakultas</label>
                             <div class="col-sm-10">
-                                <select name="prodi" id="prodi" class="form-control rounded">
+                                <select name="fakultas" id="fakultas" class="form-control rounded">
                                     <option value="">Pilih Fakultas</option>
                                     <option value="">=====================</option>
                                     <option value="Fakultas Ekonomi dan Bisnis"
-                                        {{ old('prodi') == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}
-                                        {{ $skkepanitiaan->prodi == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>
+                                        {{ old('fakultas') == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}
+                                        {{ $skkepanitiaan->fakultas == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>
                                         Fakultas
                                         Ekonomi dan Bisnis</option>
                                     <option value="Fakultas Sains dan Teknologi"
-                                        {{ old('prodi') == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}
-                                        {{ $skkepanitiaan->prodi == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>
+                                        {{ old('fakultas') == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}
+                                        {{ $skkepanitiaan->fakultas == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>
                                         Fakultas
                                         Sains dan Teknologi</option>
                                     <option value="Fakultas Ilmu Kesehatan"
-                                        {{ old('prodi') == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}
-                                        {{ $skkepanitiaan->prodi == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas
+                                        {{ old('fakultas') == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}
+                                        {{ $skkepanitiaan->fakultas == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas
                                         Ilmu
                                         Kesehatan</option>
                                 </select>
+                                @error('fakultas')
+                                    <div class="text-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
 

@@ -32,20 +32,17 @@
                        <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Fakultas</label>
                             <div class="col-sm-10">
-                                <select name="prodi" id="prodi" class="form-control rounded" required>
+                                <select name="fakultas" id="fakultas" class="form-control rounded" required>
                                     <option value="">Pilih Fakultas</option>
                                     <option value="">=====================</option>
                                     <option value="Fakultas Ekonomi dan Bisnis"
-                                        {{ old('prodi') == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}
-                                        {{ $wasdalbin->prodi == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>Fakultas
+                                        {{ old('fakultas', $wasdalbin->fakultas) == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>Fakultas
                                         Ekonomi dan Bisnis</option>
                                     <option value="Fakultas Sains dan Teknologi"
-                                        {{ old('prodi') == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}
-                                        {{ $wasdalbin->prodi == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>Fakultas
+                                        {{ old('fakultas', $wasdalbin->fakultas) == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>Fakultas
                                         Sains dan Teknologi</option>
                                     <option value="Fakultas Ilmu Kesehatan"
-                                        {{ old('prodi') == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}
-                                        {{ $wasdalbin->prodi == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas Ilmu
+                                        {{ old('fakultas', $wasdalbin->fakultas) == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas Ilmu
                                         Kesehatan</option>
                                 </select>
                             </div>

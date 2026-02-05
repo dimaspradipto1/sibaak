@@ -24,7 +24,7 @@ class WasdalbinRequest extends FormRequest
         return [
             'tahun' => 'required',
             'nama_wasdalbin' => 'required',
-            'prodi' => 'required',
+            'fakultas' => 'required',
             'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }
@@ -34,7 +34,7 @@ class WasdalbinRequest extends FormRequest
         return [
             'tahun.required' => 'Tahun wajib diisi',
             'nama_wasdalbin.required' => 'Nama Wasdalbin wajib diisi',
-            'prodi.required' => 'Program Studi wajib diisi',
+            'fakultas.required' => 'Fakultas wajib diisi',
             'file.required' => 'File wajib diisi',
             'file.file' => 'File harus berupa file',
             'file.mimes' => 'File harus berupa PDF',

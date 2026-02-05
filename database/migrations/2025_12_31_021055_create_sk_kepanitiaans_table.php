@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('tahun_akademik_id')->constrained()->cascadeOnDelete();
             $table->foreignId('users_id')->constrained()->cascadeOnDelete();
             $table->foreignId('jenissk_id')->constrained('jenis_s_k_s')->cascadeOnDelete();
-            $table->string('nama_sk');
+            $table->string('nama_dokumen');
             $table->string('semester');
             $table->string('nomor_sk');
             $table->string('fakultas');

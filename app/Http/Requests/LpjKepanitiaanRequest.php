@@ -27,7 +27,7 @@ class LpjKepanitiaanRequest extends FormRequest
             'nama_dokumen' => 'required',
             'ketua' => 'required',
             'sekretaris' => 'required',
-            'prodi' => 'required',
+            'fakultas' => 'required',
             'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }
@@ -40,7 +40,7 @@ class LpjKepanitiaanRequest extends FormRequest
             'nama_dokumen.required' => 'Nama Dokumen Wajib Diisi',
             'ketua.required' => 'Ketua Wajib Diisi',
             'sekretaris.required' => 'Sekretaris Wajib Diisi',
-            'prodi.required' => 'Program Studi Wajib Diisi',
+            'fakultas.required' => 'Fakultas Wajib Diisi',
             'file.required' => 'File Wajib Diisi',
             'file.mimes' => 'File Harus PDF',
             'file.max' => 'File Maksimal 50MB',

@@ -40,9 +40,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="prodi">Program Studi</label>
-                                <input type="text" class="form-control" id="prodi"
-                                    value="{{ $lpjkepanitiaan->prodi }}" readonly>
+                                <label for="fakultas">Fakultas</label>
+                                <input type="text" class="form-control" id="fakultas"
+                                    value="{{ $lpjkepanitiaan->fakultas }}" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
