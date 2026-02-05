@@ -10,54 +10,68 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 20px 50px;
+            line-height: 1.4;
+            color: #333;
+            font-size: 13px;
+        }
+
+        @media print {
+            body {
+                padding: 10px 40px;
+            }
+
+            .catatan {
+                margin-top: 185px !important;
+            }
         }
 
         .kop-surat {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .kop-surat img {
             float: left;
-            width: 100px;
+            width: 80px;
             margin-right: 10px;
         }
 
         .kop-surat h1 {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
             margin: 0;
             color: green;
         }
 
         .kop-surat h2 {
-            font-size: 36px;
+            font-size: 28px;
             margin: 0;
             color: green;
         }
 
         .kop-surat h3 {
-            font-size: 24px;
+            font-size: 18px;
             margin: 0;
             color: red;
         }
 
         .kop-surat p {
-            font-size: 16px;
-            margin: 5px 0;
+            font-size: 12px;
+            margin: 2px 0;
             color: black;
-            margin-left: 110px;
+            margin-left: 90px;
         }
 
         .kop-surat .contact-info {
-            margin-top: 5px;
-            font-size: 14px;
+            margin-top: 2px;
+            font-size: 11px;
         }
 
         .kop-surat hr {
             border: none;
-            border-top: 3px solid green;
+            border-top: 2px solid green;
             margin: 2px 0;
         }
 
@@ -88,12 +102,12 @@
         }
 
         .content {
-            margin-top: 20px;
+            margin-top: 10px;
             text-align: justify;
         }
 
         .details-table {
-            margin: 20px 0;
+            margin: 10px 0;
             margin-left: 50px;
         }
 
@@ -168,7 +182,7 @@
 
 </head>
 
-<body onload="window.print()">
+<body @if (!isset($is_preview) || !$is_preview) onload="window.print()" @endif>
     <?php
     use Carbon\Carbon;
     
@@ -294,52 +308,38 @@
 
     <!-- Signature Section with Stamp -->
     <div class="signature-section">
-        <div class="text" style="text-align: left; margin-top: -20px;">
-            <p>Batam, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
-            <p style="margin: 0;">Universitas Ibnu Sina</p>
-            <p style="margin: 0;">Kepala BAAK</p>
-            <div
-                style="display: flex; flex-direction: column; justify-content: left; align-items: center; margin-top: -10px;">
+        <div style="margin-top: 15px; display: flex; justify-content: flex-end;">
+            <div style="text-align: left; width: 280px;">
+                <p style="margin: 0;">Batam, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
+                <p style="margin: 0;">Universitas Ibnu Sina</p>
+                <p style="margin: 0;">Kepala BAAK</p>
 
-                <div style="display: flex; align-items: center; text-align: left; margin-top: 80px;">
-                    <div>
-                        @if ($pegawai && $pegawai->file && file_exists(public_path($pegawai->file)))
-                            {{-- Tampilkan gambar TTD jika ada --}}
-                            <img src="{{ asset($pegawai->file) }}" alt="TTD"
-                                style="width: 120px; height: auto; margin-top: -70px; margin-left: 6px; margin-bottom: -10px;">
-                        @else
-                            {{-- Tampilkan pesan jika TTD tidak tersedia --}}
-                            <div
-                                style="width: 120px; height: 80px; margin-top: -60px; margin-left: 6px; margin-bottom: -10px; 
-                                        display: flex; align-items: center; justify-content: center; 
-                                        border: 1px dashed #999; background-color: #f5f5f5; font-size: 11px; color: #666; text-align: center;">
-                                TTD tidak tersedia
-                            </div>
-                        @endif
-
-                        <p
-                            style="margin: 0; font-weight: bold; text-decoration: underline; margin-top: 10px; margin-right: 30px">
-                            {{ $pegawai->user->name ?? 'Data tidak ditemukan' }}</p>
-                        <p style="margin: 0; margin-right: 30px;">NUP. {{ $pegawai->nup ?? 'Data tidak ditemukan' }}
-                        </p>
-
-                    </div>
+                <div style="margin-top: 10px; margin-bottom: 5px;">
+                    @php
+                        $dns2d = new \Milon\Barcode\DNS2D();
+                        echo $dns2d->getBarcodeSVG(route('suratAktif.validasi', $suratAktif), 'QRCODE', 2.5, 2.5);
+                    @endphp
                 </div>
+
+                <p style="margin: 0; font-weight: bold; text-decoration: underline;">
+                    {{ $pegawai->user->name ?? 'Data tidak ditemukan' }}
+                </p>
+                <p style="margin: 0;">NUP. {{ $pegawai->nup ?? 'Data tidak ditemukan' }}</p>
             </div>
         </div>
     </div>
 
     <!-- Footer Section -->
-    <div class="footer" style="margin-top: 20px;">
-        <p>Tembusan:</p>
-        <p style="margin-left: 25px; margin-bottom: 10px; margin-top: -10px;">- Arsip</p>
+    <div class="footer" style="margin-top: 10px;">
+        <p style="margin: 0;">Tembusan:</p>
+        <p style="margin-left: 20px; margin-bottom: 2px; margin-top: 0;">- Arsip</p>
     </div>
 
     <!-- catatan Section -->
     <div class="catatan"
-        style="margin-top: 40px; padding-top: 5px; font-size: 11px; font-style: italic; justify-content: center;">
-        <p>Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Biro Administrasi Akademik dan
-            Kemahasiswaan (BAAK) Universitas Ibnu Sina (UIS)</p>
+        style="margin-top: 80px; padding-top: 2px; font-size: 10px; font-style: italic; text-align: center;">
+        <p style="margin: 2px 0;">Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Biro
+            Administrasi Akademik danKemahasiswaan (BAAK)<br>Universitas Ibnu Sina (UIS)</p>
     </div>
 
     <script>

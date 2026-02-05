@@ -172,4 +172,24 @@ class SuratAktifController extends Controller
         Alert::success('Success', 'Data deleted successfully')->autoclose(3000)->toToast();
         return redirect()->route('suratAktif.index');
     }
+
+    public function validasi(SuratAktif $suratAktif)
+    {
+        $userApproval = User::with('pegawai')->where('is_approval', 1)->first();
+        $pegawai = $userApproval ? $userApproval->pegawai : null;
+
+        return view('pages.suratAktif.detailsuratakademik', compact('suratAktif', 'pegawai', 'userApproval'));
+    }
+
+    public function preview(SuratAktif $suratAktif)
+    {
+        $no_surat = $suratAktif->no_surat;
+        $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
+        $user = User::with('pegawai')->where('is_approval', 1)->first();
+
+        $pegawai = $user ? $user->pegawai : null;
+        $bulanRomawi = $this->getBulanRomawi();
+        $is_preview = true;
+        return view('pages.suratAktif.show', compact('suratAktif', 'no_surat', 'program_studi', 'bulanRomawi', 'user', 'pegawai', 'is_preview'));
+    }
 }

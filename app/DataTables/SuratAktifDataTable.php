@@ -26,7 +26,11 @@ class SuratAktifDataTable extends DataTable
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
             ->addColumn('users_id', function ($item) {
-                return $item->users ? $item->users->name : '-';
+                $name = $item->users ? $item->users->name : '-';
+                if (Auth::user()->is_admin || Auth::user()->is_staffbaak) {
+                    return '<a href="' . route('suratAktif.edit', $item) . '" class="text-success">' . $name . '</a>';
+                }
+                return $name;
             })
             ->addColumn('program_studi_id', function ($item) {
                 return $item->programStudi ? $item->programStudi->program_studi : '-';
@@ -38,10 +42,10 @@ class SuratAktifDataTable extends DataTable
                 $actions = '';
                 if (Auth::user()->is_admin || Auth::user()->is_staffbaak) {
                     $actions .= '
-                            <a href="' . route('suratAktif.show', $item->id) . '" class="btn btn-sm btn-primary text-white px-3 rounded" title="print"><i class="fa-solid fa-print"></i></a>
-                            <a href="' . route('suratAktif.show', $item->id) . '" class="btn btn-sm btn-info text-white px-3 rounded" title="detail"><i class="fa-solid fa-eye"></i></a> 
-                            <a href="' . route('suratAktif.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
-                            <form action="' . route('suratAktif.destroy', $item->id) . '" method="POST" class="d-inline">
+                            <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-primary text-white px-3 rounded" title="print"><i class="fa-solid fa-print"></i></a>
+                            <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-info text-white px-3 rounded" title="detail"><i class="fa-solid fa-eye"></i></a> 
+                            <a href="' . route('suratAktif.edit', $item) . '" class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
+                            <form action="' . route('suratAktif.destroy', $item) . '" method="POST" class="d-inline">
                                 ' . csrf_field() . '
                                 ' . method_field('delete') . '
                                 <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus"><i class="fa-solid fa-trash-can"></i></button>
@@ -51,7 +55,7 @@ class SuratAktifDataTable extends DataTable
 
                 if ($item->status == 'diterima' && Auth::user()->is_mahasiswa) {
                     $actions .= '
-                            <a href="' . route('suratAktif.show', $item->id) . '" class="btn btn-sm btn-primary text-white px-3 rounded" title="print"><i class="fa-solid fa-print"></i></a>
+                            <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-primary text-white px-3 rounded" title="print"><i class="fa-solid fa-print"></i></a>
                         ';
                 }
 

@@ -39,6 +39,8 @@ Route::controller(LoginController::class)->group(function () {
 
 Route::post('/suratAktif/pengajuan', [SuratAktifController::class, 'pengajuan'])->name('suratAktif.pengajuan');
 Route::post('/suratAkademik/pengajuan', [SuratAkademikController::class, 'pengajuan'])->name('suratAkademik.pengajuan');
+Route::get('/suratAktif/{suratAktif}/validasi', [SuratAktifController::class, 'validasi'])->name('suratAktif.validasi');
+Route::get('/suratAktif/{suratAktif}/preview', [SuratAktifController::class, 'preview'])->name('suratAktif.preview');
 
 Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])

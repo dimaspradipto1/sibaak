@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login SIBAAK</title>
     <link rel="icon" href="{{ asset('assets/images/logouis.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -83,6 +84,24 @@
             border-radius: 4px;
             color: white;
             font-size: 14px;
+        }
+
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-container .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 14px;
+            cursor: pointer;
+            color: #ccc;
+            z-index: 10;
+        }
+
+        .password-container .input-field {
+            padding-right: 40px;
         }
 
         .submit-btn {
@@ -186,7 +205,10 @@
 
             <p class="text-left">BAAK</p>
             <input type="email" name="email" placeholder="Email atau nomor ponsel" class="input-field" required>
-            <input type="password" name="password" placeholder="Sandi" class="input-field" required>
+            <div class="password-container">
+                <input type="password" name="password" id="password" placeholder="Sandi" class="input-field" required>
+                <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+            </div>
             <button type="submit" class="submit-btn">Masuk</button>
             {{-- <div class="alternative-actions">
                 <p><a href="#">Gunakan Kode Masuk</a></p>
@@ -211,6 +233,20 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function(e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye icon class
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </body>
 
 </html>
