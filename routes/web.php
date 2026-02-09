@@ -41,8 +41,9 @@ Route::post('/suratAktif/pengajuan', [SuratAktifController::class, 'pengajuan'])
 Route::post('/suratAkademik/pengajuan', [SuratAkademikController::class, 'pengajuan'])->name('suratAkademik.pengajuan');
 Route::get('/suratAktif/{suratAktif}/validasi', [SuratAktifController::class, 'validasi'])->name('suratAktif.validasi');
 Route::get('/suratAktif/{suratAktif}/preview', [SuratAktifController::class, 'preview'])->name('suratAktif.preview');
+Route::get('/suratAktif/{suratAktif}/print', [SuratAktifController::class, 'print'])->name('suratAktif.print');
 
-Route::middleware(['auth', 'checkrole'])->group(function () {
+Route::middleware(['auth', 'CheckRole'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
     Route::resource('users', UserController::class);
