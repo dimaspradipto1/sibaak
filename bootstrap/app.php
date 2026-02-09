@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'CheckRole' => CheckRole::class,
+            'checkrole' => CheckRole::class,
         ]);
     })
     

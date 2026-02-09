@@ -43,7 +43,7 @@ Route::get('/suratAktif/{suratAktif}/validasi', [SuratAktifController::class, 'v
 Route::get('/suratAktif/{suratAktif}/preview', [SuratAktifController::class, 'preview'])->name('suratAktif.preview');
 Route::get('/suratAktif/{suratAktif}/print', [SuratAktifController::class, 'print'])->name('suratAktif.print');
 
-Route::middleware(['auth', 'CheckRole'])->group(function () {
+Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
     Route::resource('users', UserController::class);
