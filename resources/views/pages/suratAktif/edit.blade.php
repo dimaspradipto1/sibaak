@@ -10,41 +10,61 @@
                 </div>
                 <div class="card-block">
                     <h4 class="sub-title">Form Inputs</h4>
-                    <form action="{{ route('suratAktif.update', $suratAktif->id) }}" method="POST">
+                    <form action="{{ route('suratAktif.update', $suratAktif) }}" method="POST">
                         @csrf
                         @method('PUT')
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tahun Akademik</label>
                             <div class="col-sm-10">
-                                <select name="tahun_akademik" id="tahun_akademik" class="form-control rounded" data-live-search="true">
+                                <select name="tahun_akademik" id="tahun_akademik"
+                                    class="form-control rounded @error('tahun_akademik') is-invalid @enderror"
+                                    data-live-search="true">
                                     <option value="">Pilih Tahun Akademik</option>
                                     @foreach ($tahunAkademik as $tahun)
-                                        <option value="{{ $tahun->tahun_akademik }}">{{ $tahun->tahun_akademik }}</option>
+                                        <option value="{{ $tahun->tahun_akademik }}"
+                                            {{ $suratAktif->tahun_akademik == $tahun->tahun_akademik ? 'selected' : '' }}>
+                                            {{ $tahun->tahun_akademik }}</option>
                                     @endforeach
                                 </select>
+                                @error('tahun_akademik')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Status Semester</label>
                             <div class="col-sm-10">
-                                <select name="status_semester" id="status_semester" class="form-control rounded">
+                                <select name="status_semester" id="status_semester"
+                                    class="form-control rounded @error('status_semester') is-invalid @enderror">
                                     <option value="">Pilih Status Semester</option>
-                                    <option value="Gasal" {{ $suratAktif->status_semester == 'Gasal' ? 'selected' : '' }}>Gasal</option>
-                                    <option value="Genap" {{ $suratAktif->status_semester == 'Genap' ? 'selected' : '' }}>Genap</option>
+                                    <option value="Gasal" {{ $suratAktif->status_semester == 'Gasal' ? 'selected' : '' }}>
+                                        Gasal</option>
+                                    <option value="Genap" {{ $suratAktif->status_semester == 'Genap' ? 'selected' : '' }}>
+                                        Genap</option>
                                 </select>
+                                @error('status_semester')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">status</label>
                             <div class="col-sm-10">
-                                <select name="status" id="status" class="form-control rounded">
+                                <select name="status" id="status"
+                                    class="form-control rounded @error('status') is-invalid @enderror">
                                     <option value="">Pilih Status</option>
-                                    <option value="pending" {{ $suratAktif->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                    <option value="diterima" {{ $suratAktif->status == 'diterima' ? 'selected' : '' }}>Diterima</option>
-                                    <option value="ditolak" {{ $suratAktif->status == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
+                                    <option value="pending" {{ $suratAktif->status == 'pending' ? 'selected' : '' }}>Pending
+                                    </option>
+                                    <option value="diterima" {{ $suratAktif->status == 'diterima' ? 'selected' : '' }}>
+                                        Diterima</option>
+                                    <option value="ditolak" {{ $suratAktif->status == 'ditolak' ? 'selected' : '' }}>
+                                        Ditolak</option>
                                 </select>
+                                @error('status')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 

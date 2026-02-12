@@ -158,8 +158,24 @@ class SuratAktifController extends Controller
      */
     public function update(Request $request, SuratAktif $suratAktif)
     {
-        $suratAktif->update($request->all());
-        Alert::success('Success', 'Data updated successfully')->autoclose(3000)->toToast();
+        $request->validate([
+            'tahun_akademik' => 'required',
+            'status_semester' => 'required',
+            'status' => 'required',
+        ]);
+
+        $suratAktif->update([
+            'tahun_akademik' => $request->tahun_akademik,
+            'status_semester' => $request->status_semester,
+            'status' => $request->status,
+        ]);
+
+        Alert::success('Berhasil!', 'Data Surat Aktif berhasil diupdate')
+            ->autoclose(3000)
+            ->toToast()
+            ->timerProgressBar()
+            ->iconHtml('<i class="fa-solid fa-check"></i>');
+
         return redirect()->route('suratAktif.index');
     }
 
