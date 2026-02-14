@@ -3,7 +3,9 @@
     <div class="pcoded-inner-navbar main-menu">
         <div class="">
             <div class="main-menu-header">
-                <img class="img-80 img-radius" src="{{ asset('assets/images/user.png') }}" alt="User-Profile-Image">
+                <img class="img-80 img-radius"
+                    src="{{ Auth::user()->profile && Auth::user()->profile->foto ? asset('storage/' . Auth::user()->profile->foto) : asset('assets/images/user.png') }}"
+                    alt="User-Profile-Image" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
                 <div class="user-details">
                     <span id="more-details">{{ Auth::user()->name }}<i class="fa fa-caret-down"></i></span>
                 </div>

@@ -13,8 +13,7 @@
             width: 100%;
             max-width: 225px;
             height: 285px;
-            object-fit: contain;
-            background-color: #f8f9fa;
+            object-fit: cover;
             border-radius: 4px;
             margin-bottom: 15px;
         }
@@ -250,7 +249,7 @@
                         <div class="col-md-2">
                             <div class="position-relative mb-3">
                                 <img src="{{ $profile && $profile->foto ? asset('storage/' . $profile->foto) : asset('assets/images/user.png') }}"
-                                    alt="Profile Photo" class="profile-photo border w-100" id="profileImagePreview">
+                                    alt="Profile Photo" class="profile-photo w-100" id="profileImagePreview">
                                 <button type="button" class="btn-photo"
                                     onclick="document.getElementById('fotoInput').click()">Ganti Foto</button>
                                 <input type="file" name="foto" id="fotoInput" style="display: none;" accept="image/*">

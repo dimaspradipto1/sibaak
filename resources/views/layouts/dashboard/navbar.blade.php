@@ -39,7 +39,7 @@
                 </li>
             </ul>
             <ul class="nav-right">
-                {{-- <li class="header-notification">
+                <li class="header-notification">
                     <a href="#!" class="waves-effect waves-light">
                         <i class="ti-bell"></i>
                         <span class="badge bg-c-red"></span>
@@ -52,7 +52,8 @@
                         <li class="waves-effect waves-light">
                             <div class="media">
                                 <img class="d-flex align-self-center img-radius"
-                                    src="{{ asset('dashboard/assets/images/avatar-2.jpg') }}" alt="Generic placeholder image">
+                                    src="{{ asset('assets/images/user.png') }}" alt="Generic placeholder image"
+                                    style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
                                 <div class="media-body">
                                     <h5 class="notification-user">John Doe</h5>
                                     <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
@@ -64,7 +65,8 @@
                         <li class="waves-effect waves-light">
                             <div class="media">
                                 <img class="d-flex align-self-center img-radius"
-                                    src="{{ asset('dashboard/assets/images/avatar-4.jpg') }}" alt="Generic placeholder image">
+                                    src="{{ asset('assets/images/user.png') }}" alt="Generic placeholder image"
+                                    style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
                                 <div class="media-body">
                                     <h5 class="notification-user">Joseph William</h5>
                                     <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
@@ -76,7 +78,8 @@
                         <li class="waves-effect waves-light">
                             <div class="media">
                                 <img class="d-flex align-self-center img-radius"
-                                    src="{{ asset('dashboard/assets/images/avatar-3.jpg') }}        " alt="Generic placeholder image">
+                                    src="{{ asset('assets/images/user.png') }}" alt="Generic placeholder image"
+                                    style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
                                 <div class="media-body">
                                     <h5 class="notification-user">Sara Soudein</h5>
                                     <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
@@ -86,10 +89,12 @@
                             </div>
                         </li>
                     </ul>
-                </li> --}}
+                </li>
                 <li class="user-profile header-notification">
                     <a href="#!" class="waves-effect waves-light">
-                        <img src="{{ asset('assets/images/user.png') }}" class="img-radius" alt="User-Profile-Image">
+                        <img src="{{ Auth::user()->profile && Auth::user()->profile->foto ? asset('storage/' . Auth::user()->profile->foto) : asset('assets/images/user.png') }}"
+                            class="img-radius" alt="User-Profile-Image"
+                            style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
                         <span>{{ Auth::user()->name }}</span>
                         <i class="ti-angle-down"></i>
                     </a>
