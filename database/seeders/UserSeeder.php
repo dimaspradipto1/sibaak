@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-         $users = [
+        $users = [
             [
                 'name' => 'Admin',
                 'email' => 'admin@gmail.com',
@@ -132,13 +132,36 @@ class UserSeeder extends Seeder
                 'is_mahasiswa' => false,
                 'is_tata_usaha' => true,
                 'is_approval' => false,
-                'created_at' => now(),
-                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Dr. Army Trilidia Devega, S.Kom, M.Pd.T',
+                'email' => 'army@uis.ac.id',
+                'password' => Hash::make('password'),
+                'is_admin' => false,
+                'is_staffbaak' => false,
+                'is_mahasiswa' => false,
+                'is_tata_usaha' => false,
+                'is_approval' => false,
+            ],
+            [
+                'name' => 'Afrina, S.Kom, M.SI',
+                'email' => 'afrina@uis.ac.id',
+                'password' => Hash::make('password'),
+                'is_admin' => false,
+                'is_staffbaak' => false,
+                'is_mahasiswa' => false,
+                'is_tata_usaha' => false,
+                'is_approval' => false,
             ],
         ];
-       
-        foreach ($users as $user) {
-            DB::table('users')->insert($user);
+
+        foreach ($users as $userData) {
+            $user = \App\Models\User::create($userData);
+
+            // Buat Profile untuk setiap User
+            \App\Models\Profile::create([
+                'users_id' => $user->id
+            ]);
         }
     }
 }

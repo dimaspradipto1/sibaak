@@ -117,8 +117,10 @@ class SuratAkademikController extends Controller
      */
     public function edit(SuratAkademik $suratAkademik)
     {
-        $title = 'Form Surat Akademik';
-        return view('pages.suratAkademik.edit', compact('suratAkademik', 'title'));
+        $title = 'Form Edit Surat Akademik';
+        $tahunAkademik = \App\Models\TahunAkademik::all();
+        $dosens = Dosen::all();
+        return view('pages.suratAkademik.edit', compact('suratAkademik', 'title', 'tahunAkademik', 'dosens'));
     }
 
     /**
@@ -138,6 +140,38 @@ class SuratAkademikController extends Controller
     {
         $suratAkademik->delete();
         Alert::success('success', 'data deleted successfully')->autoclose(3000)->toToast();
+        return redirect()->route('suratAkademik.index');
+    }
+
+    /**
+     * Show the form for editing status only.
+     */
+    public function editStatus(SuratAkademik $suratAkademik)
+    {
+        $title = 'Form Update Status Surat Akademik';
+        $tahunAkademik = \App\Models\TahunAkademik::all();
+        return view('pages.suratAkademik.updateStatus', compact('suratAkademik', 'title', 'tahunAkademik'));
+    }
+
+    /**
+     * Update status of the specified resource in storage.
+     */
+    public function updateStatus(Request $request, SuratAkademik $suratAkademik)
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'tahun_akademik' => 'nullable|string',
+            'status_semester' => 'nullable|in:Gasal,Genap',
+            'status' => 'required|in:pending,diterima,ditolak',
+        ]);
+
+        // Update hanya field yang diperlukan
+        $suratAkademik->update($validated);
+
+        Alert::success('Success', 'Status surat akademik berhasil diupdate!')
+            ->autoclose(3000)
+            ->toToast();
+
         return redirect()->route('suratAkademik.index');
     }
 }

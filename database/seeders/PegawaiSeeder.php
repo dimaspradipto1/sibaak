@@ -33,8 +33,21 @@ class PegawaiSeeder extends Seeder
             ],
         ];
 
-        foreach ($pegawai as $pegawai) {
-            Pegawai::create($pegawai);
+        foreach ($pegawai as $pegawaiData) {
+            $p = \App\Models\Pegawai::create($pegawaiData);
+
+            // Link ke Profile
+            $user = \App\Models\User::find($p->users_id);
+            if ($user && $user->profile) {
+                $user->profile->update([
+                    'pegawai_id' => $p->id,
+                    'nidk' => $p->nidn, // Menggunakan NIDN sebagai NIDK sementara jika diperlukan sesuai screenshot
+                    'tempat_lahir' => $p->tempat_lahir,
+                    'tgl_lahir' => $p->tgl_lahir,
+                    'no_wa' => $p->no_wa,
+                    'alamat' => $p->alamat,
+                ]);
+            }
         }
     }
 }

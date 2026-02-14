@@ -10,7 +10,7 @@ class Dosen extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'users_id');
+        return $this->belongsTo(User::class, 'email', 'email');
     }
 
     public function suratAkademik()

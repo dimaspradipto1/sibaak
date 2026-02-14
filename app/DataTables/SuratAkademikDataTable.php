@@ -33,21 +33,23 @@ class SuratAkademikDataTable extends DataTable
             })
             ->addColumn('action', function ($item) {
                 $editButton = '';
+                $updateStatusButton = '';
                 $deleteButton = '';
-                $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-success text-white px-3 mr-2 rounded" title="show"><i class="fa-solid fa-print"></i> Silahkan Print Surat</a>';
+                $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Silahkan Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Silahkan Cetak Surat</span></a>';
 
                 if (Auth::user()->is_admin || Auth::user()->is_staffbaak) {
-                    $editButton = '<a href="' . route('suratAkademik.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 mr-2 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a>';
+                    $editButton = '<a href="' . route('suratAkademik.edit', $item->id) . '" class="btn btn-sm btn-warning text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>';
+                    $updateStatusButton = '<a href="' . route('suratAkademik.editStatus', $item->id) . '" class="btn btn-sm btn-info text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Update Status"><i class="fa-solid fa-check-circle"></i><span class="d-none d-lg-inline"> Status</span></a>';
                     $deleteButton = '
                 <form action="' . route('suratAkademik.destroy', $item->id) . '" method="POST" class="d-inline">
                     ' . csrf_field() . '
                     ' . method_field('delete') . '
-                    <button type="submit" class="btn btn-danger btn-sm px-3 mr-2 rounded" title="hapus"><i class="fa-solid fa-trash-can" ></i></button>
+                    <button type="submit" class="btn btn-danger btn-sm py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
                 </form>
             ';
                 }
 
-                return $showButton . $editButton . $deleteButton;
+                return $showButton . $editButton . $updateStatusButton . $deleteButton;
             })
             ->setRowId('DT_RowIndex')
             ->rawColumns(['action', 'users_id', 'program_studi_id']);
@@ -81,6 +83,7 @@ class SuratAkademikDataTable extends DataTable
             ->minifiedAjax()
             ->orderBy(1)
             ->selectStyleSingle()
+            ->scrollX(true)
             ->buttons([
                 Button::make('excel'),
                 Button::make('csv'),
@@ -113,7 +116,7 @@ class SuratAkademikDataTable extends DataTable
                 ->title('AKSI')
                 ->exportable(false)
                 ->printable(false)
-                ->width('15%')
+                ->width('20%')
                 ->addClass('text-center'),
         ];
     }

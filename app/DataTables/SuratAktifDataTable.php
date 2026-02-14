@@ -42,20 +42,19 @@ class SuratAktifDataTable extends DataTable
                 $actions = '';
                 if (Auth::user()->is_admin || Auth::user()->is_staffbaak) {
                     $actions .= '
-                            <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-primary text-white px-3 rounded" title="print"><i class="fa-solid fa-print"></i></a>
-                            <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-info text-white px-3 rounded" title="detail"><i class="fa-solid fa-eye"></i></a> 
-                            <a href="' . route('suratAktif.edit', $item) . '" class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
+                            <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Silahkan Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Silahkan Cetak Surat</span></a>
+                            <a href="' . route('suratAktif.edit', $item) . '" class="btn btn-sm btn-warning text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a> 
                             <form action="' . route('suratAktif.destroy', $item) . '" method="POST" class="d-inline">
                                 ' . csrf_field() . '
                                 ' . method_field('delete') . '
-                                <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus"><i class="fa-solid fa-trash-can"></i></button>
+                                <button type="submit" class="btn btn-danger btn-sm py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
                             </form>
                         ';
                 }
 
                 if ($item->status == 'diterima' && Auth::user()->is_mahasiswa) {
                     $actions .= '
-                            <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-primary text-white px-3 rounded" title="print"><i class="fa-solid fa-print"></i></a>
+                            <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-success text-white px-2 px-md-3 mr-1 mr-md-2 rounded" title="Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Cetak Surat</span></a>
                         ';
                 }
 
@@ -101,6 +100,7 @@ class SuratAktifDataTable extends DataTable
             ->minifiedAjax()
             ->orderBy(1)
             ->selectStyleSingle()
+            ->scrollX(true)
             ->buttons([
                 Button::make('excel'),
                 Button::make('csv'),
@@ -137,7 +137,7 @@ class SuratAktifDataTable extends DataTable
                 ->title('AKSI')
                 ->exportable(false)
                 ->printable(false)
-                ->width('15%')
+                ->width('20%')
                 ->addClass('text-center'),
         ];
     }

@@ -9,9 +9,6 @@
     <link rel="icon" href="{{ asset('assets/images/logouis.png') }}" type="image/x-icon">
     <style>
         body {
-            /* font-family: Arial, sans-serif;
-            margin: 20px; */
-            /* font-family: Arial, sans-serif; */
             font-family: "Times New Roman", Times, serif;
             margin: 0;
             padding: 0;

@@ -16,7 +16,7 @@ class TahunAkademikController extends Controller
     public function index(TahunAkademikDataTable $tahunAkademikDataTable)
     {
         $title = 'Tahun Akademik';
-        return $tahunAkademikDataTable->render('pages.tahunakademik.index', compact('title'));
+        return $tahunAkademikDataTable->render('pages.tahunAkademik.index', compact('title'));
     }
 
     /**

@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             TahunAkademikSeeder::class,
             JenisskSeeder::class,
             ProgramStudiSeeder::class,
+            MahasiswaSeeder::class,
             PegawaiSeeder::class,
             DosenSeeder::class,
         ]);

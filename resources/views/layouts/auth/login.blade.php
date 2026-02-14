@@ -203,7 +203,7 @@
         <form class="login-form" action="{{ route('loginproses') }}" method="post">
             @csrf
 
-            <p class="text-left">BAAK</p>
+            <p class="text-left">MYBAAK</p>
             <input type="email" name="email" placeholder="Email atau nomor ponsel" class="input-field" required>
             <div class="password-container">
                 <input type="password" name="password" id="password" placeholder="Sandi" class="input-field" required>
@@ -216,7 +216,7 @@
             </div> --}}
         </form>
         <div class="new-to-baak">
-            <p>Baru di SIBAAK? <a href="{{ route('register') }}">Daftar sekarang.</a></p>
+            <p>Baru di MYBAAK? <a href="{{ route('register') }}">Daftar sekarang.</a></p>
         </div>
     </div>
 

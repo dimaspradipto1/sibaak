@@ -32,8 +32,18 @@ class DosenSeeder extends Seeder
             ],
         ];
 
-        foreach ($dosen as $dosen) {
-            Dosen::create($dosen);
+        foreach ($dosen as $dosenData) {
+            $d = \App\Models\Dosen::create($dosenData);
+
+            // Link ke Profile
+            $user = \App\Models\User::where('email', $d->email)->first();
+            if ($user && $user->profile) {
+                $user->profile->update([
+                    'dosen_id' => $d->id,
+                    'nidk' => $d->nidn,
+                    'nupn' => $d->nup,
+                ]);
+            }
         }
     }
 }

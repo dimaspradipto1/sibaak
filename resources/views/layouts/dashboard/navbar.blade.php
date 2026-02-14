@@ -20,7 +20,7 @@
             <a href="{{ route('dashboard') }}">
                 <img class="img-fluid" src="{{ asset('assets/images/logouis.png') }}" style="width: 30px; height: 30px;" alt="UIS Logo" />
             </a>
-            <span class="navbar-brand mb-0 text-white ml-2">SIBAAK</span>
+            <span class="navbar-brand mb-0 text-white ml-2">MYBAAK</span>
             <a class="mobile-options waves-effect waves-light">
                 <i class="ti-more"></i>
             </a>
@@ -101,7 +101,7 @@
                             </a>
                         </li>
                         <li class="waves-effect waves-light">
-                            <a href="#">
+                            <a href="{{ route('profile.index') }}">
                                 <i class="ti-user"></i> Profile
                             </a>
                         </li>

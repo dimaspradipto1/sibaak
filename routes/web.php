@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\JenisSKController;
 use App\Http\Controllers\PedomanController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\MahasiswaController;
@@ -57,6 +58,8 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('dosen', DosenController::class);
     Route::resource('suratAktif', SuratAktifController::class);
     Route::resource('suratAkademik', SuratAkademikController::class);
+    Route::get('/suratAkademik/{suratAkademik}/editStatus', [SuratAkademikController::class, 'editStatus'])->name('suratAkademik.editStatus');
+    Route::put('/suratAkademik/{suratAkademik}/updateStatus', [SuratAkademikController::class, 'updateStatus'])->name('suratAkademik.updateStatus');
     Route::resource('sopakademik', SopAkademikController::class);
     Route::resource('lpjkepanitiaan', LpjKepanitiaanController::class);
     Route::resource('pedoman', PedomanController::class);
@@ -72,4 +75,5 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('userGuidePenggunaTatausaha', [UserGuidePenggunaTatausahaController::class, 'index'])->name('userGuidePenggunaTatausaha');
     Route::get('rekapitulasiarsip/export', [RekapitulasiArsipController::class, 'export'])->name('rekapitulasiarsip.export');
     Route::resource('rekapitulasiarsip', RekapitulasiArsipController::class);
+    Route::resource('profile', ProfileController::class);
 });
