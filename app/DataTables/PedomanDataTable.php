@@ -27,6 +27,11 @@ class PedomanDataTable extends DataTable
             ->editColumn('users_id', function ($item) {
                 return $item->users ? $item->users->name : '-';
             })
+            ->filterColumn('users_id', function ($query, $keyword) {
+                $query->whereHas('users', function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
+            })
             ->addColumn('file', function ($item) {
                 return '<a href="' . asset($item->file) . '" target="_blank"
                             class="btn btn-sm btn-success text-white px-3 rounded">
@@ -57,7 +62,7 @@ class PedomanDataTable extends DataTable
      */
     public function query(Pedoman $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with(['users']);
     }
 
     /**

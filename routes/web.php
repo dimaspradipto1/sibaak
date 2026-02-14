@@ -29,6 +29,7 @@ use App\Http\Controllers\UserGuideTatausahaController;
 use App\Http\Controllers\RekapitulasiSuratAktifController;
 use App\Http\Controllers\UserGuidePenggunaMahasiswaController;
 use App\Http\Controllers\UserGuidePenggunaTatausahaController;
+use App\Http\Controllers\SettingsController;
 
 
 Route::controller(LoginController::class)->group(function () {
@@ -79,4 +80,6 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('rekapitulasisurataktif/export', [RekapitulasiSuratAktifController::class, 'export'])->name('rekapitulasisurataktif.export');
     Route::resource('rekapitulasisurataktif', RekapitulasiSuratAktifController::class);
     Route::resource('profile', ProfileController::class);
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::put('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.updatePassword');
 });

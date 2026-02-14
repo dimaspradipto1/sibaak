@@ -25,16 +25,21 @@ class WasdalbinDataTable extends DataTable
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
             ->editColumn('users_id', function ($item) {
-                    return $item->users ? $item->users->name : '-';
-                })
-                ->addColumn('file', function ($item) {
-                    return '<a href="' . asset($item->file) . '" target="_blank"
+                return $item->users ? $item->users->name : '-';
+            })
+            ->filterColumn('users_id', function ($query, $keyword) {
+                $query->whereHas('users', function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
+            })
+            ->addColumn('file', function ($item) {
+                return '<a href="' . asset($item->file) . '" target="_blank"
                             class="btn btn-sm btn-success text-white px-3 rounded">
                             <i class="fa-solid fa-eye"></i> Lihat Dokumen
                         </a>';
-                })
-                ->addColumn('action', function ($item) {
-                    return '
+            })
+            ->addColumn('action', function ($item) {
+                return '
                 <a href="' . route('wasdalbin.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded" title="edit">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
@@ -46,7 +51,7 @@ class WasdalbinDataTable extends DataTable
                         </button>
                     </form>
                 ';
-                })
+            })
             ->setRowId('DT_RowIndex')
             ->rawColumns(['action', 'file', 'users_id']);
     }
@@ -58,7 +63,7 @@ class WasdalbinDataTable extends DataTable
      */
     public function query(Wasdalbin $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with(['users']);
     }
 
     /**
@@ -67,19 +72,19 @@ class WasdalbinDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('wasdalbin-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-            Button::make('csv'),
-            Button::make('pdf'),
-            Button::make('print'),
-            Button::make('reset'),
-            Button::make('reload')
-                    ]);
+            ->setTableId('wasdalbin-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -105,10 +110,10 @@ class WasdalbinDataTable extends DataTable
                 ->title('DIAJUKAN OLEH'),
             Column::computed('action')
                 ->title('AKSI')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width('15%')
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width('15%')
+                ->addClass('text-center'),
         ];
     }
 

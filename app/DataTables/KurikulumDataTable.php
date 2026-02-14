@@ -24,10 +24,6 @@ class KurikulumDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
-            ->editColumn('users_id', function ($item) {
-                // Perbaiki untuk menampilkan nama user
-                return $item->user ? $item->user->name : '-';
-            })
             ->addColumn('file', function ($item) {
                 return '<a href="' . asset($item->file) . '" target="_blank"
                         class="btn btn-sm btn-success text-white px-3 rounded">
@@ -36,6 +32,11 @@ class KurikulumDataTable extends DataTable
             })
             ->editColumn('users_id', function ($item) {
                 return $item->user ? $item->user->name : '-';
+            })
+            ->filterColumn('users_id', function ($query, $keyword) {
+                $query->whereHas('user', function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
             })
             ->addColumn('action', function ($item) {
                 return '
@@ -62,7 +63,7 @@ class KurikulumDataTable extends DataTable
      */
     public function query(Kurikulum $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with(['user']);
     }
 
     /**

@@ -33,12 +33,27 @@ class SkKepanitiaanDataTable extends DataTable
 
                 return trim($ta . ' - ' . $smt, ' -');
             })
+            ->filterColumn('tahun_akademik_id', function ($query, $keyword) {
+                $query->whereHas('tahunAkademik', function ($q) use ($keyword) {
+                    $q->where('tahun_akademik', 'like', "%{$keyword}%");
+                });
+            })
 
             ->editColumn('users_id', function ($item) {
                 return $item->users ? $item->users->name : '-';
             })
+            ->filterColumn('users_id', function ($query, $keyword) {
+                $query->whereHas('users', function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
+            })
             ->editColumn('jenissk_id', function ($item) {
                 return $item->jenissk ? $item->jenissk->jenis_sk : '-';
+            })
+            ->filterColumn('jenissk_id', function ($query, $keyword) {
+                $query->whereHas('jenissk', function ($q) use ($keyword) {
+                    $q->where('jenis_sk', 'like', "%{$keyword}%");
+                });
             })
             ->addColumn('file', function ($item) {
                 return '<a href="' . asset($item->file) . '" target="_blank"

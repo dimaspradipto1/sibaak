@@ -18,7 +18,8 @@
                 </div>
             </div>
             <a href="{{ route('dashboard') }}">
-                <img class="img-fluid" src="{{ asset('assets/images/logouis.png') }}" style="width: 30px; height: 30px;" alt="UIS Logo" />
+                <img class="img-fluid" src="{{ asset('assets/images/logouis.png') }}" style="width: 30px; height: 30px;"
+                    alt="UIS Logo" />
             </a>
             <span class="navbar-brand mb-0 text-white ml-2">MYBAAK</span>
             <a class="mobile-options waves-effect waves-light">
@@ -32,8 +33,7 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#!" onclick="javascript:toggleFullScreen()"
-                        class="waves-effect waves-light">
+                    <a href="#!" onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
                         <i class="ti-fullscreen"></i>
                     </a>
                 </li>
@@ -89,14 +89,13 @@
                 </li> --}}
                 <li class="user-profile header-notification">
                     <a href="#!" class="waves-effect waves-light">
-                        <img src="{{ asset('assets/images/user.png') }}" class="img-radius"
-                            alt="User-Profile-Image">
+                        <img src="{{ asset('assets/images/user.png') }}" class="img-radius" alt="User-Profile-Image">
                         <span>{{ Auth::user()->name }}</span>
                         <i class="ti-angle-down"></i>
                     </a>
                     <ul class="show-notification profile-notification">
                         <li class="waves-effect waves-light">
-                            <a href="#!">
+                            <a href="{{ route('settings.index') }}">
                                 <i class="ti-settings"></i> Settings
                             </a>
                         </li>
@@ -107,7 +106,7 @@
                         </li>
                         <li class="waves-effect waves-light">
                             <a href="{{ route('userGuide.index') }}">
-                               <i class="fa-regular fa-file-lines"></i> User Guide
+                                <i class="fa-regular fa-file-lines"></i> User Guide
                             </a>
                         </li>
                         <li class="waves-effect waves-light">
