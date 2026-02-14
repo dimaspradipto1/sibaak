@@ -198,6 +198,13 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                 </li>
+                <li class="">
+                    <a href="{{ route('rekapitulasisurataktif.index') }}" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
+                        <span class="pcoded-mtext text-capitalize">Rekapitulasi Surat Aktif</span>
+                        <span class="pcoded-mcaret"></span>
+                    </a>
+                </li>
             </ul>
 
             <div class="pcoded-navigation-label">User Guide Admin</div>

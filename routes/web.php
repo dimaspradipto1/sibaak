@@ -26,6 +26,7 @@ use App\Http\Controllers\LpjKepanitiaanController;
 use App\Http\Controllers\RekapitulasiArsipController;
 use App\Http\Controllers\UserGuideMahasiswaController;
 use App\Http\Controllers\UserGuideTatausahaController;
+use App\Http\Controllers\RekapitulasiSuratAktifController;
 use App\Http\Controllers\UserGuidePenggunaMahasiswaController;
 use App\Http\Controllers\UserGuidePenggunaTatausahaController;
 
@@ -75,5 +76,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('userGuidePenggunaTatausaha', [UserGuidePenggunaTatausahaController::class, 'index'])->name('userGuidePenggunaTatausaha');
     Route::get('rekapitulasiarsip/export', [RekapitulasiArsipController::class, 'export'])->name('rekapitulasiarsip.export');
     Route::resource('rekapitulasiarsip', RekapitulasiArsipController::class);
+    Route::get('rekapitulasisurataktif/export', [RekapitulasiSuratAktifController::class, 'export'])->name('rekapitulasisurataktif.export');
+    Route::resource('rekapitulasisurataktif', RekapitulasiSuratAktifController::class);
     Route::resource('profile', ProfileController::class);
 });

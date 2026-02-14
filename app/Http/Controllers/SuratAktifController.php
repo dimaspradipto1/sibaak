@@ -208,4 +208,14 @@ class SuratAktifController extends Controller
         $is_preview = true;
         return view('pages.suratAktif.show', compact('suratAktif', 'no_surat', 'program_studi', 'bulanRomawi', 'user', 'pegawai', 'is_preview'));
     }
+    public function print(SuratAktif $suratAktif)
+    {
+        $no_surat = $suratAktif->no_surat;
+        $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
+        $user = User::with('pegawai')->where('is_approval', 1)->first();
+
+        $pegawai = $user ? $user->pegawai : null;
+        $bulanRomawi = $this->getBulanRomawi();
+        return view('pages.suratAktif.show', compact('suratAktif', 'no_surat', 'program_studi', 'bulanRomawi', 'user', 'pegawai'));
+    }
 }

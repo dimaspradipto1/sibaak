@@ -69,4 +69,9 @@ class SuratAktif extends Model
     {
         return $this->belongsTo(TahunAkademik::class, 'tahun_akademik_id');
     }
+
+    public function rekapitulasiSuratAktif()
+    {
+        return $this->hasMany(RekapitulasiSuratAktif::class);
+    }
 }
