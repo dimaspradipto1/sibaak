@@ -7,6 +7,12 @@ use App\Models\Dosen;
 use App\Models\Pegawai;
 use App\Models\Mahasiswa;
 use App\Models\SuratAktif;
+use App\Models\Wasdalbin;
+use App\Models\SkKepanitiaan;
+use App\Models\LpjKepanitiaan;
+use App\Models\Kurikulum;
+use App\Models\Pedoman;
+use App\Models\SopAkademik;
 use Illuminate\Http\Request;
 use App\Models\SuratAkademik;
 
@@ -21,6 +27,14 @@ class DashboardController extends Controller
         $mahasiswa = Mahasiswa::count();
         $suratAkademik = SuratAkademik::count();
         $dosen = Dosen::count();
+
+        // Data Arsip
+        $skKepanitiaanCount = SkKepanitiaan::count();
+        $lpjKepanitiaanCount = LpjKepanitiaan::count();
+        $kurikulumCount = Kurikulum::count();
+        $pedomanCount = Pedoman::count();
+        $sopAkademikCount = SopAkademik::count();
+        $wasdalbinCount = Wasdalbin::count();
 
         $suratAktifpending = SuratAktif::where('status', 'pending')->count() ?: 0;
         $suratAktifDiterima = SuratAktif::where('status', 'diterima')->count() ?: 0;
@@ -68,9 +82,15 @@ class DashboardController extends Controller
             'pegawai',
             'dosen',
             'suratAkademik',
+            'skKepanitiaanCount',
+            'lpjKepanitiaanCount',
+            'kurikulumCount',
+            'pedomanCount',
+            'sopAkademikCount',
+            'wasdalbinCount',
             'chartData',
             'latestSuratAktif',
-            'title' 
+            'title'
         ));
     }
 }

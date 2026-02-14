@@ -37,9 +37,88 @@
     {{-- select2 CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+    <style>
+        /* Unifikasi Background & Aliansi Header */
+        .pcoded-header {
+            background: linear-gradient(45deg, #087C39, #FFF742) !important;
+        }
 
+        .main-menu-header {
+            background: rgba(0, 0, 0, 0.6) url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
+            background-blend-mode: overlay !important;
+            background-size: cover !important;
+            background-position: center !important;
+        }
 
+        .page-header {
+            background: rgba(0, 0, 0, 0.6) url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
+            background-blend-mode: overlay !important;
+            background-size: cover !important;
+            background-position: center !important;
+        }
 
+        .pcoded-header,
+        .main-menu-header,
+        .page-header {
+            border: none !important;
+        }
+
+        .main-menu-header {
+            height: 150px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            padding: 0 !important;
+        }
+
+        .main-menu-header img {
+            width: 60px !important;
+            height: 60px !important;
+            margin-bottom: 5px !important;
+        }
+
+        .user-details {
+            margin-top: 0 !important;
+        }
+
+        .page-header {
+            height: 140px !important;
+            display: flex !important;
+            align-items: center !important;
+            padding: 0 40px !important;
+            margin-bottom: 0 !important;
+        }
+
+        .page-header:before {
+            display: none !important;
+        }
+
+        .page-header .page-block {
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            width: 100% !important;
+        }
+
+        .page-header .page-block>.row {
+            width: 100% !important;
+            margin: 0 !important;
+        }
+
+        /* Gap and border fixes */
+        .pcoded-navbar {
+            border-right: none !important;
+        }
+
+        .pcoded-main-container {
+            background: #f8f9fc !important;
+        }
+
+        .pcoded-main-container {
+            background: #f8f9fc !important;
+        }
+    </style>
 </head>
 
 <body>

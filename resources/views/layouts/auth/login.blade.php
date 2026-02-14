@@ -79,10 +79,10 @@
             width: 100%;
             padding: 14px;
             margin-bottom: 20px;
-            background: #333;
-            border: 1px solid #666;
+            background: white;
+            border: 1px solid #ddd;
             border-radius: 4px;
-            color: white;
+            color: black;
             font-size: 14px;
         }
 
@@ -96,7 +96,7 @@
             right: 14px;
             top: 14px;
             cursor: pointer;
-            color: #ccc;
+            color: #666;
             z-index: 10;
         }
 

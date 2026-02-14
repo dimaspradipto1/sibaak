@@ -52,7 +52,7 @@
                                         <i class="fa-solid fa-user-group text-c-purple f-24"></i>
                                     </div>
                                     <div class="col-8 p-l-0">
-                                        <h5>{{$dosen}}</h5>
+                                        <h5>{{ $dosen }}</h5>
                                         <p class="text-muted m-b-0">Dosen</p>
                                     </div>
                                 </div>
@@ -172,6 +172,89 @@
                 </div>
             </div>
 
+            <div class="col-xl-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Arsip MYBAAK</h5>
+                        <div class="card-header-right">
+                            <ul class="list-unstyled card-option">
+                                <li><i class="fa fa fa-wrench open-card-option"></i>
+                                </li>
+                                <li><i class="fa fa-window-maximize full-card"></i>
+                                </li>
+                                <li><i class="fa fa-minus minimize-card"></i></li>
+                                <li><i class="fa fa-refresh reload-card"></i></li>
+                                <li><i class="fa fa-trash close-card"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-block table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Jenis Arsip</th>
+                                        <th class="text-right">Jumlah Data</th>
+                                        <th class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>SK Kepanitiaan</td>
+                                        <td class="text-right"><span
+                                                class="label label-primary">{{ $skKepanitiaanCount }}</span></td>
+                                        <td class="text-center"><a href="{{ route('skkepanitiaan.index') }}"
+                                                class="btn btn-mini btn-outline-primary">Buka</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>LPJ Kepanitiaan</td>
+                                        <td class="text-right"><span
+                                                class="label label-success">{{ $lpjKepanitiaanCount }}</span></td>
+                                        <td class="text-center"><a href="{{ route('lpjkepanitiaan.index') }}"
+                                                class="btn btn-mini btn-outline-success">Buka</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Kurikulum Prodi</td>
+                                        <td class="text-right"><span
+                                                class="label label-info">{{ $kurikulumCount }}</span></td>
+                                        <td class="text-center"><a href="{{ route('kurikulum.index') }}"
+                                                class="btn btn-mini btn-outline-info">Buka</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Pedoman</td>
+                                        <td class="text-right"><span
+                                                class="label label-warning">{{ $pedomanCount }}</span></td>
+                                        <td class="text-center"><a href="{{ route('pedoman.index') }}"
+                                                class="btn btn-mini btn-outline-warning">Buka</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>SOP Akademik</td>
+                                        <td class="text-right"><span
+                                                class="label label-danger">{{ $sopAkademikCount }}</span></td>
+                                        <td class="text-center"><a href="{{ route('sopakademik.index') }}"
+                                                class="btn btn-mini btn-outline-danger">Buka</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>Wasdalbin</td>
+                                        <td class="text-right"><span
+                                                class="label label-inverse">{{ $wasdalbinCount }}</span></td>
+                                        <td class="text-center"><a href="{{ route('wasdalbin.index') }}"
+                                                class="btn btn-mini btn-outline-inverse">Buka</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             @push('scripts')
                 <!-- Morris Chart -->
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
@@ -180,6 +263,7 @@
 
                 <script>
                     $(document).ready(function() {
+                        // Chart Pengajuan Surat
                         Morris.Bar({
                             element: 'morris-bar-chart',
                             data: [

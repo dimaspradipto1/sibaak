@@ -42,52 +42,75 @@
                 <li class="header-notification">
                     <a href="#!" class="waves-effect waves-light">
                         <i class="ti-bell"></i>
-                        <span class="badge bg-c-red"></span>
+                        @if ($totalPending > 0)
+                            <span class="badge bg-c-red">{{ $totalPending }}</span>
+                        @endif
                     </a>
                     <ul class="show-notification">
                         <li>
-                            <h6>Notifications</h6>
-                            <label class="label label-danger">New</label>
+                            <h6>Notifikasi</h6>
+                            @if ($totalPending > 0)
+                                <label class="label label-danger">New</label>
+                            @endif
                         </li>
-                        <li class="waves-effect waves-light">
-                            <div class="media">
-                                <img class="d-flex align-self-center img-radius"
-                                    src="{{ asset('assets/images/user.png') }}" alt="Generic placeholder image"
-                                    style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                                <div class="media-body">
-                                    <h5 class="notification-user">John Doe</h5>
-                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
-                                        elit.</p>
-                                    <span class="notification-time">30 minutes ago</span>
+
+                        {{-- Notifikasi Surat Aktif --}}
+                        @if ($pendingSuratAktifCount > 0)
+                            <li class="waves-effect waves-light">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h5 class="notification-user">Surat Aktif</h5>
+                                        <p class="notification-msg">Ada {{ $pendingSuratAktifCount }} pengajuan surat
+                                            aktif pending.</p>
+                                        @if (Auth::user()->is_admin || Auth::user()->is_staffbaak)
+                                            <a href="{{ route('suratAktif.index') }}" class="text-primary small">Lihat
+                                                Detail</a>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="waves-effect waves-light">
-                            <div class="media">
-                                <img class="d-flex align-self-center img-radius"
-                                    src="{{ asset('assets/images/user.png') }}" alt="Generic placeholder image"
-                                    style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                                <div class="media-body">
-                                    <h5 class="notification-user">Joseph William</h5>
-                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
-                                        elit.</p>
-                                    <span class="notification-time">30 minutes ago</span>
+                            </li>
+                        @endif
+
+                        {{-- Notifikasi Surat Akademik --}}
+                        @if ($pendingSuratAkademikCount > 0)
+                            <li class="waves-effect waves-light">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h5 class="notification-user">Surat Akademik</h5>
+                                        <p class="notification-msg">Ada {{ $pendingSuratAkademikCount }} pengajuan surat
+                                            akademik pending.</p>
+                                        @if (Auth::user()->is_admin || Auth::user()->is_staffbaak)
+                                            <a href="{{ route('suratAkademik.index') }}"
+                                                class="text-primary small">Lihat Detail</a>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="waves-effect waves-light">
-                            <div class="media">
-                                <img class="d-flex align-self-center img-radius"
-                                    src="{{ asset('assets/images/user.png') }}" alt="Generic placeholder image"
-                                    style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                                <div class="media-body">
-                                    <h5 class="notification-user">Sara Soudein</h5>
-                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
-                                        elit.</p>
-                                    <span class="notification-time">30 minutes ago</span>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        @endif
+
+                        {{-- Data Arsip Terbaru --}}
+                        @if (Auth::user()->is_admin || Auth::user()->is_tata_usaha || Auth::user()->is_operator || Auth::user()->is_staffbaak)
+                            <li class="waves-effect waves-light">
+                                <h6 class="p-2 bg-light small font-weight-bold">Arsip Terbaru</h6>
+                            </li>
+                            @forelse($recentArsip as $arsip)
+                                <li class="waves-effect waves-light">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h5 class="notification-user">
+                                                {{ str_replace(['SkKepanitiaan', 'LpjKepanitiaan'], ['SK Kepanitiaan', 'LPJ Kepanitiaan'], $arsip->jenis_arsip) }}
+                                            </h5>
+                                            <p class="notification-msg">Data arsip baru ditambahkan pada
+                                                {{ $arsip->created_at->format('d M Y') }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            @empty
+                                <li class="waves-effect waves-light text-center p-2">
+                                    <small class="text-muted">Tidak ada arsip terbaru</small>
+                                </li>
+                            @endforelse
+                        @endif
                     </ul>
                 </li>
                 <li class="user-profile header-notification">
