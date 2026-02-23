@@ -40,7 +40,7 @@ class SuratAktifDataTable extends DataTable
             })
             ->addColumn('action', function ($item) {
                 $actions = '';
-                if (Auth::user()->is_admin || Auth::user()->is_staffbaak) {
+                if (Auth::user()->is_admin ||Auth::user()->is_superadmin || Auth::user()->is_staffbaak) {
                     $actions .= '
                             <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Silahkan Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Silahkan Cetak Surat</span></a>
                             <a href="' . route('suratAktif.edit', $item) . '" class="btn btn-sm btn-warning text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a> 

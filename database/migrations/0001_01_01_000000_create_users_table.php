@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('is_mahasiswa')->default(0);
             $table->boolean('is_tata_usaha')->default(0);
             $table->boolean('is_approval')->default(0);
+            $table->boolean('is_superadmin')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

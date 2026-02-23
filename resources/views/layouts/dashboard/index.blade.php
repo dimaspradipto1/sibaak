@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @if (Auth::user()->is_admin || Auth::user()->is_staffbaak)
+    @if (Auth::user()->is_admin ||Auth::user()->is_superadmin || Auth::user()->is_staffbaak)
         <div class="row">
             <!-- Material statustic card start -->
             <div class="col-xl-4 col-md-12">

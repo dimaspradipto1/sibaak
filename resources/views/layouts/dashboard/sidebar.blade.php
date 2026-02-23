@@ -42,7 +42,7 @@
         </ul>
 
 
-        @if (Auth::user()->is_admin || Auth::user()->is_mahasiswa || Auth::user()->is_staffbaak)
+        @if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_mahasiswa || Auth::user()->is_staffbaak)
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -70,7 +70,7 @@
             </ul>
         @endif
 
-        @if (Auth::user()->is_admin || Auth::user()->is_tata_usaha || Auth::user()->is_operator || Auth::user()->is_staffbaak)
+        @if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_tata_usaha || Auth::user()->is_operator || Auth::user()->is_staffbaak)
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -128,7 +128,7 @@
             </ul>
         @endif
 
-        @if (Auth::user()->is_admin)
+        @if (Auth::user()->is_admin || Auth::user()->is_superadmin)
             <div class="pcoded-navigation-label">Master</div>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu ">

@@ -18,7 +18,7 @@ class MahasiswaController extends Controller
      */
     public function index(MahasiswaDataTable $dataTable)
     {
-        $title ='Mahasiswa';
+        $title = 'Mahasiswa';
         return $dataTable->render('pages.mahasiswa.index', compact('title'));
     }
 
@@ -73,6 +73,7 @@ class MahasiswaController extends Controller
     public function edit(Mahasiswa $mahasiswa)
     {
         $title = 'Form Mahasiswa';
+        $mahasiswa = Mahasiswa::with('user', 'programStudi')->findOrFail($mahasiswa->id);
         $users = User::where('is_mahasiswa', true)->get();
         $programStudi = ProgramStudi::all();
         return view('pages.mahasiswa.edit', compact('mahasiswa', 'programStudi', 'users', 'title'));
@@ -83,7 +84,14 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        $mahasiswa->update($request->all());
+        // Update name di tabel users melalui relasi
+        if ($request->has('name') && $mahasiswa->user) {
+            $mahasiswa->user->update(['name' => $request->name]);
+        }
+
+        // Update data mahasiswa (kecuali field 'name' yang ada di tabel users)
+        $mahasiswa->update($request->except('name'));
+
         Alert::success('Mahasiswa berhasil diupdate')
             ->autoclose(4000)
             ->toToast()

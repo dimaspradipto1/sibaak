@@ -9,14 +9,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{-- <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary rounded btn-sm"><i class="fa-solid fa-plus"></i> Tambah</a> --}}
-
-        {{-- @if (Auth::user()->is_admin || !Mahasiswa::where('users_id', Auth::id())->exists())
-            <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary rounded btn-sm">
-                <i class="fa-solid fa-plus"></i> Tambah
-            </a>
-        @endif --}}
-        @if (Auth::user()->is_admin)
+        @if (Auth::user()->is_admin || Auht::user()->is_superadmin)
             <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary rounded btn-sm">
                 <i class="fa-solid fa-plus"></i> Tambah
             </a>

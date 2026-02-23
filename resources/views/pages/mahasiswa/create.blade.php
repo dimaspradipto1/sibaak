@@ -13,7 +13,7 @@
                     <form action="{{ route('mahasiswa.store') }}" method="POST">
                         @csrf
 
-                        @if(Auth::user()->is_admin)
+                        @if(Auth::user()->is_admin || Auth::user()->is_superadmin)
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nama Mahasiswa</label>
                             <div class="col-sm-10">

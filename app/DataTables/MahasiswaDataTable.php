@@ -42,7 +42,7 @@ class MahasiswaDataTable extends DataTable
                     <a href="'.route('mahasiswa.edit', $item->id).'" class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
                 ';
             
-                if (Auth::user()->is_admin) {
+                if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak) {
                     $actions .= '
                         <form action="'.route('mahasiswa.destroy', $item->id).'" method="POST" class="d-inline">
                             ' . csrf_field() . '

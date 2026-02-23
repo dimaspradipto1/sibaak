@@ -37,7 +37,7 @@ class SuratAkademikDataTable extends DataTable
                 $deleteButton = '';
                 $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Silahkan Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Silahkan Cetak Surat</span></a>';
 
-                if (Auth::user()->is_admin || Auth::user()->is_staffbaak) {
+                if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak) {
                     $editButton = '<a href="' . route('suratAkademik.edit', $item->id) . '" class="btn btn-sm btn-warning text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>';
                     $updateStatusButton = '<a href="' . route('suratAkademik.editStatus', $item->id) . '" class="btn btn-sm btn-info text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Update Status"><i class="fa-solid fa-check-circle"></i><span class="d-none d-lg-inline"> Status</span></a>';
                     $deleteButton = '

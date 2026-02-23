@@ -112,8 +112,8 @@ class KurikulumController extends Controller
      */
     public function show(Kurikulum $kurikulum)
     {
-        $title = 'Detail Kurikulum';
-        return view('pages.kurikulum.show', compact('kurikulum', 'title'));
+        // $title = 'Detail Kurikulum';
+        // return view('pages.kurikulum.show', compact('kurikulum', 'title'));
     }
 
     /**
