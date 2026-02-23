@@ -14,7 +14,7 @@
                 <ul>
                     <li class="more-details">
                         <a href="{{ route('profile.index') }}"><i class="ti-user"></i>View Profile</a>
-                        <a href="#!"><i class="ti-settings"></i>Settings</a>
+                        <a href="{{ route('settings.index') }}"><i class="ti-settings"></i>Settings</a>
                         <a href="{{ route('logout') }}"><i class="ti-layout-sidebar-left"></i>Logout</a>
                     </li>
                 </ul>
