@@ -385,42 +385,44 @@
                                                 </td>
                                             </tr>
                                         @endif
-                                        <tr>
-                                            <td class="profile-info-label">NIDK</td>
-                                            <td style="width: 10px;">:</td>
-                                            <td class="profile-info-value">
-                                                @if (request('edit'))
-                                                    <input type="text" name="nidk"
-                                                        value="{{ old('nidk', $profile->nidk ?? '') }}">
-                                                @else
-                                                    {{ $profile->nidk ?? '-' }}
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="profile-info-label">NUPN</td>
-                                            <td style="width: 10px;">:</td>
-                                            <td class="profile-info-value">
-                                                @if (request('edit'))
-                                                    <input type="text" name="nupn"
-                                                        value="{{ old('nupn', $profile->nupn ?? '') }}">
-                                                @else
-                                                    {{ $profile->nupn ?? '-' }}
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="profile-info-label">NBM</td>
-                                            <td style="width: 10px;">:</td>
-                                            <td class="profile-info-value">
-                                                @if (request('edit'))
-                                                    <input type="text" name="nbm"
-                                                        value="{{ old('nbm', $profile->nbm ?? '') }}">
-                                                @else
-                                                    {{ $profile->nbm ?? '-' }}
-                                                @endif
-                                            </td>
-                                        </tr>
+                                        @if (!$user->is_mahasiswa && !$mahasiswa)
+                                            <tr>
+                                                <td class="profile-info-label">NIDK</td>
+                                                <td style="width: 10px;">:</td>
+                                                <td class="profile-info-value">
+                                                    @if (request('edit'))
+                                                        <input type="text" name="nidk"
+                                                            value="{{ old('nidk', $profile->nidk ?? '') }}">
+                                                    @else
+                                                        {{ $profile->nidk ?? '-' }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="profile-info-label">NUPN</td>
+                                                <td style="width: 10px;">:</td>
+                                                <td class="profile-info-value">
+                                                    @if (request('edit'))
+                                                        <input type="text" name="nupn"
+                                                            value="{{ old('nupn', $profile->nupn ?? '') }}">
+                                                    @else
+                                                        {{ $profile->nupn ?? '-' }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="profile-info-label">NBM</td>
+                                                <td style="width: 10px;">:</td>
+                                                <td class="profile-info-value">
+                                                    @if (request('edit'))
+                                                        <input type="text" name="nbm"
+                                                            value="{{ old('nbm', $profile->nbm ?? '') }}">
+                                                    @else
+                                                        {{ $profile->nbm ?? '-' }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endif
                                         <tr>
                                             <td class="profile-info-label">Nama @if ($user->is_mahasiswa || $mahasiswa)
                                                     Mahasiswa
