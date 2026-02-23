@@ -142,7 +142,7 @@
                             </a>
                         </li>
                         <li class="waves-effect waves-light">
-                            <a href="#">
+                            <a href="https://docs.google.com/spreadsheets/d/1BMulYA5yhLsgtMXJ4fMs55jG2d-CT86kSI43tGqMSQE/edit?usp=sharing" target="_blank">
                                 <i class="ti-user"></i> Feedback
                             </a>
                         </li>
