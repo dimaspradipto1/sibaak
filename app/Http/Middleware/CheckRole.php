@@ -29,7 +29,8 @@ class CheckRole
             Auth::user()->is_admin ||
             Auth::user()->is_operator ||
             Auth::user()->is_mahasiswa ||
-            Auth::user()->is_tata_usaha
+            Auth::user()->is_tata_usaha ||
+            Auth::user()->is_staffbaak
         ) {
             return $next($request);
         }
