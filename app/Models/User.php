@@ -26,6 +26,7 @@ class User extends Authenticatable
         'is_tata_usaha',
         'is_mahasiswa',
         'is_approval',
+        'is_superadmin',
     ];
 
     /**

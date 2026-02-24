@@ -27,7 +27,7 @@ class SuratAktifDataTable extends DataTable
             ->addColumn('DT_RowIndex', '')
             ->addColumn('users_id', function ($item) {
                 $name = $item->users ? $item->users->name : '-';
-                if (Auth::user()->is_admin || Auth::user()->is_staffbaak) {
+                if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak) {
                     return '<a href="' . route('suratAktif.edit', $item) . '" class="text-success">' . $name . '</a>';
                 }
                 return $name;
@@ -40,7 +40,7 @@ class SuratAktifDataTable extends DataTable
             })
             ->addColumn('action', function ($item) {
                 $actions = '';
-                if (Auth::user()->is_admin ||Auth::user()->is_superadmin || Auth::user()->is_staffbaak) {
+                if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak) {
                     $actions .= '
                             <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Silahkan Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Silahkan Cetak Surat</span></a>
                             <a href="' . route('suratAktif.edit', $item) . '" class="btn btn-sm btn-warning text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a> 
@@ -75,8 +75,8 @@ class SuratAktifDataTable extends DataTable
         $query = $model->newQuery()
             ->with(['users', 'programStudi']); // eager load biar cepat
 
-        if (Auth::user()->is_admin || Auth::user()->is_staffbaak) {
-            // Admin & Staff BAAK lihat semua
+        if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak) {
+            // Admin, Superadmin & Staff BAAK lihat semua
             return $query;
         }
 
