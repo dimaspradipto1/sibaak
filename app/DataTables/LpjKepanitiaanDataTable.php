@@ -70,7 +70,7 @@ class LpjKepanitiaanDataTable extends DataTable
                 ';
             })
             ->setRowId('DT_RowIndex')
-            ->rawColumns(['action', 'file', 'users_id', 'tahun_akademik_id', 'semester']);
+            ->rawColumns(['action', 'file']);
     }
 
     /**
@@ -80,7 +80,7 @@ class LpjKepanitiaanDataTable extends DataTable
      */
     public function query(LpjKepanitiaan $model): QueryBuilder
     {
-        return $model->newQuery()->with(['tahunAkademik', 'users', 'jenissk']);
+        return $model->newQuery()->with(['tahunAkademik', 'users']);
     }
 
     /**
