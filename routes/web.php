@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArsipUtamaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\FAQController;
@@ -84,4 +85,5 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::put('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.updatePassword');
     Route::resource('kategoriarsip', KategoriArsipController::class);
+    Route::resource('arsiputama', ArsipUtamaController::class);
 });

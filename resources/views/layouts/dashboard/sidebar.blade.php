@@ -80,7 +80,7 @@
                     </a>
                     <ul class="pcoded-submenu">
                         <li class=" ">
-                            <a href="{{ route('wasdalbin.index') }}" class="waves-effect waves-dark">
+                            <a href="{{ route('arsiputama.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext text-capitalize">Arsip Utama</span>
                                 <span class="pcoded-mcaret"></span>
