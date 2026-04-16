@@ -14,7 +14,15 @@
     <!-- Favicon icon -->
     <link rel="icon" href="{{ asset('assets/images/logouis.png') }}" type="image/x-icon">
     <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet text-css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+    </style>
     <!-- waves.css -->
     <link rel="stylesheet" href="{{ asset('assets/pages/waves/css/waves.min.css') }}" type="text/css" media="all">
     <!-- Required Fremwork -->
@@ -38,23 +46,57 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <style>
-        /* Unifikasi Background & Aliansi Header */
+        /* UIS BRANDING Integration */
+        :root {
+            --uis-green: #00A551;
+            --uis-yellow: #FFF742;
+            --uis-green-dark: #008240;
+        }
+
         .pcoded-header {
-            background: linear-gradient(45deg, #087C39, #FFF742) !important;
+            background: linear-gradient(135deg, var(--uis-green) 0%, #008240 100%) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+        }
+
+        .pcoded-header .navbar-logo {
+            background-color: transparent !important;
         }
 
         .main-menu-header {
-            background: rgba(0, 0, 0, 0.6) url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
+            background: rgba(0, 165, 81, 0.7) url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
             background-blend-mode: overlay !important;
             background-size: cover !important;
             background-position: center !important;
+            border-bottom: 3px solid var(--uis-yellow) !important;
         }
 
         .page-header {
-            background: rgba(0, 0, 0, 0.6) url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
+            background: rgba(0, 77, 39, 0.8) url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
             background-blend-mode: overlay !important;
             background-size: cover !important;
             background-position: center !important;
+            border-bottom: 4px solid var(--uis-yellow) !important;
+        }
+
+        .pcoded-navbar .pcoded-item > li.active > a {
+            background: rgba(0, 165, 81, 0.1) !important;
+            border-left: 4px solid var(--uis-green) !important;
+            color: var(--uis-green) !important;
+        }
+
+        .pcoded-navbar .pcoded-item > li.active > a .pcoded-micon {
+            color: var(--uis-green) !important;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--uis-green), var(--uis-green-dark)) !important;
+            border: none !important;
+            box-shadow: 0 4px 15px rgba(0, 165, 81, 0.3) !important;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 165, 81, 0.4) !important;
         }
 
         .pcoded-header,
@@ -115,8 +157,47 @@
             background: #f8f9fc !important;
         }
 
-        .pcoded-main-container {
-            background: #f8f9fc !important;
+        /* Modern Table Styling */
+        .table {
+            border-collapse: separate !important;
+            border-spacing: 0 8px !important;
+        }
+        .table thead th {
+            border: none !important;
+            background-color: #f8f9fa !important;
+            color: #333 !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            font-size: 11px !important;
+            letter-spacing: 1px !important;
+            padding: 15px !important;
+        }
+        .table tbody tr {
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02) !important;
+            transition: all 0.2s ease !important;
+        }
+        .table tbody tr:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08) !important;
+            transform: scale(1.002) !important;
+        }
+        .table tbody td {
+            padding: 15px !important;
+            vertical-align: middle !important;
+            border: none !important;
+        }
+        .table tbody tr td:first-child { border-radius: 10px 0 0 10px !important; }
+        .table tbody tr td:last-child { border-radius: 0 10px 10px 0 !important; }
+
+        /* Card Customization */
+        .card {
+            border: none !important;
+            border-radius: 12px !important;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05) !important;
+        }
+        .card-header h5 {
+            font-weight: 700 !important;
+            color: #2c3e50 !important;
         }
     </style>
 </head>

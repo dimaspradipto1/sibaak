@@ -23,7 +23,7 @@ class SopAkademikRequest extends FormRequest
     {
         return [
             'nama_sop' => 'required',
-            'fakultas' => 'required',
+            'fakultas' => 'nullable',
             'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }

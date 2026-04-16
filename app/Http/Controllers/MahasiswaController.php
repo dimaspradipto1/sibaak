@@ -30,7 +30,9 @@ class MahasiswaController extends Controller
         $title = 'Form Mahasiswa';
         $isMahasiswa = Mahasiswa::where('users_id', Auth::id())->exists();
         $programStudi = ProgramStudi::all();
-        $users = User::where('is_mahasiswa', true)->get();
+        $users = User::whereHas('role', function($query) {
+            $query->where('nama_role', 'MAHASISWA');
+        })->get();
         return view('pages.mahasiswa.create', compact('users', 'programStudi', 'isMahasiswa', 'title'));
     }
 
@@ -74,7 +76,9 @@ class MahasiswaController extends Controller
     {
         $title = 'Form Mahasiswa';
         $mahasiswa = Mahasiswa::with('user', 'programStudi')->findOrFail($mahasiswa->id);
-        $users = User::where('is_mahasiswa', true)->get();
+        $users = User::whereHas('role', function($query) {
+            $query->where('nama_role', 'MAHASISWA');
+        })->get();
         $programStudi = ProgramStudi::all();
         return view('pages.mahasiswa.edit', compact('mahasiswa', 'programStudi', 'users', 'title'));
     }

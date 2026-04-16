@@ -1,0 +1,198 @@
+@extends('layouts.dashboard.template')
+
+@section('content')
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card border-0 shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                <div class="card-header bg-gradient-primary text-white p-4 d-flex justify-content-between align-items-center" 
+                     style="background: linear-gradient(45deg, #4099ff, #73b4ff);">
+                    <div>
+                        <h4 class="mb-1 font-weight-bold text-white"><i class="fa fa-shield-alt mr-2"></i> Konfigurasi Izin Akses</h4>
+                        <p class="mb-0 opacity-80" style="font-size: 0.9rem;">Menentukan hak akses untuk role: <strong>{{ $role->nama_role }}</strong></p>
+                    </div>
+                    <a href="{{ route('role.index') }}" class="btn btn-light btn-sm rounded-pill px-4 font-weight-bold shadow-sm">
+                        <i class="fa fa-arrow-left mr-1"></i> Kembali
+                    </a>
+                </div>
+                
+                <div class="card-body p-4 bg-light">
+                    <form action="{{ route('role.update-permission', $role->id) }}" method="POST" id="permissionForm">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="row">
+                            @foreach ($permissions as $module => $items)
+                                <div class="col-xl-6 col-md-12 mb-4">
+                                    <div class="card border-0 shadow-sm h-100 transition-hover" style="border-radius: 12px; overflow: hidden;">
+                                        <div class="card-header border-0 bg-gradient-uis-green text-white py-3 px-4">
+                                            <div class="d-flex align-items-center mb-0">
+                                                <div class="module-icon bg-white text-success mr-3" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                                                    @php
+                                                        $icon = 'fa-folder';
+                                                        if(str_contains($module, 'Arsip')) $icon = 'fa-archive';
+                                                        if(str_contains($module, 'Master')) $icon = 'fa-database';
+                                                        if(str_contains($module, 'Rekap')) $icon = 'fa-chart-pie';
+                                                        if(str_contains($module, 'Layanan')) $icon = 'fa-user-graduate';
+                                                    @endphp
+                                                    <i class="fa {{ $icon }} sm"></i>
+                                                </div>
+                                                <h6 class="mb-0 font-weight-bold text-white">{{ strtoupper($module) }}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless mb-0">
+                                                    <thead class="bg-light border-bottom">
+                                                        <tr style="background-color: #f1f4f9;">
+                                                            <th class="py-2 px-4 small font-weight-bold text-muted border-0" style="width: 50%;">MODULE</th>
+                                                            <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">VIEW</th>
+                                                            <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">ADD</th>
+                                                            <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">EDIT</th>
+                                                            <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">DEL</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php
+                                                            $subModules = [];
+                                                            foreach($items as $item) {
+                                                                $name = $item->name;
+                                                                $action = 'Other';
+                                                                $target = $name;
+                                                                
+                                                                if(str_starts_with($name, 'Lihat ')) { $action = 'View'; $target = substr($name, 6); }
+                                                                elseif(str_starts_with($name, 'Tambah ')) { $action = 'Add'; $target = substr($name, 7); }
+                                                                elseif(str_starts_with($name, 'Edit ')) { $action = 'Edit'; $target = substr($name, 5); }
+                                                                elseif(str_starts_with($name, 'Hapus ')) { $action = 'Delete'; $target = substr($name, 6); }
+                                                                elseif(str_starts_with($name, 'Kelola ')) { $action = 'Manage'; $target = substr($name, 7); }
+                                                                
+                                                                $subModules[$target][$action] = $item;
+                                                            }
+                                                        @endphp
+
+                                                        @foreach($subModules as $target => $actions)
+                                                            <tr class="border-bottom-dashed">
+                                                                <td class="py-3 px-4">
+                                                                    <span class="font-weight-600 text-dark small d-block">{{ $target }}</span>
+                                                                </td>
+                                                                @foreach(['View', 'Add', 'Edit', 'Delete'] as $type)
+                                                                    <td class="text-center py-3 px-1">
+                                                                        @if(isset($actions[$type]))
+                                                                            <div class="pretty p-svg p-curve p-jelly p-success m-0" style="font-size: 1.2rem;">
+                                                                                <input type="checkbox" 
+                                                                                       name="permissions[]" 
+                                                                                       value="{{ $actions[$type]->id }}" 
+                                                                                       {{ in_array($actions[$type]->id, $rolePermissions) ? 'checked' : '' }} />
+                                                                                <div class="state p-success">
+                                                                                    <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                                                                        <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                                                                    </svg>
+                                                                                    <label></label>
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif($type == 'View' && isset($actions['Manage']))
+                                                                             {{-- Handle case like "Kelola Surat Aktif" --}}
+                                                                             <div class="pretty p-svg p-curve p-jelly p-success m-0" style="font-size: 1.2rem;">
+                                                                                <input type="checkbox" 
+                                                                                       name="permissions[]" 
+                                                                                       value="{{ $actions['Manage']->id }}" 
+                                                                                       {{ in_array($actions['Manage']->id, $rolePermissions) ? 'checked' : '' }} />
+                                                                                <div class="state p-success">
+                                                                                    <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                                                                        <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                                                                    </svg>
+                                                                                    <label></label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <span class="d-block x-small text-muted" style="font-size: 0.6rem;">FULL</span>
+                                                                        @else
+                                                                            <span class="text-light">-</span>
+                                                                        @endif
+                                                                    </td>
+                                                                @endforeach
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <div class="sticky-footer mt-4 pt-4 border-top text-center">
+                            <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 font-weight-bold shadow-lg" style="letter-spacing: 1px;">
+                                <i class="fa fa-save mr-2"></i> SIMPAN KONFIGURASI
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@push('style')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/3.0.3/pretty-checkbox.min.css">
+<style>
+    .bg-gradient-uis-green {
+        background: linear-gradient(135deg, #00A551 0%, #008240 100%);
+    }
+    .bg-soft-primary {
+        background-color: rgba(64, 153, 255, 0.1);
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+    }
+    .transition-hover {
+        transition: all 0.3s ease;
+    }
+    .transition-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    .border-bottom-dashed {
+        border-bottom: 1px dashed #e9ecef;
+    }
+    .border-bottom-dashed:last-child {
+        border-bottom: none;
+    }
+    .color-dark {
+        color: #2c3e50;
+    }
+    .font-weight-600 {
+        font-weight: 600;
+    }
+    .color-muted {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    .sticky-footer {
+        position: sticky;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(5px);
+        z-index: 10;
+        margin: 0 -1.5rem;
+    }
+    .opacity-80 {
+        opacity: 0.8;
+    }
+    
+    .table th, .table td {
+        vertical-align: middle !important;
+    }
+    
+    /* Custom Styling for Pretty Checkbox */
+    .pretty.p-success input:checked~.state.p-success:before, 
+    .pretty.p-success.p-toggle .state.p-success:before {
+        background-color: #00A551 !important;
+    }
+    .pretty.p-svg .state .svg {
+        top: 2px !important;
+    }
+</style>
+@endpush

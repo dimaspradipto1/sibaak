@@ -42,7 +42,7 @@
         </ul>
 
 
-        @if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_mahasiswa || Auth::user()->is_staffbaak)
+        @canany(['surat_aktif_view', 'surat_akademik_view'])
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -51,6 +51,7 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
+                        @can('surat_aktif_view')
                         <li class=" ">
                             <a href="{{ route('suratAktif.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -58,6 +59,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('surat_akademik_view')
                         <li class=" ">
                             <a href="{{ route('suratAkademik.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -65,12 +68,13 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </li>
             </ul>
-        @endif
+        @endcanany
 
-        @if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_tata_usaha || Auth::user()->is_operator || Auth::user()->is_staffbaak)
+        @canany(['arsip_utama_view', 'sk_kepanitiaan_view', 'lpj_kepanitiaan_view', 'kurikulum_view', 'pedoman_view', 'sop_akademik_view', 'wasdalbin_view'])
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -79,6 +83,7 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
+                        @can('arsip_utama_view')
                         <li class=" ">
                             <a href="{{ route('arsiputama.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -86,6 +91,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('sk_kepanitiaan_view')
                         <li class=" ">
                             <a href="{{ route('skkepanitiaan.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -93,6 +100,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('lpj_kepanitiaan_view')
                         <li class=" ">
                             <a href="{{ route('lpjkepanitiaan.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -100,7 +109,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-
+                        @endcan
+                        @can('kurikulum_view')
                         <li class=" ">
                             <a href="{{ route('kurikulum.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -108,6 +118,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('pedoman_view')
                         <li class=" ">
                             <a href="{{ route('pedoman.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -115,6 +127,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('sop_akademik_view')
                         <li class=" ">
                             <a href="{{ route('sopakademik.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -122,6 +136,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('wasdalbin_view')
                         <li class=" ">
                             <a href="{{ route('wasdalbin.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -129,13 +145,13 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-
+                        @endcan
                     </ul>
                 </li>
             </ul>
-        @endif
+        @endcanany
 
-        @if (Auth::user()->is_admin || Auth::user()->is_superadmin)
+        @canany(['role_view', 'users_view', 'pegawai_view', 'dosen_view', 'mahasiswa_view', 'jenis_sk_view', 'kategori_arsip_view', 'tahun_akademik_view', 'program_studi_view'])
             <div class="pcoded-navigation-label">Master</div>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu ">
@@ -145,13 +161,25 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
+                        @can('role_view')
                         <li class="">
+                            <a href="{{ route('role.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="fa-solid fa-users-gear"></i></span>
+                                <span class="pcoded-mtext text-capitalize">role akses</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('users_view')
+                         <li class="">
                             <a href="{{ route('users.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-users-gear"></i></span>
                                 <span class="pcoded-mtext text-capitalize">pengguna</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('pegawai_view')
                         <li class="">
                             <a href="{{ route('pegawai.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-user-gear"></i></span>
@@ -159,6 +187,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('dosen_view')
                         <li class="">
                             <a href="{{ route('dosen.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-user-gear"></i></span>
@@ -166,6 +196,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('mahasiswa_view')
                         <li class="">
                             <a href="{{ route('mahasiswa.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-users-gear"></i></span>
@@ -173,6 +205,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('jenis_sk_view')
                         <li class="">
                             <a href="{{ route('jenissk.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-users-gear"></i></span>
@@ -180,6 +214,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('kategori_arsip_view')
                          <li class="">
                             <a href="{{ route('kategoriarsip.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-users-gear"></i></span>
@@ -187,6 +223,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('tahun_akademik_view')
                         <li class="">
                             <a href="{{ route('tahunAkademik.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-calendar-days"></i></span>
@@ -194,6 +232,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
+                        @can('program_studi_view')
                         <li class="">
                             <a href="{{ route('programStudi.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-folder-closed"></i></span>
@@ -201,12 +241,16 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </li>
             </ul>
+        @endcanany
 
+        @canany(['rekapitulasi_arsip_view', 'rekapitulasi_surat_aktif_view'])
             <div class="pcoded-navigation-label">Rekapitulasi</div>
             <ul class="pcoded-item pcoded-left-item">
+                @can('rekapitulasi_arsip_view')
                 <li class="">
                     <a href="{{ route('rekapitulasiarsip.index') }}" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
@@ -214,6 +258,8 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                 </li>
+                @endcan
+                @can('rekapitulasi_surat_aktif_view')
                 <li class="">
                     <a href="{{ route('rekapitulasisurataktif.index') }}" class="waves-effect waves-dark">
                         <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
@@ -221,8 +267,11 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                 </li>
+                @endcan
             </ul>
+        @endcanany
 
+        @canany(['users_view', 'role_view']) {{-- Gunakan izin admin/master untuk User Guide Admin --}}
             <div class="pcoded-navigation-label">User Guide Admin</div>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="">
@@ -251,7 +300,7 @@
                     </a>
                 </li>
             </ul>
-        @endif
+        @endcanany
 
         <div class="pcoded-navigation-label">User Guide</div>
         <ul class="pcoded-item pcoded-left-item">

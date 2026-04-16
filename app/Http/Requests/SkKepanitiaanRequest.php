@@ -28,7 +28,7 @@ class SkKepanitiaanRequest extends FormRequest
             'nama_dokumen' => 'required',
             'nomor_sk' => 'required',
             'jenissk_id' => 'required',
-            'fakultas' => 'required',
+            'fakultas' => 'nullable',
             'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }

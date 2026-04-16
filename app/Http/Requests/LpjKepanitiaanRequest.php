@@ -27,7 +27,7 @@ class LpjKepanitiaanRequest extends FormRequest
             'nama_dokumen' => 'required',
             'ketua' => 'required',
             'sekretaris' => 'required',
-            'fakultas' => 'required',
+            'fakultas' => 'nullable',
             'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }

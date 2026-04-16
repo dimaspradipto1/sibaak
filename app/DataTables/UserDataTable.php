@@ -31,27 +31,7 @@ class UserDataTable extends DataTable
                 return $item->email;
             })
             ->addColumn('status', function ($item) {
-                $statuses = [];
-
-                // Cek setiap status dan tambahkan ke array jika statusnya aktif
-                if ($item->is_admin) {
-                    $statuses[] = 'Admin';
-                }
-                if ($item->is_staffbaak) {
-                    $statuses[] = 'Staff BAAK';
-                }
-                if ($item->is_mahasiswa) {
-                    $statuses[] = 'Mahasiswa';
-                }
-                if ($item->is_tata_usaha) {
-                    $statuses[] = 'Tata Usaha';
-                }
-                if ($item->is_approval) {
-                    $statuses[] = 'Approval';
-                }
-
-                // Gabungkan semua status yang ada, dipisahkan dengan koma
-                return implode(', ', $statuses);
+                return $item->role?->nama_role ?? '-';
             })
             ->addColumn('action', function ($user) {
                 return '
@@ -60,7 +40,7 @@ class UserDataTable extends DataTable
                     <form action="' . route('users.destroy', $user->id) . '" method="POST" style="display: inline">
                         ' . csrf_field() . '
                         ' . method_field('DELETE') . '
-                        <button type="submit" class="btn btn-sm btn-danger px-3 rounded" onclick="return confrm(\'Yakin ingin menghapus data ini?\')"><i class="fa-solid fa-trash"></i></button>
+                        <button type="submit" class="btn btn-sm btn-danger px-3 rounded" onclick="return confirm(\'Yakin ingin menghapus data ini?\')"><i class="fa-solid fa-trash"></i></button>
                     </form>
                 ';
             })
@@ -73,7 +53,9 @@ class UserDataTable extends DataTable
                 $query->where('email', 'like', "%{$keyword}%");
             })
             ->filterColumn('status', function ($query, $keyword) {
-                $query->whereRaw("CONCAT_WS(',', is_admin, is_staffbaak, is_mahasiswa, is_tata_usaha, is_approval) like ?", ["%{$keyword}%"]);
+                $query->whereHas('role', function ($q) use ($keyword) {
+                    $q->where('nama_role', 'like', "%{$keyword}%");
+                });
             });
     }
 
@@ -84,7 +66,7 @@ class UserDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('role');
     }
 
     /**

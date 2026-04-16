@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -26,7 +27,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('pages.users.create');
+        $title = 'Tambah Pengguna';
+        $roles = Role::all();
+        return view('pages.users.create', compact('title', 'roles'));
     }
 
     /**
@@ -38,14 +41,9 @@ class UserController extends Controller
             'name'           => $request->name,
             'email'          => $request->email,
             'password'       => Hash::make($request->password),
+            'role_id'        => $request->role_id,
+            'is_active'      => $request->is_active ?? 1,
             'remember_token' => Str::random(60),
-
-            // role flags (boleh lebih dari satu, sama seperti update)
-            'is_admin'      => $request->has('is_admin') ? 1 : 0,
-            'is_mahasiswa'  => $request->has('is_mahasiswa') ? 1 : 0,
-            'is_tata_usaha' => $request->has('is_tata_usaha') ? 1 : 0,
-            'is_approval'   => $request->has('is_approval') ? 1 : 0,
-            'is_staffbaak'  => $request->has('is_staffbaak') ? 1 : 0,
         ];
 
         User::create($data);
@@ -71,7 +69,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('pages.users.edit', compact('user'));
+        $title = 'Edit Pengguna';
+        $roles = Role::all();
+        return view('pages.users.edit', compact('user', 'title', 'roles'));
     }
 
     /**
@@ -81,19 +81,14 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $user->update([
-            'is_admin' => $request->has('is_admin') ? 1 : 0,
-            'is_mahasiswa' => $request->has('is_mahasiswa') ? 1 : 0,
-            'is_tata_usaha' => $request->has('is_tata_usaha') ? 1 : 0,
-            'is_approval' => $request->has('is_approval') ? 1 : 0,
-        ]);
-
         $updateData = [
-            'name' => $request->name ?? '',
-            'email' => $request->email ?? '',
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'role_id'   => $request->role_id,
+            'is_active' => $request->is_active ?? 1,
         ];
 
-        if ($request->has('password')) {
+        if ($request->filled('password')) {
             $updateData['password'] = Hash::make($request->password);
         }
 
@@ -129,11 +124,21 @@ class UserController extends Controller
 
     public function updatePassword(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $request->validate([
+            'new_password' => 'required|min:6|confirmed',
+        ], [
+            'new_password.required' => 'Password baru wajib diisi',
+            'new_password.min' => 'Password minimal 6 karakter',
+            'new_password.confirmed' => 'Konfirmasi password tidak cocok',
+        ]);
 
+        $user = User::findOrFail($id);
         $user->password = Hash::make($request->new_password);
         $user->save();
-        Alert::success('success', 'data updated successfully')->autoclose(2000)->toToast();
+
+        Alert::success('success', 'Password updated successfully')
+            ->autoclose(2000)
+            ->toToast();
         return redirect()->route('users.index');
     }
 }

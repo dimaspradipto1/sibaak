@@ -17,6 +17,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramStudiController;
 use App\Http\Controllers\RekapitulasiArsipController;
 use App\Http\Controllers\RekapitulasiSuratAktifController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SkController;
 use App\Http\Controllers\SkKepanitiaanController;
@@ -86,4 +87,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::put('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.updatePassword');
     Route::resource('kategoriarsip', KategoriArsipController::class);
     Route::resource('arsiputama', ArsipUtamaController::class);
+    Route::resource('role', RoleController::class);
+    Route::get('/role/{role}/permission', [RoleController::class, 'editPermission'])->name('role.edit-permission');
+    Route::put('/role/{role}/permission', [RoleController::class, 'updatePermission'])->name('role.update-permission');
 });

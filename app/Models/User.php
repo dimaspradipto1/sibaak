@@ -12,22 +12,81 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
-        'is_admin',
-        'is_staffbaak',
-        'is_tata_usaha',
-        'is_mahasiswa',
-        'is_approval',
-        'is_superadmin',
+        'role_id',
+        'is_active',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role && strtoupper(trim($this->role->nama_role)) === strtoupper(trim($role));
+    }
+
+    public function getIsSuperadminAttribute()
+    {
+        return $this->hasRole('SUPER ADMIN');
+    }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->hasRole('ADMIN');
+    }
+
+    public function getIsMahasiswaAttribute()
+    {
+        return $this->hasRole('MAHASISWA');
+    }
+
+    public function getIsTataUsahaAttribute()
+    {
+        return str_contains($this->role?->nama_role ?? '', 'TATA USAHA');
+    }
+
+    public function getIsStaffbaakAttribute()
+    {
+        return str_contains($this->role?->nama_role ?? '', 'BAAK');
+    }
+
+    public function getIsApprovalAttribute()
+    {
+        return $this->hasRole('APPROVAL');
+    }
+
+    public function getIsOperatorAttribute()
+    {
+        return str_contains($this->role?->nama_role ?? '', 'OPERATOR');
+    }
+
+    public function getFakultasAttribute()
+    {
+        $roleName = strtoupper($this->role?->nama_role ?? '');
+
+        if (str_contains($roleName, 'EKONOMI DAN BISNIS')) {
+            return 'Fakultas Ekonomi dan Bisnis';
+        }
+        if (str_contains($roleName, 'SAINS DAN TEKNOLOGI')) {
+            return 'Fakultas Sains dan Teknologi';
+        }
+        if (str_contains($roleName, 'ILMU KESEHATAN')) {
+            return 'Fakultas Ilmu Kesehatan';
+        }
+        if (str_contains($roleName, 'TEKNIK')) {
+            return 'Fakultas Teknik';
+        }
+        if (str_contains($roleName, 'PASCASARJANA')) {
+            return 'Pascasarjana';
+        }
+
+        return null;
+    }
 
     /**
      * The attributes that should be hidden for serialization.

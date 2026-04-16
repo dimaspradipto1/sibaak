@@ -55,6 +55,11 @@ class LpjKepanitiaanController extends Controller
             $data = $request->validated();
             $data['users_id'] = Auth::id();
 
+            // Set fakultas otomatis jika tidak ada di request
+            if (!isset($data['fakultas']) || empty($data['fakultas'])) {
+                $data['fakultas'] = Auth::user()->fakultas;
+            }
+
             if ($request->hasFile('file')) {
                 $uploaded = $request->file('file');
                 $safeOriginal = preg_replace('/[^A-Za-z0-9\.\-_ ]/', '', $uploaded->getClientOriginalName());
@@ -141,6 +146,11 @@ class LpjKepanitiaanController extends Controller
         try {
             $data = $request->validated();
             $data['users_id'] = Auth::id();
+
+            // Set fakultas otomatis jika tidak ada di request
+            if (!isset($data['fakultas']) || empty($data['fakultas'])) {
+                $data['fakultas'] = Auth::user()->fakultas;
+            }
 
             if ($request->hasFile('file')) {
                 // Hapus file lama jika ada (Drive or Local)

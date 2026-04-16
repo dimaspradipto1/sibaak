@@ -30,33 +30,35 @@
                         </div>
 
 
-                        <!-- Checkbox for status -->
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Role Akses</label>
                             <div class="col-sm-10">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="is_admin" id="is_admin" {{ $user->is_admin ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="is_admin">Admin</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="is_mahasiswa" id="is_mahasiswa" {{ $user->is_mahasiswa ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="is_mahasiswa">Mahasiswa</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="is_tata_usaha" id="is_tata_usaha" {{ $user->is_tata_usaha ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="is_tata_usaha">Tata Usaha</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="is_approval" id="is_approval" {{ $user->is_approval ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="is_approval">Approval</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="is_staffbaak" id="is_staffbaak" {{ $user->is_staffbaak ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="is_staffbaak">Staff BAAK</label>
-                                </div>
+                                <select name="role_id" id="role_id" class="form-control rounded">
+                                    <option value="">-- Pilih Role --</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
+                                            {{ $role->nama_role }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('role_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Status Akun</label>
+                            <div class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" {{ $user->is_active ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="is_active">Aktif</label>
+                                </div>
+                                @error('is_active')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
 
                         <!-- Submit buttons -->
                         <button type="submit" class="btn btn-primary rounded text-uppercase btn-sm">
@@ -72,3 +74,11 @@
     </div>
     <!-- Basic Form Inputs card end -->
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            $('#role_id').select2();
+        });
+    </script>
+@endpush

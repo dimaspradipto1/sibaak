@@ -30,7 +30,9 @@ class SuratAkademikController extends Controller
     {
         $dosens = Dosen::all();
         $title = 'Form Surat Akademik';
-        $users = User::where('is_mahasiswa', true)->get();
+        $users = User::whereHas('role', function ($query) {
+            $query->where('nama_role', 'MAHASISWA');
+        })->get();
         $programStudi = ProgramStudi::all();
         return view('pages.suratAkademik.create', compact('users', 'programStudi', 'title', 'dosens'));
     }

@@ -17,12 +17,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('is_admin')->default(0);
-            $table->boolean('is_staffbaak')->default(0);
-            $table->boolean('is_mahasiswa')->default(0);
-            $table->boolean('is_tata_usaha')->default(0);
-            $table->boolean('is_approval')->default(0);
-            $table->boolean('is_superadmin')->default(0);
+            $table->foreignId('role_id')->constrained()->cascadeOnDelete();
+            $table->boolean('is_active')->default(1);
+            
+
+            // $table->boolean('is_admin')->default(0);
+            // $table->boolean('is_staffbaak')->default(0);
+            // $table->boolean('is_mahasiswa')->default(0);
+            // $table->boolean('is_tata_usaha')->default(0);
+            // $table->boolean('is_approval')->default(0);
+            // $table->boolean('is_superadmin')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

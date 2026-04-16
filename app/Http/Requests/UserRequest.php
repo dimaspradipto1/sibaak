@@ -23,23 +23,21 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'password' => 'required',
-            'is_admin' => 'nullable|boolean',
-            'is_staffbaak' => 'nullable|boolean',
-            'is_mahasiswa' => 'nullable|boolean',
-            'is_tata_usaha' => 'nullable|boolean',
-            'is_approval' => 'nullable|boolean',
+            'email' => 'required|email|max:255|unique:users,email,' . ($this->user ? $this->user->id : 'NULL'),
+            'password' => $this->isMethod('POST') ? 'required' : 'nullable',
+            'role_id' => 'required|exists:roles,id',
+            'is_active' => 'nullable|boolean',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Nama Lengkap wajib diisi',
-            'email.required' => 'Email wajib diisi',
+            'name.required'     => 'Nama Lengkap wajib diisi',
+            'email.required'    => 'Email wajib diisi',
+            'email.unique'      => 'Email sudah terdaftar',
             'password.required' => 'Password wajib diisi',
-            'is_admin.required' => 'Role Akses wajib diisi',
+            'role_id.required'  => 'Role Akses wajib diisi',
         ];
     }
 }
