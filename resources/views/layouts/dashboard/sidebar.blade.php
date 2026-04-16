@@ -80,6 +80,13 @@
                     </a>
                     <ul class="pcoded-submenu">
                         <li class=" ">
+                            <a href="{{ route('wasdalbin.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext text-capitalize">Arsip Utama</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class=" ">
                             <a href="{{ route('skkepanitiaan.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                 <span class="pcoded-mtext text-capitalize">SK Kepanitiaan</span>
@@ -170,6 +177,13 @@
                             <a href="{{ route('jenissk.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="fa-solid fa-users-gear"></i></span>
                                 <span class="pcoded-mtext text-capitalize">jenis SK</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                         <li class="">
+                            <a href="{{ route('kategoriarsip.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="fa-solid fa-users-gear"></i></span>
+                                <span class="pcoded-mtext text-capitalize">kategori arsip</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>

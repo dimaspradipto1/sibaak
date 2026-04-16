@@ -1,35 +1,36 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SkController;
-use App\Http\Controllers\FAQController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DosenController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\JenisSKController;
+use App\Http\Controllers\KategoriArsipController;
+use App\Http\Controllers\KepanitiaanController;
+use App\Http\Controllers\KurikulumController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LpjKepanitiaanController;
+use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PedomanController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KurikulumController;
-use App\Http\Controllers\MahasiswaController;
-use App\Http\Controllers\UserGuideController;
-use App\Http\Controllers\WasdalbinController;
-use App\Http\Controllers\SuratAktifController;
-use App\Http\Controllers\KepanitiaanController;
-use App\Http\Controllers\SopAkademikController;
 use App\Http\Controllers\ProgramStudiController;
-use App\Http\Controllers\SkKepanitiaanController;
-use App\Http\Controllers\SuratAkademikController;
-use App\Http\Controllers\TahunAkademikController;
-use App\Http\Controllers\LpjKepanitiaanController;
 use App\Http\Controllers\RekapitulasiArsipController;
-use App\Http\Controllers\UserGuideMahasiswaController;
-use App\Http\Controllers\UserGuideTatausahaController;
 use App\Http\Controllers\RekapitulasiSuratAktifController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SkController;
+use App\Http\Controllers\SkKepanitiaanController;
+use App\Http\Controllers\SopAkademikController;
+use App\Http\Controllers\SuratAkademikController;
+use App\Http\Controllers\SuratAktifController;
+use App\Http\Controllers\TahunAkademikController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserGuideController;
+use App\Http\Controllers\UserGuideMahasiswaController;
 use App\Http\Controllers\UserGuidePenggunaMahasiswaController;
 use App\Http\Controllers\UserGuidePenggunaTatausahaController;
-use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\UserGuideTatausahaController;
+use App\Http\Controllers\WasdalbinController;
+use Illuminate\Support\Facades\Route;
 
 
 Route::controller(LoginController::class)->group(function () {
@@ -82,4 +83,5 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('profile', ProfileController::class);
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::put('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.updatePassword');
+    Route::resource('kategoriarsip', KategoriArsipController::class);
 });

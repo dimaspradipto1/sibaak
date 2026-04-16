@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\LpjKepanitiaan;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -53,21 +54,28 @@ class LpjKepanitiaanDataTable extends DataTable
                         </a>';
             })
             ->addColumn('action', function ($item) {
-                return '
+                $btn = '
                     <a href="' . route('lpjkepanitiaan.show', $item->id) . '" class="btn btn-dark btn-sm px-3 rounded" title="show">
                         <i class="fa-solid fa-eye"></i>
                     </a>
                     <a href="' . route('lpjkepanitiaan.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded" title="edit">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </a>
-                    <form action="' . route('lpjkepanitiaan.destroy', $item->id) . '" method="POST" class="d-inline">
-                        ' . csrf_field() . '
-                        ' . method_field('delete') . '
-                        <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </form>
                 ';
+
+                if (!Auth::user()->is_tata_usaha) {
+                    $btn .= '
+                        <form action="' . route('lpjkepanitiaan.destroy', $item->id) . '" method="POST" class="d-inline">
+                            ' . csrf_field() . '
+                            ' . method_field('delete') . '
+                            <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </form>
+                    ';
+                }
+
+                return $btn;
             })
             ->setRowId('DT_RowIndex')
             ->rawColumns(['action', 'file']);
@@ -80,7 +88,14 @@ class LpjKepanitiaanDataTable extends DataTable
      */
     public function query(LpjKepanitiaan $model): QueryBuilder
     {
-        return $model->newQuery()->with(['tahunAkademik', 'users']);
+        $query = $model->newQuery()->with(['tahunAkademik', 'users']);
+
+        // Jika role is_tata_usaha, hanya tampilkan data milik user tersebut
+        if (Auth::check() && Auth::user()->is_tata_usaha) {
+            $query->where('users_id', Auth::id());
+        }
+
+        return $query;
     }
 
     /**
