@@ -8,11 +8,11 @@
 
     <div class="card">
         <div class="card-header">
-            @if (Auth::user()->is_admin || Auth::user()->is_superadmin)
+            @can('mahasiswa_create')
                 <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary rounded btn-sm">
                     <i class="fa-solid fa-plus"></i> Tambah
                 </a>
-            @endif
+            @endcan
 
             @if (auth()->user()->is_mahasiswa)
                 <!-- Tombol hanya untuk mahasiswa: Pengajuan -->

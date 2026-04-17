@@ -4,7 +4,9 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <a href="{{ route('dosen.create') }}" class="btn btn-primary rounded btn-sm"><i class="fa-solid fa-plus"></i>
+            @can('dosen_create')
+            <a href="{{ route('dosen.create') }}" class="btn btn-primary rounded btn-sm"><i class="fa-solid fa-plus"></i> Tambah</a>
+            @endcan
                 Tambah</a>
             <div class="card-header-right">
                 <ul class="list-unstyled card-option">

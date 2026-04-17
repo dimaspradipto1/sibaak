@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Dosen;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -31,15 +32,28 @@ class DosenDataTable extends DataTable
                 return $item->programStudi ? $item->programStudi->program_studi : '-';
             })
             ->addColumn('action', function ($item) {
-                return '
-                <a href="' . route('dosen.show', $item->id) . '" class="btn btn-sm btn-info text-white px-3 rounded" title="detail"><i class="fa-solid fa-eye"></i></a> 
-                    <a href="' . route('dosen.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
-                    <form action="' . route('dosen.destroy', $item->id) . '" method="POST" class="d-inline">
-                    ' . csrf_field() . '
-                    ' . method_field('delete') . '
-                    <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus"><i class="fa-solid fa-trash-can" ></i></button>
-                    </form>
-                ';
+                $btn = '';
+                if (Gate::check('dosen_view')) {
+                    $btn .= '<a href="' . route('dosen.show', $item->id) . '" class="btn btn-sm btn-info text-white px-3 rounded mx-1" title="detail"><i class="fa-solid fa-eye"></i></a>';
+                }
+                if (Gate::check('dosen_edit')) {
+                    $btn .= '<a href="' . route('dosen.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded mx-1" title="edit"><i class="fa-solid fa-pen-to-square"></i></a>';
+                }
+                if (Gate::check('dosen_delete')) {
+                    $btn .= '
+                        <form action="' . route('dosen.destroy', $item->id) . '" method="POST" class="d-inline">
+                        ' . csrf_field() . '
+                        ' . method_field('delete') . '
+                        <button type="submit" class="btn btn-danger btn-sm px-3 rounded mx-1" title="hapus" onclick="return confirm(\'Hapus data ini?\')">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                        </form>
+                    ';
+                }
+                if (empty(trim($btn))) {
+                    $btn = '<span class="text-muted small">-</span>';
+                }
+                return $btn;
             })
             ->rawColumns(['action', 'programStudi.program_studi'])
             ->setRowId('id')

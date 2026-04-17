@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\KategoriArsip;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -25,18 +26,29 @@ class KategoriArsipDataTable extends DataTable
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
             ->addColumn('action', function ($item) {
-                return '
-                    <a href="' . route('kategoriarsip.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded" title="edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                    <form action="' . route('kategoriarsip.destroy', $item->id) . '" method="POST" class="d-inline">
-                        ' . csrf_field() . '
-                        ' . method_field('delete') . '
-                        <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </form>
-                ';
+                $btn = '';
+                if (Gate::check('kategori_arsip_edit')) {
+                    $btn .= '
+                        <a href="' . route('kategoriarsip.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded mx-1" title="edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    ';
+                }
+                if (Gate::check('kategori_arsip_delete')) {
+                    $btn .= '
+                        <form action="' . route('kategoriarsip.destroy', $item->id) . '" method="POST" class="d-inline">
+                            ' . csrf_field() . '
+                            ' . method_field('delete') . '
+                            <button type="submit" class="btn btn-danger btn-sm px-3 rounded mx-1" title="hapus" onclick="return confirm(\'Hapus data ini?\')">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </form>
+                    ';
+                }
+                if (empty(trim($btn))) {
+                    $btn = '<span class="text-muted small">-</span>';
+                }
+                return $btn;
             })
             ->setRowId('id')
             ->rawColumns(['action']);

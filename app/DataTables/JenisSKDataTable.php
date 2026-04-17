@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\JenisSK;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -25,12 +26,24 @@ class JenisSKDataTable extends DataTable
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
             ->addColumn('action', function($item){
-                return '<a href="'.route('jenissk.edit', $item->id).'") class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
-                        <form action="'.route('jenissk.destroy', $item->id).'") method="POST" class="d-inline">
+                $btn = '';
+                if (Gate::check('jenis_sk_edit')) {
+                    $btn .= '<a href="' . route('jenissk.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded mx-1" title="edit"><i class="fa-solid fa-pen-to-square"></i></a>';
+                }
+                if (Gate::check('jenis_sk_delete')) {
+                    $btn .= '
+                        <form action="' . route('jenissk.destroy', $item->id) . '" method="POST" class="d-inline">
                         ' . csrf_field() . '
                         ' . method_field('delete') . '
-                        <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus"><i class="fa-solid fa-trash-can" ></i></button>
+                        <button type="submit" class="btn btn-danger btn-sm px-3 rounded mx-1" title="hapus" onclick="return confirm(\'Hapus data ini?\')">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
                         </form>';
+                }
+                if (empty(trim($btn))) {
+                    $btn = '<span class="text-muted small">-</span>';
+                }
+                return $btn;
             })
             ->setRowId('DT_RowIndex')
             ->rawColumns(['action']);

@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Kurikulum;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -40,22 +41,28 @@ class KurikulumDataTable extends DataTable
                 });
             })
             ->addColumn('action', function ($item) {
-                $btn = '
-                <a href="' . route('kurikulum.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded" title="edit">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </a>
-                ';
+                if (Gate::check('kurikulum_edit')) {
+                    $btn = '
+                    <a href="' . route('kurikulum.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded mx-1" title="edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    ';
+                }
 
-                if (!Auth::user()->is_tata_usaha) {
+                if (Gate::check('kurikulum_delete')) {
                     $btn .= '
                         <form action="' . route('kurikulum.destroy', $item->id) . '" method="POST" class="d-inline">
                             ' . csrf_field() . '
                             ' . method_field('delete') . '
-                            <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus">
+                            <button type="submit" class="btn btn-danger btn-sm px-3 rounded mx-1" title="hapus" onclick="return confirm(\'Hapus data ini?\')">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </form>
                     ';
+                }
+
+                if (empty(trim($btn))) {
+                    $btn = '<span class="text-muted small">-</span>';
                 }
 
                 return $btn;
@@ -73,8 +80,8 @@ class KurikulumDataTable extends DataTable
     {
         $query = $model->newQuery()->with(['user']);
 
-        // Jika role is_tata_usaha, hanya tampilkan data milik user tersebut
-        if (Auth::check() && Auth::user()->is_tata_usaha) {
+        // Jika bukan superadmin atau admin, tampilkan data milik sendiri saja
+        if (Auth::check() && !Auth::user()->is_superadmin && !Auth::user()->is_admin) {
             $query->where('users_id', Auth::id());
         }
 

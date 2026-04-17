@@ -4,9 +4,9 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        @if(Auth::user()->is_admin || Auth::user()->is_mahasiswa)
+        @can('surat_akademik_create')
             <a href="{{ route('suratAkademik.create') }}" class="btn btn-primary rounded btn-sm"><i class="fa-solid fa-plus"></i> Tambah</a>
-        @endif
+        @endcan
 
 
         <div class="card-header-right">

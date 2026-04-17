@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -34,15 +35,26 @@ class UserDataTable extends DataTable
                 return $item->role?->nama_role ?? '-';
             })
             ->addColumn('action', function ($user) {
-                return '
-                    <a href="' . route('users.updatePassword', $user->id) . '" class="btn btn-sm btn-info text-white px-3 rounded"><i class="fa-solid fa-key"></i></a>
-                    <a href="' . route('users.edit', $user->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded" ><i class="fa-solid fa-pen-to-square"></i></a>
-                    <form action="' . route('users.destroy', $user->id) . '" method="POST" style="display: inline">
-                        ' . csrf_field() . '
-                        ' . method_field('DELETE') . '
-                        <button type="submit" class="btn btn-sm btn-danger px-3 rounded" onclick="return confirm(\'Yakin ingin menghapus data ini?\')"><i class="fa-solid fa-trash"></i></button>
-                    </form>
-                ';
+                $btn = '';
+                if (Gate::check('users_edit')) {
+                    $btn .= '<a href="' . route('users.updatePassword', $user->id) . '" class="btn btn-sm btn-info text-white px-3 rounded mx-1"><i class="fa-solid fa-key"></i></a>';
+                    $btn .= '<a href="' . route('users.edit', $user->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded mx-1"><i class="fa-solid fa-pen-to-square"></i></a>';
+                }
+                if (Gate::check('users_delete')) {
+                    $btn .= '
+                        <form action="' . route('users.destroy', $user->id) . '" method="POST" style="display: inline">
+                            ' . csrf_field() . '
+                            ' . method_field('DELETE') . '
+                            <button type="submit" class="btn btn-sm btn-danger px-3 rounded mx-1" onclick="return confirm(\'Yakin ingin menghapus data ini?\')">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    ';
+                }
+                if (empty(trim($btn))) {
+                    $btn = '<span class="text-muted small">-</span>';
+                }
+                return $btn;
             })
             ->setRowId('DT_RowIndex')
             ->rawColumns(['action', 'status'])

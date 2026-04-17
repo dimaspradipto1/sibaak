@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\SopAkademik;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -40,24 +41,26 @@ class SopAkademikDataTable extends DataTable
                         </a>';
             })
             ->addColumn('action', function ($item) {
-                $btn = '
-                    <a href="' . route('sopakademik.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded" title="edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                ';
-
-                if (!Auth::user()->is_tata_usaha) {
+                $btn = '';
+                if (Gate::check('sop_akademik_edit')) {
+                    $btn .= '
+                        <a href="' . route('sopakademik.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded mx-1" title="Edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    ';
+                }
+                if (Gate::check('sop_akademik_delete')) {
                     $btn .= '
                         <form action="' . route('sopakademik.destroy', $item->id) . '" method="POST" class="d-inline">
                             ' . csrf_field() . '
                             ' . method_field('delete') . '
-                            <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
+                            <button type="submit" class="btn btn-danger btn-sm px-3 rounded mx-1" title="Hapus" onclick="return confirm(\'Hapus data ini?\')"><i class="fa-solid fa-trash-can"></i></button>
                         </form>
                     ';
                 }
-
+                if (empty(trim($btn))) {
+                    $btn = '<span class="text-muted small">-</span>';
+                }
                 return $btn;
             })
             ->setRowId('DT_RowIndex')
@@ -73,8 +76,8 @@ class SopAkademikDataTable extends DataTable
     {
         $query = $model->newQuery()->with(['users']);
 
-        // Jika role is_tata_usaha, hanya tampilkan data milik user tersebut
-        if (Auth::check() && Auth::user()->is_tata_usaha) {
+        // Jika bukan superadmin atau admin, hanya tampilkan data milik sendiri
+        if (Auth::check() && !Auth::user()->is_superadmin && !Auth::user()->is_admin) {
             $query->where('users_id', Auth::id());
         }
 

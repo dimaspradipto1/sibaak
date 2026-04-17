@@ -3,9 +3,9 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        @if(Auth::user()->is_admin || Auth::user()->is_staffbaak)
+        @can('surat_aktif_create')
             <a href="{{ route('suratAktif.create') }}" class="btn btn-primary rounded btn-sm"><i class="fa-solid fa-plus"></i> Tambah</a>
-        @endif
+        @endcan
 
         @if(auth()->user()->is_mahasiswa)
             <!-- Tombol hanya untuk mahasiswa: Pengajuan -->

@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\ArsipUtama;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -42,21 +43,27 @@ class ArsipUtamaDataTable extends DataTable
                         </a>';
             })
             ->addColumn('action', function ($item) {
-                $btn = '
-                    <a href="' . route('arsiputama.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded" title="edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                ';
-                if (!Auth::user()->is_tata_usaha) {
+                $btn = '';
+                if (Gate::check('arsip_utama_edit')) {
+                    $btn .= '
+                        <a href="' . route('arsiputama.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded mx-1" title="Edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    ';
+                }
+                if (Gate::check('arsip_utama_delete')) {
                     $btn .= '
                         <form action="' . route('arsiputama.destroy', $item->id) . '" method="POST" class="d-inline">
                             ' . csrf_field() . '
                             ' . method_field('delete') . '
-                            <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus">
-                                <i class="fa-solid fa-trash-can"></i>
+                            <button type="submit" class="btn btn-danger btn-sm px-3 rounded mx-1" title="Hapus" onclick="return confirm(\'Hapus data ini?\')">'
+                                . '<i class="fa-solid fa-trash-can"></i>
                             </button>
                         </form>
                     ';
+                }
+                if (empty(trim($btn))) {
+                    $btn = '<span class="text-muted small">-</span>';
                 }
                 return $btn;
             })
@@ -68,7 +75,8 @@ class ArsipUtamaDataTable extends DataTable
     {
         $query = $model->newQuery()->with(['kategoriArsip', 'user']);
 
-        if (Auth::check() && Auth::user()->is_tata_usaha) {
+        // Jika bukan superadmin atau admin, tampilkan data milik sendiri saja
+        if (Auth::check() && !Auth::user()->is_superadmin && !Auth::user()->is_admin) {
             $query->where('user_id', Auth::id());
         }
 
