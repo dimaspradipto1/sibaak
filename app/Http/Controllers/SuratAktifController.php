@@ -30,9 +30,15 @@ class SuratAktifController extends Controller
     public function create()
     {
         $title = 'Form Surat Aktif';
-        $users = User::whereHas('role', function($query) {
-            $query->where('nama_role', 'MAHASISWA');
-        })->get();
+        
+        if (Auth::user()->is_mahasiswa) {
+            $users = User::where('id', Auth::id())->get();
+        } else {
+            $users = User::whereHas('role', function($query) {
+                $query->where('nama_role', 'MAHASISWA');
+            })->get();
+        }
+        
         $programStudi = ProgramStudi::all();
         return view('pages.suratAktif.create', compact('users', 'programStudi', 'title'));
     }
@@ -84,11 +90,11 @@ class SuratAktifController extends Controller
         $lastSurat = SuratAktif::latest('no_surat')->first();
         $noSurat = $lastSurat ? (int) $lastSurat->no_surat + 1 : 1;
         $noSuratFormatted = sprintf("%03d", $noSurat);
-        $users_id = Auth::user()->id;
+        $userId = Auth::user()->is_mahasiswa ? Auth::id() : $request->users_id;
 
         $data = [
             'no_surat' => $noSuratFormatted,
-            'users_id' => $users_id,
+            'users_id' => $userId,
             'program_studi_id' => $request->program_studi_id,
             'tempat_lahir' => $request->tempat_lahir,
             'tgl_lahir' => $request->tgl_lahir,

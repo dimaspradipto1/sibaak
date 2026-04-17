@@ -69,12 +69,20 @@ class SuratAktifDataTable extends DataTable
                 }
 
                 // Tombol cetak untuk mahasiswa jika status diterima
-                if ($item->status == 'diterima' && Auth::user()->is_mahasiswa) {
+                if (Auth::user()->is_mahasiswa) {
                     $actions .= '
-                        <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-success text-white px-2 px-md-3 mr-1 mr-md-2 rounded" title="Cetak Surat" target="_blank">
-                            <i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Cetak Surat</span>
+                        <a href="' . route('suratAktif.validasi', $item) . '" class="btn btn-sm btn-info text-white px-2 px-md-3 mr-1 mr-md-2 rounded" title="Lihat Detail">
+                            <i class="fa-solid fa-eye"></i><span class="d-none d-md-inline"> Detail</span>
                         </a>
                     ';
+                    
+                    if ($item->status == 'diterima') {
+                        $actions .= '
+                            <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-success text-white px-2 px-md-3 mr-1 mr-md-2 rounded" title="Cetak Surat" target="_blank">
+                                <i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Cetak Surat</span>
+                            </a>
+                        ';
+                    }
                 }
 
                 if (empty(trim($actions))) {

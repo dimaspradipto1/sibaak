@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\SuratAkademik;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\DataTables\SuratAkademikDataTable;
+use Illuminate\Support\Facades\Auth;
 
 class SuratAkademikController extends Controller
 {
@@ -30,9 +31,15 @@ class SuratAkademikController extends Controller
     {
         $dosens = Dosen::all();
         $title = 'Form Surat Akademik';
-        $users = User::whereHas('role', function ($query) {
-            $query->where('nama_role', 'MAHASISWA');
-        })->get();
+        
+        if (Auth::user()->is_mahasiswa) {
+            $users = User::where('id', Auth::id())->get();
+        } else {
+            $users = User::whereHas('role', function ($query) {
+                $query->where('nama_role', 'MAHASISWA');
+            })->get();
+        }
+        
         $programStudi = ProgramStudi::all();
         return view('pages.suratAkademik.create', compact('users', 'programStudi', 'title', 'dosens'));
     }
@@ -42,7 +49,8 @@ class SuratAkademikController extends Controller
      */
     public function store(Request $request)
     {
-        $mahasiswa = Mahasiswa::where('users_id', $request->users_id)->first();
+        $userId = Auth::user()->is_mahasiswa ? Auth::id() : $request->users_id;
+        $mahasiswa = Mahasiswa::where('users_id', $userId)->first();
 
         if (!$mahasiswa) {
             return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan!');
@@ -66,7 +74,7 @@ class SuratAkademikController extends Controller
         }
 
         $data = [
-            'users_id' => $request->users_id,
+            'users_id' => $userId,
             'program_studi_id' => $mahasiswa->programStudi->id,
             'npm' => $mahasiswa->npm,
             'status_cuti' => 'Belum Pernah Cuti',

@@ -1,4 +1,4 @@
-<nav class="navbar header-navbar pcoded-header" style="background: linear-gradient(45deg, #087C39, #FFF742);">
+<nav class="navbar header-navbar pcoded-header">
     <div class="navbar-wrapper">
         <div class="navbar-logo">
             <a class="mobile-menu waves-effect waves-light" id="mobile-collapse" href="#!">

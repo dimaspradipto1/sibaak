@@ -63,16 +63,14 @@
         }
 
         .main-menu-header {
-            background: rgba(0, 165, 81, 0.7) url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
-            background-blend-mode: overlay !important;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
             background-size: cover !important;
             background-position: center !important;
             border-bottom: 3px solid var(--uis-yellow) !important;
         }
 
         .page-header {
-            background: rgba(0, 77, 39, 0.8) url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
-            background-blend-mode: overlay !important;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
             background-size: cover !important;
             background-position: center !important;
             border-bottom: 4px solid var(--uis-yellow) !important;

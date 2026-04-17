@@ -42,7 +42,7 @@
         </ul>
 
 
-        @canany(['surat_aktif_view', 'surat_akademik_view'])
+        @if(Auth::user()->is_mahasiswa || Gate::any(['surat_aktif_view', 'surat_akademik_view']))
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -51,7 +51,7 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
-                        @can('surat_aktif_view')
+                        @if(Auth::user()->is_mahasiswa || Gate::check('surat_aktif_view'))
                         <li class=" ">
                             <a href="{{ route('suratAktif.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -59,8 +59,8 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-                        @endcan
-                        @can('surat_akademik_view')
+                        @endif
+                        @if(Auth::user()->is_mahasiswa || Gate::check('surat_akademik_view'))
                         <li class=" ">
                             <a href="{{ route('suratAkademik.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -68,11 +68,11 @@
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>
-                        @endcan
+                        @endif
                     </ul>
                 </li>
             </ul>
-        @endcanany
+        @endif
 
         @canany(['arsip_utama_view', 'sk_kepanitiaan_view', 'lpj_kepanitiaan_view', 'kurikulum_view', 'pedoman_view', 'sop_akademik_view', 'wasdalbin_view'])
             <ul class="pcoded-item pcoded-left-item">

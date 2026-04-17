@@ -38,10 +38,14 @@
                                                 </div>
                                                 <h6 class="mb-0 font-weight-bold text-white">{{ strtoupper($module) }}</h6>
                                             </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="check-all-module" data-module="{{ Str::slug($module) }}" id="checkAll-{{ Str::slug($module) }}">
+                                                <label class="text-white small font-weight-bold mb-0 ml-1 cursor-pointer" for="checkAll-{{ Str::slug($module) }}">Select All</label>
+                                            </div>
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="table-responsive">
-                                                <table class="table table-borderless mb-0">
+                                                <table class="table table-borderless mb-0 permission-table" data-module-target="{{ Str::slug($module) }}">
                                                     <thead class="bg-light border-bottom">
                                                         <tr style="background-color: #f1f4f9;">
                                                             <th class="py-2 px-4 small font-weight-bold text-muted border-0" style="width: 50%;">MODULE</th>
@@ -49,6 +53,7 @@
                                                             <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">ADD</th>
                                                             <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">EDIT</th>
                                                             <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">DEL</th>
+                                                            <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">ALL</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -105,10 +110,21 @@
                                                                             </div>
                                                                             <span class="d-block x-small text-muted" style="font-size: 0.6rem;">FULL</span>
                                                                         @else
-                                                                            <span class="text-light">-</span>
+                                                                             <span class="text-light">-</span>
                                                                         @endif
                                                                     </td>
                                                                 @endforeach
+                                                                <td class="text-center py-3 px-1">
+                                                                    <div class="pretty p-svg p-curve p-jelly p-warning m-0 check-all-row" style="font-size: 1.2rem;">
+                                                                        <input type="checkbox" class="row-checkbox" />
+                                                                        <div class="state p-warning">
+                                                                            <svg class="svg svg-icon" viewBox="0 0 20 20">
+                                                                                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+                                                                            </svg>
+                                                                            <label></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -194,5 +210,35 @@
     .pretty.p-svg .state .svg {
         top: 2px !important;
     }
+    .cursor-pointer {
+        cursor: pointer;
+    }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        // Toggle all checkboxes in a row
+        $('.row-checkbox').on('change', function() {
+            var isChecked = $(this).is(':checked');
+            $(this).closest('tr').find('input[type="checkbox"]').not(this).prop('checked', isChecked);
+        });
+
+        // Toggle all checkboxes in a module card
+        $('.check-all-module').on('change', function() {
+            var isChecked = $(this).is(':checked');
+            var moduleSlug = $(this).data('module');
+            $('table[data-module-target="' + moduleSlug + '"]').find('input[type="checkbox"]').prop('checked', isChecked);
+        });
+
+        // Optional: Sync row-checkbox if all items in row are checked manually
+        $('input[name="permissions[]"]').on('change', function() {
+            var $row = $(this).closest('tr');
+            var $allCheckboxes = $row.find('input[name="permissions[]"]');
+            var $checkedCheckboxes = $row.find('input[name="permissions[]"]:checked');
+            $row.find('.row-checkbox').prop('checked', $allCheckboxes.length === $checkedCheckboxes.length);
+        });
+    });
+</script>
 @endpush
