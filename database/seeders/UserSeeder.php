@@ -20,14 +20,14 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Super Admin',
                 'email' => 'superadmin@gmail.com',
-                'password' => Hash::make('852456'),
+                'password' => Hash::make('852456dimas'),
                 'role_id' => $roles['SUPER ADMIN'] ?? null,
                 'is_active' => true,
             ],
             [
                 'name' => 'Admin',
                 'email' => 'admin@gmail.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('852456dimas'),
                 'role_id' => $roles['ADMIN'] ?? null,
                 'is_active' => true,
             ],
