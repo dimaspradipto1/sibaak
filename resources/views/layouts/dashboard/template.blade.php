@@ -76,14 +76,25 @@
             border-bottom: 4px solid var(--uis-yellow) !important;
         }
 
-        .pcoded-navbar .pcoded-item > li.active > a {
-            background: rgba(0, 165, 81, 0.1) !important;
-            border-left: 4px solid var(--uis-green) !important;
+        .pcoded-navbar .pcoded-item > li.active > a,
+        .pcoded-navbar .pcoded-item > li.pcoded-trigger > a {
+            background: var(--uis-green) !important;
+            color: #ffffff !important;
+            border-left: 4px solid var(--uis-yellow) !important;
+        }
+
+        .pcoded-navbar .pcoded-item > li.active > a .pcoded-micon,
+        .pcoded-navbar .pcoded-item > li.pcoded-trigger > a .pcoded-micon {
+            color: #ffffff !important;
+        }
+
+        .pcoded-navbar .pcoded-item li a:hover {
             color: var(--uis-green) !important;
         }
 
-        .pcoded-navbar .pcoded-item > li.active > a .pcoded-micon {
-            color: var(--uis-green) !important;
+        .pcoded-navbar .pcoded-item li.active a:hover,
+        .pcoded-navbar .pcoded-item li.pcoded-trigger a:hover {
+            color: #ffffff !important;
         }
 
         .btn-primary {
