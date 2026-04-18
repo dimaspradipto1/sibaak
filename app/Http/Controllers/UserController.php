@@ -11,6 +11,10 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
+use App\Imports\UsersImport;
+use App\Exports\UsersTemplateExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class UserController extends Controller
 {
     /**
@@ -140,5 +144,31 @@ class UserController extends Controller
             ->autoclose(2000)
             ->toToast();
         return redirect()->route('users.index');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            Excel::import(new UsersImport, $request->file('file'));
+            
+            Alert::success('Sukses', 'Data Pengguna berhasil diimpor')
+                ->autoclose(4000)
+                ->toToast();
+        } catch (\Exception $e) {
+            Alert::error('Gagal', 'Terjadi kesalahan saat impor: ' . $e->getMessage())
+                ->autoclose(5000)
+                ->toToast();
+        }
+
+        return redirect()->back();
+    }
+
+    public function exportTemplate()
+    {
+        return Excel::download(new UsersTemplateExport, 'format_import_pengguna.xlsx');
     }
 }

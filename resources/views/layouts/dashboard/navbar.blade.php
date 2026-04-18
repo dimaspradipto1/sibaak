@@ -62,7 +62,7 @@
                                         <h5 class="notification-user">Surat Aktif</h5>
                                         <p class="notification-msg">Ada {{ $pendingSuratAktifCount }} pengajuan surat
                                             aktif pending.</p>
-                                        @if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak)
+                                        @if (Auth::check() && (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak))
                                             <a href="{{ route('suratAktif.index') }}" class="text-primary small">Lihat
                                                 Detail</a>
                                         @endif
@@ -79,7 +79,7 @@
                                         <h5 class="notification-user">Surat Akademik</h5>
                                         <p class="notification-msg">Ada {{ $pendingSuratAkademikCount }} pengajuan surat
                                             akademik pending.</p>
-                                        @if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak)
+                                        @if (Auth::check() && (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak))
                                             <a href="{{ route('suratAkademik.index') }}"
                                                 class="text-primary small">Lihat Detail</a>
                                         @endif
@@ -89,11 +89,7 @@
                         @endif
 
                         {{-- Data Arsip Terbaru --}}
-                        @if (Auth::user()->is_admin ||
-                                Auth::user()->is_superadmin ||
-                                Auth::user()->is_tata_usaha ||
-                                Auth::user()->is_operator ||
-                                Auth::user()->is_staffbaak)
+                        @if (Auth::check() && (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_tata_usaha || Auth::user()->is_operator || Auth::user()->is_staffbaak))
                             <li class="waves-effect waves-light">
                                 <h6 class="p-2 bg-light small font-weight-bold">Arsip Terbaru</h6>
                             </li>
@@ -118,6 +114,7 @@
                     </ul>
                 </li>
                 <li class="user-profile header-notification">
+                    @auth
                     <a href="#!" class="waves-effect waves-light">
                         <img src="{{ Auth::user()->profile && Auth::user()->profile->foto ? asset('storage/' . Auth::user()->profile->foto) : asset('assets/images/user.png') }}"
                             class="img-radius" alt="User-Profile-Image"
@@ -152,6 +149,11 @@
                             </a>
                         </li>
                     </ul>
+                    @else
+                    <a href="{{ route('login') }}" class="waves-effect waves-light btn btn-primary btn-sm text-white px-3 mt-2" style="border-radius: 20px;">
+                        <i class="fa-solid fa-right-to-bracket mr-1"></i> Login
+                    </a>
+                    @endauth
                 </li>
             </ul>
         </div>

@@ -217,6 +217,7 @@
         </form>
         <div class="new-to-baak">
             <p>Baru di MYBAAK? <a href="{{ route('register') }}">Daftar sekarang.</a></p>
+            <p>Pencarian Dokumen <a href="{{ route('semantic.index') }}">Disini.</a></p>
         </div>
     </div>
 

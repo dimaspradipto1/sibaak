@@ -32,15 +32,25 @@ use App\Http\Controllers\UserGuidePenggunaMahasiswaController;
 use App\Http\Controllers\UserGuidePenggunaTatausahaController;
 use App\Http\Controllers\UserGuideTatausahaController;
 use App\Http\Controllers\WasdalbinController;
+use App\Http\Controllers\SemanticArsipController;
 use Illuminate\Support\Facades\Route;
 
 
+// 1. HALAMAN UTAMA (Semantic Search)
+Route::get('/', [SemanticArsipController::class, 'index'])->name('semantic.index');
+
+// 2. AUTHENTICATION
 Route::controller(LoginController::class)->group(function () {
-    Route::get('/', 'index')->name('login');
+    Route::get('/login', 'index')->name('login');
     Route::post('/loginproses', 'loginproses')->name('loginproses');
     Route::get('/register', 'register')->name('register');
     Route::post('/registerproses', 'registerproses')->name('registerproses');
     Route::get('/logout', 'logout')->name('logout');
+});
+
+// redirect rute lama agar tetap aman
+Route::get('/semantic-search', function() {
+    return redirect()->route('semantic.index');
 });
 
 Route::post('/suratAktif/pengajuan', [SuratAktifController::class, 'pengajuan'])->name('suratAktif.pengajuan');
@@ -52,10 +62,14 @@ Route::get('/suratAktif/{suratAktif}/print', [SuratAktifController::class, 'prin
 Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
+    Route::post('/users/import', [UserController::class, 'import'])->name('users.import');
+    Route::get('/users/export-template', [UserController::class, 'exportTemplate'])->name('users.export-template');
     Route::resource('users', UserController::class);
     Route::get('/user/{id}/update-password', [UserController::class, 'showUpdatePasswordForm'])->name('users.showUpdatePasswordForm');
     Route::put('/user/{id}/update-password', [UserController::class, 'updatePassword'])->name('users.updatePassword');
     Route::resource('tahunAkademik', TahunAkademikController::class);
+    Route::post('/mahasiswa/import', [MahasiswaController::class, 'import'])->name('mahasiswa.import');
+    Route::get('/mahasiswa/export-template', [MahasiswaController::class, 'exportTemplate'])->name('mahasiswa.export-template');
     Route::resource('mahasiswa', MahasiswaController::class);
     Route::resource('programStudi', ProgramStudiController::class);
     Route::resource('jenissk', JenisSKController::class);
@@ -86,6 +100,8 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::put('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.updatePassword');
     Route::resource('kategoriarsip', KategoriArsipController::class);
+    Route::post('/arsiputama/import', [ArsipUtamaController::class, 'import'])->name('arsiputama.import');
+    Route::get('/arsiputama/export-template', [ArsipUtamaController::class, 'exportTemplate'])->name('arsiputama.export-template');
     Route::resource('arsiputama', ArsipUtamaController::class);
     Route::resource('role', RoleController::class);
     Route::get('/role/{role}/permission', [RoleController::class, 'editPermission'])->name('role.edit-permission');

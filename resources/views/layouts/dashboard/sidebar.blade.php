@@ -3,19 +3,31 @@
     <div class="pcoded-inner-navbar main-menu">
         <div class="">
             <div class="main-menu-header">
+                @auth
                 <img class="img-80 img-radius"
                     src="{{ Auth::user()->profile && Auth::user()->profile->foto ? asset('storage/' . Auth::user()->profile->foto) : asset('assets/images/user.png') }}"
                     alt="User-Profile-Image" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
                 <div class="user-details">
                     <span id="more-details">{{ Auth::user()->name }}<i class="fa fa-caret-down"></i></span>
                 </div>
+                @else
+                <img class="img-80 img-radius" src="{{ asset('assets/images/user.png') }}" alt="User-Profile-Image">
+                <div class="user-details">
+                    <span id="more-details">Guest User<i class="fa fa-caret-down"></i></span>
+                </div>
+                @endauth
             </div>
             <div class="main-menu-content">
                 <ul>
                     <li class="more-details">
+                        <a href="{{ route('semantic.index') }}"><i class="ti-search"></i>Semantic Search</a>
+                        @auth
                         <a href="{{ route('profile.index') }}"><i class="ti-user"></i>View Profile</a>
                         <a href="{{ route('settings.index') }}"><i class="ti-settings"></i>Settings</a>
                         <a href="{{ route('logout') }}"><i class="ti-layout-sidebar-left"></i>Logout</a>
+                        @else
+                        <a href="{{ route('login') }}"><i class="ti-layout-sidebar-left"></i>Login</a>
+                        @endauth
                     </li>
                 </ul>
             </div>
@@ -33,7 +45,7 @@
         {{-- <div class="pcoded-navigation-label">Navigation</div> --}}
         <ul class="pcoded-item pcoded-left-item">
             <li class="active">
-                <a href="{{ route('dashboard') }}" class="waves-effect waves-dark">
+                <a href="{{ Auth::check() ? route('dashboard') : route('login') }}" class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                     <span class="pcoded-mtext">Dashboard</span>
                     <span class="pcoded-mcaret"></span>
@@ -42,7 +54,7 @@
         </ul>
 
 
-        @if(Auth::user()->is_mahasiswa || Gate::any(['surat_aktif_view', 'surat_akademik_view']))
+        @if(Auth::check() && (Auth::user()->is_mahasiswa || Gate::any(['surat_aktif_view', 'surat_akademik_view'])))
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -83,6 +95,13 @@
                         <span class="pcoded-mcaret"></span>
                     </a>
                     <ul class="pcoded-submenu">
+                        <li class=" ">
+                            <a href="{{ route('semantic.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext text-capitalize font-weight-bold text-primary">Semantic Search</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
                         @can('arsip_utama_view')
                         <li class=" ">
                             <a href="{{ route('arsiputama.index') }}" class="waves-effect waves-dark">

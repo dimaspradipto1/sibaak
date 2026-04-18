@@ -11,6 +11,10 @@ use App\DataTables\MahasiswaDataTable;
 use App\Http\Requests\MahasiswaRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 
+use App\Imports\MahasiswaImport;
+use App\Exports\MahasiswaTemplateExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class MahasiswaController extends Controller
 {
     /**
@@ -116,5 +120,31 @@ class MahasiswaController extends Controller
             ->timerProgressBar()
             ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
         return redirect()->route('mahasiswa.index');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            Excel::import(new MahasiswaImport, $request->file('file'));
+            
+            Alert::success('Sukses', 'Data Mahasiswa berhasil diimpor')
+                ->autoclose(4000)
+                ->toToast();
+        } catch (\Exception $e) {
+            Alert::error('Gagal', 'Terjadi kesalahan saat impor: ' . $e->getMessage())
+                ->autoclose(5000)
+                ->toToast();
+        }
+
+        return redirect()->back();
+    }
+
+    public function exportTemplate()
+    {
+        return Excel::download(new MahasiswaTemplateExport, 'format_import_mahasiswa.xlsx');
     }
 }
