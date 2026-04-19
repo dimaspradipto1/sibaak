@@ -173,5 +173,19 @@
                 }
             }
         });
+
+        $('form').on('submit', function() {
+            Swal.fire({
+                title: 'Sedang Mengunggah...',
+                text: 'Mohon tunggu sebentar, file sedang dikirim ke Google Drive.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            return true;
+        });
     </script>
 @endpush

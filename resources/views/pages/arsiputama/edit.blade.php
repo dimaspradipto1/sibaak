@@ -116,5 +116,19 @@
         $(document).ready(function () {
             $('#kategori_arsip_id').select2();
         });
+
+        $('form').on('submit', function() {
+            Swal.fire({
+                title: 'Sedang Memproses...',
+                text: 'Mohon tunggu sebentar, data sedang diperbarui.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            return true;
+        });
     </script>
 @endpush
