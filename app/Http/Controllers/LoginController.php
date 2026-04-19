@@ -84,6 +84,6 @@ class LoginController extends Controller
             ->toToast()
             ->timerProgressBar()
             ->iconHtml('<i class="fa-solid fa-check"></i>');
-        return redirect()->route('login');
+        return redirect()->route('semantic.index');
     }
 }

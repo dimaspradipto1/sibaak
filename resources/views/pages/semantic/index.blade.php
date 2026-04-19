@@ -81,12 +81,27 @@
             align-items: center;
             padding: 5px 15px;
             background: #fff;
+            transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .search-bar-landing:hover,
         .search-bar-landing:focus-within {
             box-shadow: 0 1px 6px rgba(32, 33, 36, .28);
             border-color: rgba(223, 225, 229, 0);
+        }
+
+        /* Clean Input Styles */
+        input {
+            background-color: transparent !important;
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px white inset !important;
+            -webkit-text-fill-color: #202124 !important;
+            transition: background-color 5000s ease-in-out 0s;
         }
 
         /* Results Style */
@@ -113,7 +128,13 @@
             padding: 2px 15px;
             width: 100%;
             max-width: 692px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            background: #fff;
+            transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .search-bar-results:focus-within {
+            box-shadow: 0 1px 6px rgba(32, 33, 36, .28);
+            border-color: rgba(223, 225, 229, 0);
         }
 
         .nav-link-google {
@@ -266,7 +287,56 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .xsmall { font-size: 11px; }
+
+        .xsmall {
+            font-size: 11px;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .google-logo {
+                font-size: 45px;
+                letter-spacing: -2px;
+                margin-bottom: 20px;
+            }
+
+            .top-right-nav {
+                top: 10px;
+                right: 15px;
+            }
+
+            .results-header {
+                padding: 15px;
+            }
+
+            .results-logo {
+                font-size: 20px;
+                margin-right: 15px !important;
+            }
+
+            .search-bar-results {
+                max-width: 100%;
+            }
+
+            .nav-link-google {
+                margin-right: 10px;
+                font-size: 13px;
+            }
+
+            .nav-link-google i {
+                display: none;
+            }
+
+            .ml-md-5, .pl-md-5 {
+                margin-left: 0 !important;
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+            }
+            
+            .container-fluid {
+                padding-right: 15px!important;
+            }
+        }
     </style>
 </head>
 
@@ -275,10 +345,10 @@
     <div class="top-right-nav d-flex align-items-center">
         <!-- Google Apps & Profile Links -->
         <a href="https://mail.google.com" target="_blank" class="mr-3 text-muted small d-none d-md-inline text-decoration-none hover-underline">Gmail</a>
-        <span class="mr-3 text-muted small d-none d-md-inline" style="cursor: pointer;">Gambar</span>
+        <a href="{{ route('semantic.index', ['tab' => 'gambar']) }}" class="mr-3 text-muted small d-none d-md-inline text-decoration-none hover-underline">Gambar</a>
         
-        <div class="google-apps-icon mr-2">
-            <i class="fa-solid fa-ellipsis-vertical" style="transform: rotate(90deg);"></i>
+        <div class="google-apps-icon mr-2" title="Google Apps">
+            <i class="fa-solid fa-grip" style="font-size: 20px;"></i>
         </div>
 
         @auth
@@ -304,18 +374,24 @@
 
     @if (!$query)
         <div class="landing-container">
-            <div class="google-logo">
+            <div class="google-logo text-center position-relative">
                 <span style="color: #4285F4;">M</span><span style="color: #EA4335;">y</span><span
                     style="color: #FBBC05;">b</span><span style="color: #4285F4;">a</span><span
                     style="color: #34A853;">a</span><span style="color: #EA4335;">k</span>
+                <span class="ml-1" style="color: #EA4335;">U</span><span style="color: #FBBC05;">I</span><span
+                    style="color: #34A853;">S</span>
+                @if($tab == 'gambar')
+                    <div style="color: #4285F4; font-size: 16px; font-weight: 500; margin-top: -20px; text-transform: capitalize;">gambar</div>
+                @endif
             </div>
 
             <div class="search-wrapper px-3">
                 <form action="{{ route('semantic.index') }}" method="GET">
+                    <input type="hidden" name="tab" value="{{ $tab }}">
                     <div class="search-bar-landing">
                         <i class="fa-solid fa-magnifying-glass text-muted mr-3"></i>
                         <input type="text" name="q" class="form-control border-0 no-focus py-4"
-                            placeholder="Cari arsip UIS..." autofocus autocomplete="off">
+                            placeholder="{{ $tab == 'gambar' ? 'Cari gambar arsip...' : 'Cari arsip UIS...' }}" autofocus autocomplete="off">
                     </div>
                     <div class="text-center mt-4">
                         <button type="submit" class="btn btn-light px-4 py-2 mr-2 border-0 shadow-sm"
@@ -365,13 +441,13 @@
         </div>
     @else
         <div class="results-header d-flex flex-column">
-            <div class="d-flex align-items-center mb-3">
-                <a href="{{ route('semantic.index') }}" class="results-logo mr-5">
+            <div class="d-flex align-items-center mb-2">
+                <a href="{{ route('semantic.index') }}" class="results-logo mr-1 mr-md-5">
                     <span style="color: #4285F4;">M</span><span style="color: #EA4335;">y</span><span
                         style="color: #FBBC05;">b</span><span style="color: #4285F4;">a</span><span
                         style="color: #34A853;">a</span><span style="color: #EA4335;">k</span>
                 </a>
-                <div class="search-bar-results ml-2">
+                <div class="search-bar-results flex-grow-1">
                     <input type="text" name="q" class="form-control border-0 no-focus py-2"
                         value="{{ $query }}" form="searchForm">
                     <i class="fa-solid fa-magnifying-glass text-primary ml-auto cursor-pointer"
@@ -381,16 +457,18 @@
                     <input type="hidden" name="tab" value="{{ $tab }}">
                 </form>
             </div>
-            <div class="d-flex ml-5 pl-5">
-                <a href="{{ route('semantic.index', ['q' => $query, 'tab' => 'semua']) }}"
-                    class="nav-link-google {{ $tab == 'semua' ? 'active' : '' }}"><i
-                        class="fa-solid fa-magnifying-glass mr-2"></i>Semua</a>
-                <a href="{{ route('semantic.index', ['q' => $query, 'tab' => 'gambar']) }}"
-                    class="nav-link-google {{ $tab == 'gambar' ? 'active' : '' }}"><i
-                        class="fa-solid fa-image mr-2"></i>Gambar</a>
-                <a href="{{ route('semantic.index', ['q' => $query, 'tab' => 'terbaru']) }}"
-                    class="nav-link-google {{ $tab == 'terbaru' ? 'active' : '' }}"><i
-                        class="fa-solid fa-calendar mr-2"></i>Terbaru</a>
+            <div class="d-flex overflow-auto mt-2">
+                <div class="ml-0 ml-md-5 pl-0 pl-md-5 d-flex">
+                    <a href="{{ route('semantic.index', ['q' => $query, 'tab' => 'semua']) }}"
+                        class="nav-link-google {{ $tab == 'semua' ? 'active' : '' }}"><i
+                            class="fa-solid fa-magnifying-glass mr-2"></i>Semua</a>
+                    <a href="{{ route('semantic.index', ['q' => $query, 'tab' => 'gambar']) }}"
+                        class="nav-link-google {{ $tab == 'gambar' ? 'active' : '' }}"><i
+                            class="fa-solid fa-image mr-2"></i>Gambar</a>
+                    <a href="{{ route('semantic.index', ['q' => $query, 'tab' => 'terbaru']) }}"
+                        class="nav-link-google {{ $tab == 'terbaru' ? 'active' : '' }}"><i
+                            class="fa-solid fa-calendar mr-2"></i>Terbaru</a>
+                </div>
             </div>
         </div>
 
