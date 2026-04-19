@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\ArsipUtama;
-use App\Models\SkKepanitiaan;
-use App\Models\LpjKepanitiaan;
+use App\Models\Artikel;
 use App\Models\Kurikulum;
+use App\Models\LpjKepanitiaan;
 use App\Models\Pedoman;
+use App\Models\SkKepanitiaan;
 use App\Models\SopAkademik;
 use App\Models\Wasdalbin;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
 
 class SemanticArsipController extends Controller
 {
@@ -19,6 +22,7 @@ class SemanticArsipController extends Controller
         $query = $request->input('q');
         $tab = $request->input('tab', 'semua');
         $results = collect();
+        $top_result = null;
 
         if ($query) {
             // Helper to get Google Drive Thumbnail if available
@@ -28,6 +32,67 @@ class SemanticArsipController extends Controller
                 }
                 return null;
             };
+
+            // Search in Artikel (Prioritized for Knowledge Panel)
+            $artikelItems = Artikel::with(['user.role'])
+                ->where(function($q) use ($query) {
+                    $q->where('judul', 'like', "%$query%")
+                      ->orWhere('tipe', 'like', "%$query%")
+                      ->orWhere('konten', 'like', "%$query%")
+                      ->orWhere('keyword', 'like', "%$query%");
+                })
+                ->get()
+                ->map(function($item) {
+                    $item->type = 'Artikel';
+                    $item->title = $item->judul;
+                    
+                    // Improved Narrative Logic
+                    $plain_text = trim(strip_tags($item->konten));
+                    if (empty($plain_text)) {
+                        $source = 'portal berita';
+                        if ($item->is_youtube) $source = 'saluran YouTube';
+                        if ($item->is_facebook) $source = 'halaman Facebook';
+                        
+                        $item->description = "Lihat informasi lengkap mengenai {$item->title} yang tersedia di {$source} resmi Universitas Ibnu Sina. Akses arsip digital untuk melihat detail publikasi ini.";
+                    } else {
+                        $item->description = Str::limit($plain_text, 170, '...');
+                    }
+
+                    $item->link = route('artikel.show', $item->id);
+                    $item->icon = 'fa-newspaper';
+                    $item->color = 'text-info';
+                    $item->thumbnail = $item->gambar ? asset('storage/' . $item->gambar) : null;
+                    
+                    // Specific YouTube Handling
+                    $item->is_youtube = false;
+                    $item->is_facebook = false;
+                    
+                    if ($item->media_url && preg_match('/(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $item->media_url, $matches)) {
+                        $item->is_youtube = true;
+                        $item->youtube_id = $matches[2];
+                        $item->thumbnail = "https://img.youtube.com/vi/{$item->youtube_id}/mqdefault.jpg";
+                        $item->link = $item->media_url;
+                        $item->icon = 'fa-brands fa-youtube';
+                        $item->color = 'text-danger';
+                    } elseif ($item->media_url && str_contains($item->media_url, 'facebook.com')) {
+                        $item->is_facebook = true;
+                        $item->link = $item->media_url;
+                        $item->icon = 'fa-brands fa-facebook';
+                        $item->color = 'text-primary';
+                    }
+
+                    // Detect if media_url is a Map
+                    $item->is_map = strpos($item->media_url, 'maps') !== false || strpos($item->media_url, 'goo.gl/maps') !== false;
+                    $item->external_link = $item->media_url;
+                    $item->kategori = $item->kategori; 
+                    
+                    return $item;
+                });
+
+            // Set top_result if search matches article title closely
+            if ($artikelItems->count() > 0) {
+                $top_result = $artikelItems->first();
+            }
 
             // Search in Arsip Utama
             $arsipUtama = ArsipUtama::with(['user.role', 'kategoriArsip'])
@@ -44,6 +109,7 @@ class SemanticArsipController extends Controller
                 ->map(function($item) use ($getThumbnail) {
                     $item->type = 'Arsip Utama';
                     $item->title = $item->nama_arsip;
+                    $item->description = 'Dokumen ini merupakan arsip digital yang terdaftar dalam kategori ' . ($item->kategoriArsip->kategori_arsip ?? 'Umum') . '. Berkas ini disimpan untuk keperluan administrasi dan akreditasi internal UIS.';
                     $item->link = $item->file_arsip;
                     $item->icon = 'fa-file-pdf';
                     $item->color = 'text-danger';
@@ -67,6 +133,7 @@ class SemanticArsipController extends Controller
                 ->map(function($item) use ($getThumbnail) {
                     $item->type = 'SK Kepanitiaan';
                     $item->title = $item->nama_dokumen . ' (' . $item->nomor_sk . ')';
+                    $item->description = 'Salinan resmi Dokumen SK Kepanitiaan dengan nomor registrasi ' . $item->nomor_sk . '. Dokumen ini telah diverifikasi dan tersimpan dalam pangkalan data arsip digital UIS.';
                     $item->link = $item->file;
                     $item->icon = 'fa-file-contract';
                     $item->color = 'text-primary';
@@ -86,6 +153,7 @@ class SemanticArsipController extends Controller
                 ->get()
                 ->map(function($item) use ($getThumbnail) {
                     $item->type = 'LPJ Kepanitiaan';
+                    $item->description = 'Laporan Pertanggungjawaban (LPJ) kegiatan. Ketua pelaksana: ' . $item->ketua . '.';
                     $item->title = $item->nama_dokumen;
                     $item->link = $item->file;
                     $item->icon = 'fa-file-invoice';
@@ -170,7 +238,8 @@ class SemanticArsipController extends Controller
                     return $item;
                 });
 
-            $results = $results->concat($arsipUtama)
+            $results = $results->concat($artikelItems)
+                               ->concat($arsipUtama)
                                ->concat($sk)
                                ->concat($lpj)
                                ->concat($kurikulum)
@@ -182,10 +251,31 @@ class SemanticArsipController extends Controller
             if ($tab == 'terbaru') {
                 $results = $results->sortByDesc('created_at');
             } elseif ($tab == 'gambar') {
-                $results = $results->whereNotNull('link')->where('link', '!=', '');
+                $results = $results->whereNotNull('thumbnail')->where('thumbnail', '!=', '');
+            } elseif ($tab == 'video') {
+                $results = $results->filter(function($item) {
+                    return (isset($item->is_youtube) && $item->is_youtube) || (isset($item->is_facebook) && $item->is_facebook);
+                });
+            } elseif ($tab == 'berita') {
+                $results = $results->filter(function($item) {
+                    return $item->type == 'Artikel' && in_array($item->kategori, ['Berita', 'Informasi', 'Pengumuman', 'Tutorial']);
+                });
             }
+
+            // PAGINATION LOGIC
+            $perPage = 10;
+            $currentPage = request()->input('page', 1);
+            $currentItems = $results->slice(($currentPage - 1) * $perPage, $perPage)->all();
+
+            $results = new LengthAwarePaginator(
+                $currentItems,
+                $results->count(),
+                $perPage,
+                $currentPage,
+                ['path' => request()->url(), 'query' => request()->query()]
+            );
         }
 
-        return view('pages.semantic.index', compact('title', 'results', 'query', 'tab'));
+        return view('pages.semantic.index', compact('title', 'results', 'query', 'tab', 'top_result'));
     }
 }

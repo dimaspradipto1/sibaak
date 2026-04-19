@@ -120,6 +120,12 @@ class PermissionSeeder extends Seeder
             // Rekapitulasi
             ['name' => 'Lihat Rekapitulasi Arsip', 'slug' => 'rekapitulasi_arsip_view', 'module' => 'Rekapitulasi'],
             ['name' => 'Lihat Rekapitulasi Surat Aktif', 'slug' => 'rekapitulasi_surat_aktif_view', 'module' => 'Rekapitulasi'],
+
+            // Portal Artikel
+            ['name' => 'Lihat Portal Artikel', 'slug' => 'artikel_view', 'module' => 'Portal Artikel'],
+            ['name' => 'Tambah Portal Artikel', 'slug' => 'artikel_create', 'module' => 'Portal Artikel'],
+            ['name' => 'Edit Portal Artikel', 'slug' => 'artikel_edit', 'module' => 'Portal Artikel'],
+            ['name' => 'Hapus Portal Artikel', 'slug' => 'artikel_delete', 'module' => 'Portal Artikel'],
         ];
 
         foreach ($permissions as $permission) {

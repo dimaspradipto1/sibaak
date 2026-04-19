@@ -10,7 +10,7 @@
                         <h4 class="mb-1 font-weight-bold text-white"><i class="fa fa-shield-alt mr-2"></i> Konfigurasi Izin Akses</h4>
                         <p class="mb-0 opacity-80" style="font-size: 0.9rem;">Menentukan hak akses untuk role: <strong>{{ $role->nama_role }}</strong></p>
                     </div>
-                    <a href="{{ route('role.index') }}" class="btn btn-light btn-sm rounded-pill px-4 font-weight-bold shadow-sm">
+                    <a href="{{ route('role.index') }}" class="btn btn-light btn-sm px-4 font-weight-bold shadow-sm" style="border-radius: 50px !important;">
                         <i class="fa fa-arrow-left mr-1"></i> Kembali
                     </a>
                 </div>
@@ -33,6 +33,7 @@
                                                         if(str_contains($module, 'Master')) $icon = 'fa-database';
                                                         if(str_contains($module, 'Rekap')) $icon = 'fa-chart-pie';
                                                         if(str_contains($module, 'Layanan')) $icon = 'fa-user-graduate';
+                                                        if(str_contains($module, 'Artikel')) $icon = 'fa-newspaper';
                                                     @endphp
                                                     <i class="fa {{ $icon }} sm"></i>
                                                 </div>
@@ -44,16 +45,16 @@
                                             </div>
                                         </div>
                                         <div class="card-body p-0">
-                                            <div class="table-responsive">
-                                                <table class="table table-borderless mb-0 permission-table" data-module-target="{{ Str::slug($module) }}">
+                                            <div class="table-responsive overflow-hidden">
+                                                <table class="table table-borderless mb-0 permission-table w-100" data-module-target="{{ Str::slug($module) }}">
                                                     <thead class="bg-light border-bottom">
                                                         <tr style="background-color: #f1f4f9;">
-                                                            <th class="py-2 px-4 small font-weight-bold text-muted border-0" style="width: 50%;">MODULE</th>
-                                                            <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">VIEW</th>
-                                                            <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">ADD</th>
-                                                            <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">EDIT</th>
-                                                            <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">DEL</th>
-                                                            <th class="py-2 px-2 small font-weight-bold text-muted border-0 text-center">ALL</th>
+                                                            <th class="py-2 px-3 small font-weight-bold text-muted border-0" style="width: 40%;">MODULE</th>
+                                                            <th class="py-2 px-1 small font-weight-bold text-muted border-0 text-center" style="width: 12%;">VIEW</th>
+                                                            <th class="py-2 px-1 small font-weight-bold text-muted border-0 text-center" style="width: 12%;">ADD</th>
+                                                            <th class="py-2 px-1 small font-weight-bold text-muted border-0 text-center" style="width: 12%;">EDIT</th>
+                                                            <th class="py-2 px-1 small font-weight-bold text-muted border-0 text-center" style="width: 12%;">DEL</th>
+                                                            <th class="py-2 px-1 small font-weight-bold text-muted border-0 text-center" style="width: 12%;">ALL</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -76,13 +77,13 @@
 
                                                         @foreach($subModules as $target => $actions)
                                                             <tr class="border-bottom-dashed">
-                                                                <td class="py-3 px-4">
-                                                                    <span class="font-weight-600 text-dark small d-block">{{ $target }}</span>
+                                                                <td class="py-2 px-3">
+                                                                    <span class="font-weight-600 text-dark small d-block" style="white-space: normal;">{{ $target }}</span>
                                                                 </td>
                                                                 @foreach(['View', 'Add', 'Edit', 'Delete'] as $type)
-                                                                    <td class="text-center py-3 px-1">
+                                                                    <td class="text-center py-2 px-1">
                                                                         @if(isset($actions[$type]))
-                                                                            <div class="pretty p-svg p-curve p-jelly p-success m-0" style="font-size: 1.2rem;">
+                                                                            <div class="pretty p-svg p-curve p-jelly p-success m-0" style="font-size: 1.1rem;">
                                                                                 <input type="checkbox" 
                                                                                        name="permissions[]" 
                                                                                        value="{{ $actions[$type]->id }}" 
@@ -96,7 +97,7 @@
                                                                             </div>
                                                                         @elseif($type == 'View' && isset($actions['Manage']))
                                                                              {{-- Handle case like "Kelola Surat Aktif" --}}
-                                                                             <div class="pretty p-svg p-curve p-jelly p-success m-0" style="font-size: 1.2rem;">
+                                                                             <div class="pretty p-svg p-curve p-jelly p-success m-0" style="font-size: 1.1rem;">
                                                                                 <input type="checkbox" 
                                                                                        name="permissions[]" 
                                                                                        value="{{ $actions['Manage']->id }}" 
@@ -108,14 +109,14 @@
                                                                                     <label></label>
                                                                                 </div>
                                                                             </div>
-                                                                            <span class="d-block x-small text-muted" style="font-size: 0.6rem;">FULL</span>
+                                                                            <span class="d-block x-small text-muted" style="font-size: 0.55rem;">FULL</span>
                                                                         @else
                                                                              <span class="text-light">-</span>
                                                                         @endif
                                                                     </td>
                                                                 @endforeach
-                                                                <td class="text-center py-3 px-1">
-                                                                    <div class="pretty p-svg p-curve p-jelly p-warning m-0 check-all-row" style="font-size: 1.2rem;">
+                                                                <td class="text-center py-2 px-1">
+                                                                    <div class="pretty p-svg p-curve p-jelly p-warning m-0 check-all-row" style="font-size: 1.1rem;">
                                                                         <input type="checkbox" class="row-checkbox" />
                                                                         <div class="state p-warning">
                                                                             <svg class="svg svg-icon" viewBox="0 0 20 20">
@@ -137,7 +138,8 @@
                         </div>
 
                         <div class="sticky-footer mt-4 pt-4 border-top text-center">
-                            <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 font-weight-bold shadow-lg" style="letter-spacing: 1px;">
+                            <button type="submit" class="btn btn-primary px-5 py-2 font-weight-bold shadow-lg" 
+                                    style="letter-spacing: 1px; border-radius: 50px !important;">
                                 <i class="fa fa-save mr-2"></i> SIMPAN KONFIGURASI
                             </button>
                         </div>

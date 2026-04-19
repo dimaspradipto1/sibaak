@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArsipUtamaController;
+use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\FAQController;
@@ -107,6 +108,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::post('/arsiputama/import', [ArsipUtamaController::class, 'import'])->name('arsiputama.import');
     Route::get('/arsiputama/export-template', [ArsipUtamaController::class, 'exportTemplate'])->name('arsiputama.export-template');
     Route::resource('arsiputama', ArsipUtamaController::class);
+    Route::resource('artikel', ArtikelController::class);
     Route::resource('role', RoleController::class);
     Route::get('/role/{role}/permission', [RoleController::class, 'editPermission'])->name('role.edit-permission');
     Route::put('/role/{role}/permission', [RoleController::class, 'updatePermission'])->name('role.update-permission');
