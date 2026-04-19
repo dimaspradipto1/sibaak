@@ -13,8 +13,33 @@ use Illuminate\Support\Facades\Auth;
 use App\DataTables\SuratAktifDataTable;
 use RealRashid\SweetAlert\Facades\Alert;
 
+use App\Imports\SuratAktifImport;
+use App\Exports\SuratAktifTemplateExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class SuratAktifController extends Controller
 {
+    public function exportTemplate()
+    {
+        return Excel::download(new SuratAktifTemplateExport, 'template_surat_aktif.xlsx');
+    }
+
+    public function import(Request $request) 
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            Excel::import(new SuratAktifImport, $request->file('file'));
+            Alert::success('Berhasil', 'Data Surat Aktif berhasil diimport')->autoclose(3000)->toToast();
+        } catch (\Exception $e) {
+            Alert::error('Gagal', 'Terjadi kesalahan saat import: ' . $e->getMessage())->autoclose(5000)->toToast();
+        }
+
+        return redirect()->route('suratAktif.index');
+    }
+
     /**
      * Display a listing of the resource.
      */

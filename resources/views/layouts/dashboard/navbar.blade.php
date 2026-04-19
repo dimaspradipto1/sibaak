@@ -1,7 +1,7 @@
 <nav class="navbar header-navbar pcoded-header">
     <div class="navbar-wrapper">
         <div class="navbar-logo">
-            <a class="mobile-menu waves-effect waves-light" id="mobile-collapse" href="#!">
+            <a class="mobile-menu waves-effect waves-light" id="mobile-collapse" href="javascript:void(0)">
                 <i class="ti-menu"></i>
             </a>
             <div class="mobile-search waves-effect waves-light">
@@ -21,7 +21,7 @@
                 <img class="img-fluid" src="{{ asset('assets/images/logouis.png') }}" style="width: 30px; height: 30px;"
                     alt="UIS Logo" />
             </a>
-            <span class="navbar-brand mb-0 text-white ml-2">MYBAAK</span>
+            <span class="navbar-brand mb-0 text-white ml-2">MYBAAK UIS</span>
             <a class="mobile-options waves-effect waves-light">
                 <i class="ti-more"></i>
             </a>
@@ -33,14 +33,14 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#!" onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
+                    <a href="javascript:void(0)" onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
                         <i class="ti-fullscreen"></i>
                     </a>
                 </li>
             </ul>
             <ul class="nav-right">
                 <li class="header-notification">
-                    <a href="#!" class="waves-effect waves-light">
+                    <a href="javascript:void(0)" class="waves-effect waves-light">
                         <i class="ti-bell"></i>
                         @if ($totalPending > 0)
                             <span class="badge bg-c-red">{{ $totalPending }}</span>
@@ -115,7 +115,7 @@
                 </li>
                 <li class="user-profile header-notification">
                     @auth
-                    <a href="#!" class="waves-effect waves-light">
+                    <a href="javascript:void(0)" class="waves-effect waves-light">
                         <img src="{{ Auth::user()->profile && Auth::user()->profile->foto ? asset('storage/' . Auth::user()->profile->foto) : asset('assets/images/user.png') }}"
                             class="img-radius" alt="User-Profile-Image"
                             style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">

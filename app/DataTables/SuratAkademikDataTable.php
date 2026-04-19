@@ -61,10 +61,14 @@ class SuratAkademikDataTable extends DataTable
 
                 // Tombol untuk mahasiswa
                 if (Auth::user()->is_mahasiswa) {
-                    $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-info text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Lihat Detail"><i class="fa-solid fa-eye"></i><span class="d-none d-md-inline"> Detail</span></a>';
-                    
-                    if ($item->status == 'diterima') {
-                        $showButton .= '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Cetak Surat</span></a>';
+                    if ($item->status == 'pending') {
+                        $showButton = '<span class="text-info small font-italic"><i class="fa-solid fa-clock mr-1"></i>Estimasi surat diproses 3 hari kerja</span>';
+                    } else {
+                        $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-info text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Lihat Detail"><i class="fa-solid fa-eye"></i><span class="d-none d-md-inline"> Detail</span></a>';
+                        
+                        if ($item->status == 'diterima') {
+                            $showButton .= '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Cetak Surat</span></a>';
+                        }
                     }
                 }
 

@@ -13,8 +13,33 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\DataTables\SuratAkademikDataTable;
 use Illuminate\Support\Facades\Auth;
 
+use App\Imports\SuratAkademikImport;
+use App\Exports\SuratAkademikTemplateExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class SuratAkademikController extends Controller
 {
+    public function exportTemplate()
+    {
+        return Excel::download(new SuratAkademikTemplateExport, 'template_surat_akademik.xlsx');
+    }
+
+    public function import(Request $request) 
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            Excel::import(new SuratAkademikImport, $request->file('file'));
+            Alert::success('Berhasil', 'Data Surat Akademik berhasil diimport')->autoclose(3000)->toToast();
+        } catch (\Exception $e) {
+            Alert::error('Gagal', 'Terjadi kesalahan saat import: ' . $e->getMessage())->autoclose(5000)->toToast();
+        }
+
+        return redirect()->route('suratAkademik.index');
+    }
+
     /**
      * Display a listing of the resource.
      */

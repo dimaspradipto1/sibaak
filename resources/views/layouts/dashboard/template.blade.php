@@ -295,7 +295,7 @@
                                                 </a>
                                             </li>
                                             <li class="breadcrumb-item"><a
-                                                    href="#!">{{ $title ?? 'Dashboard' }}</a>
+                                                    href="javascript:void(0)">{{ $title ?? 'Dashboard' }}</a>
                                             </li>
                                         </ul>
                                     </div>

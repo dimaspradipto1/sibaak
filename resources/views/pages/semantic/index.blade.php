@@ -378,8 +378,8 @@
                 <span style="color: #4285F4;">M</span><span style="color: #EA4335;">y</span><span
                     style="color: #FBBC05;">b</span><span style="color: #4285F4;">a</span><span
                     style="color: #34A853;">a</span><span style="color: #EA4335;">k</span>
-                <span class="ml-1" style="color: #EA4335;">U</span><span style="color: #FBBC05;">I</span><span
-                    style="color: #34A853;">S</span>
+                <span style="color: #4285F4;">U</span><span style="color: #34A853;;">I</span><span
+                    style="color: #FBBC05;">S</span>
                 @if($tab == 'gambar')
                     <div style="color: #4285F4; font-size: 16px; font-weight: 500; margin-top: -20px; text-transform: capitalize;">gambar</div>
                 @endif
@@ -446,6 +446,8 @@
                     <span style="color: #4285F4;">M</span><span style="color: #EA4335;">y</span><span
                         style="color: #FBBC05;">b</span><span style="color: #4285F4;">a</span><span
                         style="color: #34A853;">a</span><span style="color: #EA4335;">k</span>
+                    <span style="color: #4285F4;">U</span><span style="color: #34A853;">I</span><span
+                        style="color: #FBBC05;">S</span>
                 </a>
                 <div class="search-bar-results flex-grow-1">
                     <input type="text" name="q" class="form-control border-0 no-focus py-2"
@@ -530,8 +532,8 @@
 
                                 <div class="col-md-3 ml-auto px-4">
                                     <div class="card border shadow-sm p-3">
-                                        <h6 class="font-weight-bold mb-3">About UIS Archive</h6>
-                                        <p class="small text-muted">Sistem Pencarian Semantik UIS terintegrasi dengan
+                                        <h6 class="font-weight-bold mb-3">About Mybaak UIS</h6>
+                                        <p class="small text-muted">Sistem Pencarian Semantik Mybaak UIS terintegrasi dengan
                                             Google Drive API untuk memudahkan staf dan mahasiswa dalam menemukan dokumen
                                             akreditasi dan administrasi secara cepat.</p>
                                         <hr>
