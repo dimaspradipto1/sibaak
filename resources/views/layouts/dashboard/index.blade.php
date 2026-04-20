@@ -6,8 +6,153 @@
 
 @section('content')
 
-    {{-- Section for Staff/Admin --}}
-    @canany(['dashboard_view', 'users_view', 'surat_aktif_view'])
+    {{-- Section for Special Staff/Archive Manager (Non Admin, Non Mahasiswa) --}}
+    @php
+        $isMahasiswa = (Auth::user()->role && Auth::user()->role->nama_role == 'MAHASISWA') || (isset(Auth::user()->is_mahasiswa) && Auth::user()->is_mahasiswa);
+        $isAdmin = Gate::check('admin_view') || str_contains($roleName, 'ADMIN');
+        $isSpecialStaff = !$isMahasiswa && !$isAdmin;
+    @endphp
+
+    @if ($isSpecialStaff)
+        <div class="row">
+            <!-- Header Welcome -->
+            <div class="col-md-12 mb-4">
+                <div class="card bg-gradient-uis-green text-white p-4 shadow-sm border-0" style="border-radius: 15px;">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h3 class="font-weight-bold mb-1">Halo, {{ auth()->user()->name }}! 👋</h3>
+                            <p class="mb-0 opacity-75">Selamat datang di Panel Pengelolaan Arsip SIBAAK. Berikut adalah ringkasan data yang Anda kelola hari ini.</p>
+                        </div>
+                        <div class="col-md-4 text-right d-none d-md-block">
+                            <i class="fas fa-folder-tree fa-4x opacity-25"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Archive Stats Cards -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card-premium border-0 shadow-sm" style="background: #ffffff; border-left: 5px solid #00A551 !important;">
+                    <div class="card-block p-4">
+                        <h6 class="text-muted text-uppercase small font-weight-bold">SK Kepanitiaan</h6>
+                        <div class="d-flex align-items-center justify-content-between mt-3">
+                            <h3 class="font-weight-bold mb-0">{{ $skKepanitiaanCount }}</h3>
+                            <div class="bg-soft-green p-3 rounded-circle">
+                                <i class="fas fa-file-signature text-success f-20"></i>
+                            </div>
+                        </div>
+                        <a href="{{ route('skkepanitiaan.index') }}" class="small text-success font-weight-bold mt-3 d-block">Lihat Detail <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card-premium border-0 shadow-sm" style="background: #ffffff; border-left: 5px solid #4099ff !important;">
+                    <div class="card-block p-4">
+                        <h6 class="text-muted text-uppercase small font-weight-bold">LPJ Kepanitiaan</h6>
+                        <div class="d-flex align-items-center justify-content-between mt-3">
+                            <h3 class="font-weight-bold mb-0">{{ $lpjKepanitiaanCount }}</h3>
+                            <div class="bg-soft-blue p-3 rounded-circle">
+                                <i class="fas fa-file-invoice-dollar text-primary f-20"></i>
+                            </div>
+                        </div>
+                        <a href="{{ route('lpjkepanitiaan.index') }}" class="small text-primary font-weight-bold mt-3 d-block">Lihat Detail <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card-premium border-0 shadow-sm" style="background: #ffffff; border-left: 5px solid #fe8c00 !important;">
+                    <div class="card-block p-4">
+                        <h6 class="text-muted text-uppercase small font-weight-bold">Kurikulum Prodi</h6>
+                        <div class="d-flex align-items-center justify-content-between mt-3">
+                            <h3 class="font-weight-bold mb-0">{{ $kurikulumCount }}</h3>
+                            <div class="bg-soft-orange p-3 rounded-circle">
+                                <i class="fas fa-graduation-cap text-warning f-20"></i>
+                            </div>
+                        </div>
+                        <a href="{{ route('kurikulum.index') }}" class="small text-warning font-weight-bold mt-3 d-block">Lihat Detail <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card-premium border-0 shadow-sm" style="background: #ffffff; border-left: 5px solid #667eea !important;">
+                    <div class="card-block p-4">
+                        <h6 class="text-muted text-uppercase small font-weight-bold">Wasdalbin</h6>
+                        <div class="d-flex align-items-center justify-content-between mt-3">
+                            <h3 class="font-weight-bold mb-0">{{ $wasdalbinCount }}</h3>
+                            <div class="bg-soft-purple p-3 rounded-circle">
+                                <i class="fas fa-clipboard-check text-purple f-20"></i>
+                            </div>
+                        </div>
+                        <a href="{{ route('wasdalbin.index') }}" class="small text-purple font-weight-bold mt-3 d-block">Lihat Detail <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lower Section: Quick Actions & Recent Info -->
+            <div class="col-xl-8 col-md-12">
+                <div class="card shadow-sm border-0" style="border-radius: 12px; height: 100%;">
+                    <div class="card-header bg-white border-bottom p-4">
+                        <h5 class="font-weight-bold mb-0">Informasi Arsip Tambahan</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="p-3 bg-light rounded d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <h6 class="mb-1 font-weight-bold">Pedoman Akademik</h6>
+                                        <p class="small text-muted mb-0">Total: {{ $pedomanCount }} file</p>
+                                    </div>
+                                    <a href="{{ route('pedoman.index') }}" class="btn btn-sm btn-outline-dark rounded-pill">Buka</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="p-3 bg-light rounded d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <h6 class="mb-1 font-weight-bold">SOP Akademik</h6>
+                                        <p class="small text-muted mb-0">Total: {{ $sopAkademikCount }} file</p>
+                                    </div>
+                                    <a href="{{ route('sopakademik.index') }}" class="btn btn-sm btn-outline-dark rounded-pill">Buka</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="text-center py-3">
+                            <h6 class="font-weight-bold mb-3">Butuh Dokumen Tertentu?</h6>
+                            <a href="{{ route('semantic.index') }}" class="btn btn-primary btn-lg rounded-pill px-5 shadow">
+                                <i class="fas fa-search mr-2"></i> Gunakan Semantic Search
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-md-12">
+                <div class="card shadow-sm border-0 bg-info text-white" style="border-radius: 12px; height: 100%;">
+                    <div class="card-body p-4">
+                        <h5 class="font-weight-bold mb-4"><i class="fas fa-info-circle mr-2"></i> Peran Anda</h5>
+                        <p>Sebagai Pengelola Arsip, Anda memiliki kewenangan untuk:</p>
+                        <ul class="pl-3 mb-4">
+                            <li class="mb-2">Menambah/Unggah dokumen baru ke Google Drive.</li>
+                            <li class="mb-2">Memperbarui informasi dokumen yang tersedia.</li>
+                            <li class="mb-2">Melakukan pencarian berbasis AI (Semantic).</li>
+                        </ul>
+                        <div class="text-center mt-auto">
+                            <img src="{{ asset('assets/images/user.png') }}" class="img-fluid opacity-50 mb-3" style="max-height: 120px;">
+                            <p class="small italic">Si-Baak System Version 2.0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- Section for Admin/Superadmin --}}
+    @if ($isAdmin)
         <div class="row">
             <!-- Premium Stats Cards -->
             <div class="col-xl-3 col-md-6">
@@ -15,7 +160,7 @@
                     <div class="card-block">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h4 class="text-white">{{ $user }}</h4>
+                                <h4 class="text-white">{{ $totalUser }}</h4>
                                 <h6 class="text-white m-b-0">Total Pengguna</h6>
                             </div>
                             <div class="col-4 text-right">
@@ -76,7 +221,7 @@
                 <div class="card shadow-sm border-0" style="border-radius: 12px;">
                     <div class="card-header bg-white border-0 pt-4 px-4">
                         <h5 class="font-weight-bold"><i class="fas fa-chart-line text-primary mr-2"></i> Grafik Pengajuan Surat</h5>
-                        <p class="text-muted small">Statistik 5 Tahun ({{ date('Y') }} - {{ date('Y') + 4 }})</p>
+                        <p class="text-muted small">Statistik 5 Tahun Terakhir</p>
                     </div>
                     <div class="card-block pt-0">
                         <div id="morris-bar-chart" style="height: 320px;"></div>
@@ -166,10 +311,10 @@
                 });
             </script>
         @endpush
-    @endcanany
+    @endif
 
     {{-- Section for Mahasiswa --}}
-    @if (Auth::user()->is_mahasiswa)
+    @if ($isMahasiswa)
         <div class="row">
             <div class="col-md-8">
                 <div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 15px;">
