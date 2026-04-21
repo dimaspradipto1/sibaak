@@ -96,6 +96,7 @@ class SemanticArsipController extends Controller
 
             // Search in Arsip Utama
             $arsipUtama = ArsipUtama::with(['user.role', 'kategoriArsip'])
+                ->where('is_active', true) // Filter dokumen yang aktif saja
                 ->where(function($q) use ($query) {
                     $q->where('nama_arsip', 'like', "%$query%")
                       ->orWhereHas('kategoriArsip', function($sq) use ($query) {

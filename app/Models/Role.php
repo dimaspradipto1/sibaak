@@ -17,4 +17,9 @@ class Role extends Model
     {
         return $this->permissions->contains('slug', $permissionSlug);
     }
+
+    public function unitKerja()
+    {
+        return $this->belongsTo(UnitKerja::class, 'unit_kerja_id');
+    }
 }

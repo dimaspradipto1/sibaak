@@ -273,6 +273,15 @@
                             </a>
                         </li>
                         @endcan
+                        @can('unit_kerja_view')
+                        <li class="">
+                            <a href="{{ route('unitkerja.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="fa-solid fa-sitemap"></i></span>
+                                <span class="pcoded-mtext text-capitalize">unit kerja</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        @endcan
                     </ul>
                 </li>
             </ul>

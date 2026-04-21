@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ArsipUtamaDataTable;
+use App\Exports\ArsipUtamaTemplateExport;
+use App\Http\Requests\ArsipUtamaRequest;
+use App\Imports\ArsipUtamaImport;
 use App\Models\ArsipUtama;
 use App\Models\KategoriArsip;
-use Illuminate\Support\Facades\Log;
+use App\Models\UnitKerja;
+use App\Traits\HandleGoogleDrive;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use App\DataTables\ArsipUtamaDataTable;
-use App\Http\Requests\ArsipUtamaRequest;
-use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Http\Request;
-use App\Traits\HandleGoogleDrive;
-
-use App\Imports\ArsipUtamaImport;
-use App\Exports\ArsipUtamaTemplateExport;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ArsipUtamaController extends Controller
 {
@@ -23,8 +23,30 @@ class ArsipUtamaController extends Controller
 
     public function index(ArsipUtamaDataTable $dataTable)
     {
+        $user = Auth::user();
         $title = 'Arsip Utama';
-        return $dataTable->render('pages.arsiputama.index', compact('title'));
+        $kategoriArsips = KategoriArsip::orderBy('kategori_arsip')->get();
+        
+        // Ambil data unit kerja berdasarkan hak akses
+        $unitKerjaQuery = UnitKerja::with('children');
+        
+        $isHigherLevel = $user->is_superadmin || $user->is_admin || ($user->role && strtoupper($user->role->nama_role) == 'REKTOR');
+
+        if (!$isHigherLevel && $user->role?->unit_kerja_id) {
+            $myUnit = $user->role->unitKerja;
+            // Hanya tampilkan unit dia dan bawahannya
+            $unitKerjas = collect([$myUnit->load('children')]);
+        } else {
+            // Admin atau User Tanpa Unit (Super User) melihat semua akar organisasi
+            $unitKerjas = UnitKerja::whereNull('parent_id')->with('children')->get();
+            
+            // Fallback: Jika tidak ada unit root, ambil semua
+            if ($unitKerjas->isEmpty()) {
+                $unitKerjas = UnitKerja::with('children')->get();
+            }
+        }
+
+        return $dataTable->render('pages.arsiputama.index', compact('title', 'kategoriArsips', 'unitKerjas'));
     }
 
     public function create()
@@ -192,5 +214,24 @@ class ArsipUtamaController extends Controller
     public function exportTemplate()
     {
         return Excel::download(new ArsipUtamaTemplateExport, 'format_import_arsip_utama.xlsx');
+    }
+
+    public function toggleStatus(Request $request)
+    {
+        try {
+            $arsip = ArsipUtama::findOrFail($request->id);
+            $arsip->is_active = $request->status;
+            $arsip->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status berhasil diubah'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengubah status: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

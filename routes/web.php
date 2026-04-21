@@ -33,6 +33,7 @@ use App\Http\Controllers\UserGuidePenggunaMahasiswaController;
 use App\Http\Controllers\UserGuidePenggunaTatausahaController;
 use App\Http\Controllers\UserGuideTatausahaController;
 use App\Http\Controllers\WasdalbinController;
+use App\Http\Controllers\UnitKerjaController;
 use App\Http\Controllers\SemanticArsipController;
 use Illuminate\Support\Facades\Route;
 
@@ -107,7 +108,9 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('kategoriarsip', KategoriArsipController::class);
     Route::post('/arsiputama/import', [ArsipUtamaController::class, 'import'])->name('arsiputama.import');
     Route::get('/arsiputama/export-template', [ArsipUtamaController::class, 'exportTemplate'])->name('arsiputama.export-template');
+    Route::post('/arsiputama/toggle-status', [ArsipUtamaController::class, 'toggleStatus'])->name('arsiputama.toggle-status');
     Route::resource('arsiputama', ArsipUtamaController::class);
+    Route::resource('unitkerja', UnitKerjaController::class);
     Route::resource('artikel', ArtikelController::class);
     Route::resource('role', RoleController::class);
     Route::get('/role/{role}/permission', [RoleController::class, 'editPermission'])->name('role.edit-permission');

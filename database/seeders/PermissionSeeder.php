@@ -117,6 +117,11 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Program Studi', 'slug' => 'program_studi_edit', 'module' => 'Master Data'],
             ['name' => 'Hapus Program Studi', 'slug' => 'program_studi_delete', 'module' => 'Master Data'],
 
+            ['name' => 'Lihat Unit Kerja', 'slug' => 'unit_kerja_view', 'module' => 'Master Data'],
+            ['name' => 'Tambah Unit Kerja', 'slug' => 'unit_kerja_create', 'module' => 'Master Data'],
+            ['name' => 'Edit Unit Kerja', 'slug' => 'unit_kerja_edit', 'module' => 'Master Data'],
+            ['name' => 'Hapus Unit Kerja', 'slug' => 'unit_kerja_delete', 'module' => 'Master Data'],
+
             // Rekapitulasi
             ['name' => 'Lihat Rekapitulasi Arsip', 'slug' => 'rekapitulasi_arsip_view', 'module' => 'Rekapitulasi'],
             ['name' => 'Lihat Rekapitulasi Surat Aktif', 'slug' => 'rekapitulasi_surat_aktif_view', 'module' => 'Rekapitulasi'],

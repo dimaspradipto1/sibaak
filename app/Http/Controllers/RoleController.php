@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\Permission;
+use App\Models\UnitKerja;
 use App\DataTables\RoleDataTable;
 use App\Http\Requests\RoleRequest;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -19,12 +20,13 @@ class RoleController extends Controller
     public function create()
     {
         $title = 'Form Role';
-        return view('pages.role.create', compact('title'));
+        $unitKerjas = UnitKerja::orderBy('nama_unit')->get();
+        return view('pages.role.create', compact('title', 'unitKerjas'));
     }
 
     public function store(RoleRequest $request)
     {
-        Role::create($request->validated());
+        Role::create($request->validated() + ['unit_kerja_id' => $request->unit_kerja_id]);
         Alert::success('Data berhasil ditambahkan')->toToast()->autoClose(4000)->timerProgressBar()->iconHtml('<i class="fa fa-check-circle"></i>');
         return redirect()->route('role.index');
     }
@@ -34,12 +36,13 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $title = 'Edit Role';
-        return view('pages.role.edit', compact('title', 'role'));
+        $unitKerjas = UnitKerja::orderBy('nama_unit')->get();
+        return view('pages.role.edit', compact('title', 'role', 'unitKerjas'));
     }
 
     public function update(RoleRequest $request, Role $role)
     {
-        $role->update($request->validated());
+        $role->update($request->validated() + ['unit_kerja_id' => $request->unit_kerja_id]);
         Alert::success('Data berhasil diupdate')->toToast()->autoClose(4000)->timerProgressBar()->iconHtml('<i class="fa fa-check-circle"></i>');
         return redirect()->route('role.index');
     }

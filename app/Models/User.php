@@ -32,12 +32,12 @@ class User extends Authenticatable
 
     public function getIsSuperadminAttribute()
     {
-        return $this->hasRole('SUPER ADMIN');
+        return $this->hasRole('SUPER ADMIN') || $this->hasRole('SUPERADMIN');
     }
 
     public function getIsAdminAttribute()
     {
-        return $this->hasRole('ADMIN');
+        return $this->hasRole('ADMIN') || $this->hasRole('ADMINISTRATOR');
     }
 
     public function getIsMahasiswaAttribute()

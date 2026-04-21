@@ -12,6 +12,7 @@ class RoleRequest extends FormRequest
     {
         return [
             'nama_role' => 'required|string|max:255',
+            'unit_kerja_id' => 'nullable|exists:unit_kerjas,id',
         ];
     }
 

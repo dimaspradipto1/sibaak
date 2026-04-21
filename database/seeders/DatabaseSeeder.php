@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\UnitKerjaSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
             MahasiswaSeeder::class,
             PegawaiSeeder::class,
             DosenSeeder::class,
+            UnitKerjaSeeder::class,
         ]);
     }
 }
