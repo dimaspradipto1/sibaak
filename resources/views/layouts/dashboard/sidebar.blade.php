@@ -98,7 +98,7 @@
                         <li class=" ">
                             <a href="{{ route('semantic.index') }}" class="waves-effect waves-dark">
                                 <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext text-capitalize font-weight-bold text-primary">Semantic Search</span>
+                                <span class="pcoded-mtext text-capitalize font-weight-bold text-primary">Arsip UIS</span>
                                 <span class="pcoded-mcaret"></span>
                             </a>
                         </li>

@@ -26,10 +26,10 @@ class ArsipUtamaController extends Controller
         $user = Auth::user();
         $title = 'Arsip Utama';
         $kategoriArsips = KategoriArsip::orderBy('kategori_arsip', 'asc')->get();
-        
+
         // Ambil data unit kerja berdasarkan hak akses
         $unitKerjaQuery = UnitKerja::with('children');
-        
+
         $isHigherLevel = $user->is_superadmin || $user->is_admin || ($user->role && strtoupper($user->role->nama_role) == 'REKTOR');
 
         if (!$isHigherLevel && $user->role?->unit_kerja_id) {
@@ -39,7 +39,7 @@ class ArsipUtamaController extends Controller
         } else {
             // Admin atau User Tanpa Unit (Super User) melihat semua akar organisasi
             $unitKerjas = UnitKerja::whereNull('parent_id')->with('children')->get();
-            
+
             // Fallback: Jika tidak ada unit root, ambil semua
             if ($unitKerjas->isEmpty()) {
                 $unitKerjas = UnitKerja::with('children')->get();
@@ -60,7 +60,7 @@ class ArsipUtamaController extends Controller
     {
         try {
             $data = $request->validated();
-            
+
             // Handle custom category
             if ($request->filled('custom_kategori')) {
                 $newKategori = KategoriArsip::firstOrCreate([
@@ -228,7 +228,7 @@ class ArsipUtamaController extends Controller
 
         try {
             Excel::import(new ArsipUtamaImport, $request->file('file'));
-            
+
             Alert::success('Sukses', 'Data Arsip Utama berhasil diimpor')
                 ->autoclose(4000)
                 ->toToast();

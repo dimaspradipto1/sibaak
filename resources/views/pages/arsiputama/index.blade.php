@@ -40,17 +40,26 @@
                             <div class="tree-container" style="max-height: 480px; overflow-y: auto; padding-right: 5px;">
                                 @php
                                     if (!function_exists('renderTree')) {
-                                        function renderTree($units) {
+                                        function renderTree($units)
+                                        {
                                             echo '<ul class="tree">';
                                             foreach ($units as $unit) {
                                                 $hasChildren = $unit->children->count() > 0;
                                                 $displayName = $unit->nama_unit;
                                                 echo '<li>';
                                                 if ($hasChildren) {
-                                                    echo '<span class="tree-node parent" data-unit-id="'.$unit->id.'"><i class="fas fa-minus-square mr-1 text-success"></i> ' . $displayName . '</span>';
+                                                    echo '<span class="tree-node parent" data-unit-id="' .
+                                                        $unit->id .
+                                                        '"><i class="fas fa-minus-square mr-1 text-success"></i> ' .
+                                                        $displayName .
+                                                        '</span>';
                                                     renderTree($unit->children);
                                                 } else {
-                                                    echo '<span class="tree-node leaf pl-1" data-unit-id="'.$unit->id.'"><i class="fas fa-circle mr-1 text-muted" style="font-size: 6px; vertical-align: middle;"></i> ' . $displayName . '</span>';
+                                                    echo '<span class="tree-node leaf pl-1" data-unit-id="' .
+                                                        $unit->id .
+                                                        '"><i class="fas fa-circle mr-1 text-muted" style="font-size: 6px; vertical-align: middle;"></i> ' .
+                                                        $displayName .
+                                                        '</span>';
                                                 }
                                                 echo '</li>';
                                             }
@@ -59,12 +68,13 @@
                                     }
                                 @endphp
 
-                                @if($unitKerjas->count() > 0)
+                                @if ($unitKerjas->count() > 0)
                                     {!! renderTree($unitKerjas) !!}
                                 @else
                                     <div class="text-center py-4">
                                         <i class="fas fa-info-circle text-muted mb-2" style="font-size: 24px;"></i>
-                                        <p class="small text-muted" style="font-size: 11px;">Belum ada data unit kerja yang terhubung dengan akun Anda atau unit belum diisi.</p>
+                                        <p class="small text-muted" style="font-size: 11px;">Belum ada data unit kerja yang
+                                            terhubung dengan akun Anda atau unit belum diisi.</p>
                                     </div>
                                 @endif
                             </div>
@@ -82,7 +92,8 @@
                     </div>
                     <div id="collapseYear" class="collapse show" data-parent="#filterAccordion">
                         <div class="card-body p-3 pt-0">
-                            <select id="filterTahun" class="form-control form-control-sm select2-search" style="width: 100%;">
+                            <select id="filterTahun" class="form-control form-control-sm select2-search"
+                                style="width: 100%;">
                                 <option value="">-- Semua Tahun --</option>
                                 @for ($i = date('Y'); $i >= 2010; $i--)
                                     <option value="{{ $i }}">{{ $i }}</option>
@@ -102,7 +113,8 @@
                     </div>
                     <div id="collapseCategory" class="collapse show" data-parent="#filterAccordion">
                         <div class="card-body p-3 pt-0">
-                            <select id="filterKategori" class="form-control form-control-sm select2-search" style="width: 100%;">
+                            <select id="filterKategori" class="form-control form-control-sm select2-search"
+                                style="width: 100%;">
                                 <option value="">-- Semua Kategori --</option>
                                 @foreach ($kategoriArsips as $kat)
                                     <option value="{{ $kat->kategori_arsip }}">{{ $kat->kategori_arsip }}</option>
@@ -117,7 +129,8 @@
 
         <!-- Data Table Area -->
         <div class="col-xl-9 col-lg-8">
-            <div class="card border-0 shadow-sm mb-4" style="border-radius: 15px; overflow: hidden; border-top: 5px solid #046B26 !important;">
+            <div class="card border-0 shadow-sm mb-4"
+                style="border-radius: 15px; overflow: hidden; border-top: 5px solid #046B26 !important;">
                 <!-- Main Header -->
                 <div class="card-header bg-white border-bottom py-3 px-4">
                     <div class="row align-items-center">
@@ -125,56 +138,75 @@
                             <div class="d-flex align-items-center">
                                 <div class="d-flex mr-3">
                                     <div style="width: 4px; height: 25px; background: #046B26; border-radius: 2px;"></div>
-                                    <div style="width: 4px; height: 25px; background: #046B26; border-radius: 2px; margin-left: 3px; opacity: 0.5;"></div>
+                                    <div
+                                        style="width: 4px; height: 25px; background: #046B26; border-radius: 2px; margin-left: 3px; opacity: 0.5;">
+                                    </div>
                                 </div>
                                 <div>
                                     <h5 class="m-0 font-weight-bold text-dark">Daftar Arsip Utama</h5>
-                                    <p class="text-xs text-muted mb-0" style="font-size: 11px;">Kelola dan pantau seluruh dokumen arsip institusi</p>
+                                    <p class="text-xs text-muted mb-0" style="font-size: 11px;">Kelola dan pantau seluruh
+                                        dokumen arsip institusi</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-5 text-md-right mt-2 mt-md-0">
-                            <div class="d-inline-flex shadow-sm overflow-hidden" style="border: 1px solid #e3e6f0; border-radius: 30px;">
+                            <div class="d-inline-flex shadow-sm overflow-hidden"
+                                style="border: 1px solid #e3e6f0; border-radius: 30px;">
                                 @can('arsip_utama_create')
-                                <a href="{{ route('arsiputama.create') }}" class="btn btn-success btn-xs font-weight-bold px-3 py-1 border-0" style="background-color: #046B26; color: white; font-size: 10px; height: 32px; line-height: 24px; border-top-left-radius: 30px; border-bottom-left-radius: 30px;">
-                                    <i class="fas fa-plus mr-1"></i> TAMBAH
-                                </a>
+                                    <a href="{{ route('arsiputama.create') }}"
+                                        class="btn btn-success btn-xs font-weight-bold px-3 py-1 border-0"
+                                        style="background-color: #046B26; color: white; font-size: 10px; height: 32px; line-height: 24px; border-top-left-radius: 30px; border-bottom-left-radius: 30px;">
+                                        <i class="fas fa-plus mr-1"></i> TAMBAH
+                                    </a>
                                 @endcan
-                                <button class="btn btn-white btn-xs px-3 py-1 border-0 border-left rounded-0 text-danger" id="btnBulkDelete" style="font-size: 10px; height: 32px; line-height: 24px;">
+                                <button class="btn btn-white btn-xs px-3 py-1 border-0 border-left rounded-0 text-danger"
+                                    id="btnBulkDelete" style="font-size: 10px; height: 32px; line-height: 24px;">
                                     <i class="fas fa-trash-alt mr-1"></i> HAPUS
                                 </button>
                                 <div class="dropdown d-inline-block border-left">
-                                    <button class="btn btn-white btn-xs px-3 py-1 border-0 font-weight-bold dropdown-toggle" type="button" data-toggle="dropdown" style="font-size: 10px; height: 32px; line-height: 24px; border-top-right-radius: 30px; border-bottom-right-radius: 30px;">
+                                    <button
+                                        class="btn btn-white btn-xs px-3 py-1 border-0 font-weight-bold dropdown-toggle"
+                                        type="button" data-toggle="dropdown"
+                                        style="font-size: 10px; height: 32px; line-height: 24px; border-top-right-radius: 30px; border-bottom-right-radius: 30px;">
                                         <i class="fas fa-file-export mr-1 text-primary"></i> EXPORT
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right shadow border-0 mt-1">
-                                        <a class="dropdown-item py-2 small" href="#"><i class="fas fa-file-excel mr-2 text-success"></i> Excel</a>
-                                        <a class="dropdown-item py-2 small" href="#"><i class="fas fa-file-pdf mr-2 text-danger"></i> PDF</a>
+                                        <a class="dropdown-item py-2 small" href="#"><i
+                                                class="fas fa-file-excel mr-2 text-success"></i> Excel</a>
+                                        <a class="dropdown-item py-2 small" href="#"><i
+                                                class="fas fa-file-pdf mr-2 text-danger"></i> PDF</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="card-body p-0">
                     <!-- Data Management Toolbar -->
                     <div class="px-4 py-2 border-bottom d-flex align-items-center justify-content-between bg-white">
                         <div class="d-flex align-items-center flex-grow-1">
                             <div class="ml-4 d-none d-lg-flex align-items-center">
-                                <span class="badge badge-pill bg-white border text-muted px-2 py-1 font-weight-normal mr-2 d-flex align-items-center shadow-sm" style="font-size: 10px;">
-                                    <span class="dot bg-primary mr-1" style="width: 6px; height: 6px; border-radius: 50%;"></span> Aktif
+                                <span
+                                    class="badge badge-pill bg-white border text-muted px-2 py-1 font-weight-normal mr-2 d-flex align-items-center shadow-sm"
+                                    style="font-size: 10px;">
+                                    <span class="dot bg-primary mr-1"
+                                        style="width: 6px; height: 6px; border-radius: 50%;"></span> Aktif
                                 </span>
-                                <span class="badge badge-pill bg-white border text-muted px-2 py-1 font-weight-normal d-flex align-items-center shadow-sm" style="font-size: 10px;">
-                                    <span class="dot bg-info mr-1" style="width: 6px; height: 6px; border-radius: 50%;"></span> Inaktif
+                                <span
+                                    class="badge badge-pill bg-white border text-muted px-2 py-1 font-weight-normal d-flex align-items-center shadow-sm"
+                                    style="font-size: 10px;">
+                                    <span class="dot bg-info mr-1"
+                                        style="width: 6px; height: 6px; border-radius: 50%;"></span> Inaktif
                                 </span>
                             </div>
                         </div>
-                        <button class="btn btn-xs btn-white border shadow-sm ml-2" id="btnRefreshTable" title="Muat Ulang" style="width: 30px; height: 30px; border-radius: 8px;">
+                        <button class="btn btn-xs btn-white border shadow-sm ml-2" id="btnRefreshTable"
+                            title="Muat Ulang" style="width: 30px; height: 30px; border-radius: 8px;">
                             <i class="fas fa-sync-alt text-muted" style="font-size: 10px;"></i>
                         </button>
                     </div>
-                    
+
                     <div class="p-0">
                         <div class="table-responsive">
                             {!! $dataTable->table(['class' => 'table table-hover mb-0 w-100', 'id' => 'arsiputama-table']) !!}
@@ -198,42 +230,79 @@
 
     <style>
         /* Compact layout adjustments */
-        .card { margin-bottom: 0.8rem !important; }
-        .card-header { padding: 0.8rem 1.2rem !important; }
-        .card-body, .card-block { padding: 0.8rem 1.2rem !important; }
-        
+        .card {
+            margin-bottom: 0.8rem !important;
+        }
+
+        .card-header {
+            padding: 0.8rem 1.2rem !important;
+        }
+
+        .card-body,
+        .card-block {
+            padding: 0.8rem 1.2rem !important;
+        }
+
         /* Sidebar Filter Compact */
-        .bg-white.p-3.mb-3.shadow-sm.rounded { padding: 0.6rem 1rem !important; margin-bottom: 0.6rem !important; }
-        .accordion .card.mb-3 { margin-bottom: 0.6rem !important; }
-        .accordion .card-header.p-3 { padding: 0.6rem 1rem !important; }
-        .accordion .card-body.p-3 { padding: 0.6rem 1rem 0.6rem !important; }
-        .tree li { padding: 2px 0 !important; }
-        .tree-node { font-size: 0.72rem !important; padding: 1px 5px !important; }
-        
+        .bg-white.p-3.mb-3.shadow-sm.rounded {
+            padding: 0.6rem 1rem !important;
+            margin-bottom: 0.6rem !important;
+        }
+
+        .accordion .card.mb-3 {
+            margin-bottom: 0.6rem !important;
+        }
+
+        .accordion .card-header.p-3 {
+            padding: 0.6rem 1rem !important;
+        }
+
+        .accordion .card-body.p-3 {
+            padding: 0.6rem 1rem 0.6rem !important;
+        }
+
+        .tree li {
+            padding: 2px 0 !important;
+        }
+
+        .tree-node {
+            font-size: 0.72rem !important;
+            padding: 1px 5px !important;
+        }
+
         /* Main Table Area Compact */
-        .card-header.bg-white.border-bottom.py-3.px-4 { padding: 0.6rem 1.2rem !important; }
-        .px-4.py-3.border-bottom.bg-white { padding: 0.4rem 1.2rem !important; }
-        
+        .card-header.bg-white.border-bottom.py-3.px-4 {
+            padding: 0.6rem 1.2rem !important;
+        }
+
+        .px-4.py-3.border-bottom.bg-white {
+            padding: 0.4rem 1.2rem !important;
+        }
+
         /* Hide Default DataTables Elements */
-        .dataTables_filter, .dataTables_length {
+        .dataTables_filter,
+        .dataTables_length {
             display: none !important;
         }
-        
+
         .bg-light-yellow {
             background: #fffcf0;
             border: 1px solid #ffeeba !important;
         }
 
         /* Tree View Styling */
-        ul.tree, ul.tree ul {
+        ul.tree,
+        ul.tree ul {
             list-style: none;
             margin: 0;
             padding: 0;
         }
+
         ul.tree ul {
             margin-left: 15px;
             position: relative;
         }
+
         ul.tree ul:before {
             content: "";
             display: block;
@@ -244,12 +313,14 @@
             left: -10px;
             border-left: 1px dotted #28a745;
         }
+
         ul.tree li {
             margin: 0;
             padding: 3px 0;
             line-height: normal;
             position: relative;
         }
+
         ul.tree li:before {
             content: "";
             display: block;
@@ -260,7 +331,7 @@
             top: 12px;
             left: -10px;
         }
-        
+
         /* Premium Table Styles Compact */
         #arsiputama-table thead th {
             background-color: #f8f9fc;
@@ -272,6 +343,7 @@
             border-bottom: 2px solid #e3e6f0;
             padding: 8px 10px !important;
         }
+
         #arsiputama-table tbody td {
             vertical-align: middle;
             padding: 6px 10px !important;
@@ -279,29 +351,40 @@
             font-size: 12px;
             border-bottom: 1px solid #f1f3f9;
         }
+
         #arsiputama-table tbody tr:hover {
             background-color: #fcfdff;
         }
 
         /* Utility */
-        .text-xs { font-size: 10px; }
-        .dot { display: inline-block; }
-        .rounded-lg { border-radius: 8px !important; }
-        
+        .text-xs {
+            font-size: 10px;
+        }
+
+        .dot {
+            display: inline-block;
+        }
+
+        .rounded-lg {
+            border-radius: 8px !important;
+        }
+
         /* Fix Button Borders in Group */
         .btn-white {
             background-color: #fff;
             color: #6e707e;
         }
+
         .btn-white:hover {
             background-color: #f8f9fc;
             color: #4e73df;
         }
-        
+
         .pagination .page-item.active .page-link {
             background-color: #ff9800;
             border-color: #ff9800;
         }
+
         /* Select2 Premium Customization Compact */
         .select2-container--default .select2-selection--single {
             border: 1px solid #e3e6f0 !important;
@@ -311,9 +394,11 @@
             transition: all 0.2s;
             background-color: #f8f9fc !important;
         }
+
         .select2-container--default .select2-selection--single .select2-selection__arrow {
             height: 30px !important;
         }
+
         .select2-container--default .select2-selection--single .select2-selection__rendered {
             color: #6e707e !important;
             font-size: 12px !important;
@@ -351,7 +436,7 @@
                 e.preventDefault();
                 $('.tree-node').removeClass('text-primary font-weight-bold text-success');
                 $(this).addClass('text-primary font-weight-bold');
-                
+
                 selectedUnitId = $(this).data('unit-id');
                 reloadTable();
             });
@@ -400,7 +485,7 @@
                 var btn = $(this);
                 var id = btn.data('id');
                 var status = btn.data('status');
-                
+
                 $.ajax({
                     url: "{{ route('arsiputama.toggle-status') }}",
                     type: "POST",
@@ -410,10 +495,11 @@
                         status: status
                     },
                     beforeSend: function() {
-                        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i>');
+                        btn.prop('disabled', true).html(
+                            '<i class="fas fa-spinner fa-spin"></i>');
                     },
                     success: function(response) {
-                        if(response.success) {
+                        if (response.success) {
                             reloadTable();
                         } else {
                             alert(response.message);

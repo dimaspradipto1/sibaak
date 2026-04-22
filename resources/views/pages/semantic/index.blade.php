@@ -373,7 +373,7 @@
 
         .google-pill-btn-final:hover {
             background: #f8f9fa !important;
-            box-shadow: 0 1px 2px rgba(60,64,67,0.3) !important;
+            box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3) !important;
         }
 
         .kp-divider {
@@ -393,9 +393,11 @@
             .results-right-sidebar {
                 padding-left: 20px !important;
             }
+
             .kp-title-text {
                 font-size: 22px;
             }
+
             .google-pill-btn-final {
                 padding: 6px 12px !important;
                 font-size: 12px !important;
@@ -431,7 +433,8 @@
 
             @auth
                 <div class="dropdown">
-                    <div class="user-avatar" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="user-avatar" id="userMenu" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
                         {{ substr(Auth::user()->name, 0, 1) }}
                     </div>
                     <div class="dropdown-menu dropdown-menu-right shadow border-0 mt-2 p-3 text-center"
@@ -444,7 +447,8 @@
                         <hr>
                         <a href="{{ route('dashboard') }}"
                             class="btn btn-outline-secondary btn-block btn-sm mb-2 rounded-pill">Kelola Akun Dashbord</a>
-                        <a href="{{ route('logout') }}" class="btn btn-light btn-block btn-sm border rounded-pill">Keluar</a>
+                        <a href="{{ route('logout') }}"
+                            class="btn btn-light btn-block btn-sm border rounded-pill">Keluar</a>
                     </div>
                 </div>
             @else
@@ -454,10 +458,10 @@
 
         <div class="landing-container">
             <div class="google-logo text-center position-relative">
-                <span style="color: #4285F4;">M</span><span style="color: #EA4335;">y</span><span
-                    style="color: #FBBC05;">b</span><span style="color: #4285F4;">a</span><span
-                    style="color: #34A853;">a</span><span style="color: #EA4335;">k</span>
-                <span style="color: #4285F4;">U</span><span style="color: #34A853;;">I</span><span
+                <span style="color: #4285F4;">A</span><span style="color: #EA4335;">r</span><span
+                    style="color: #FBBC05;">s</span><span style="color: #34A853;">i</span><span
+                    style="color: #EA4335;">p</span>
+                <span style="color: #4285F4;">U</span><span style="color: #34A853;">I</span><span
                     style="color: #FBBC05;">S</span>
                 @if ($tab == 'gambar')
                     <div
@@ -472,7 +476,7 @@
                     <div class="search-bar-landing">
                         <i class="fa-solid fa-magnifying-glass text-muted mr-3"></i>
                         <input type="text" name="q" class="form-control border-0 no-focus py-4"
-                            placeholder="{{ $tab == 'gambar' ? 'Cari gambar arsip...' : 'Telusuri Mybaak UIS atau ketik URL' }}"
+                            placeholder="{{ $tab == 'gambar' ? 'Cari gambar arsip...' : 'Telusuri Arsip UIS atau ketik URL' }}"
                             autofocus autocomplete="off">
                     </div>
                     <div class="text-center mt-4">
@@ -533,12 +537,12 @@
                             <i class="fa-solid fa-flask"></i>
                         </div>
                     </div>
-                    
+
                     <div class="col text-center">
                         <a href="{{ route('semantic.index') }}" class="results-logo" style="font-size: 22px;">
-                            <span style="color: #4285F4;">M</span><span style="color: #EA4335;">y</span><span
-                                style="color: #FBBC05;">b</span><span style="color: #4285F4;">a</span><span
-                                style="color: #34A853;">a</span><span style="color: #EA4335;">k</span>
+                            <span style="color: #4285F4;">A</span><span style="color: #EA4335;">r</span><span
+                                style="color: #FBBC05;">s</span><span style="color: #4285F4;">i</span><span
+                                style="color: #34A853;">p</span>
                             <span style="color: #4285F4;">U</span><span style="color: #34A853;">I</span><span
                                 style="color: #FBBC05;">S</span>
                         </a>
@@ -547,22 +551,29 @@
                     <div class="col-auto px-0">
                         @auth
                             <div class="dropdown">
-                                <div class="user-avatar" id="userMenuMobile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
-                                     style="width: 32px; height: 32px; font-size: 14px;">
+                                <div class="user-avatar" id="userMenuMobile" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" style="width: 32px; height: 32px; font-size: 14px;">
                                     {{ substr(Auth::user()->name, 0, 1) }}
                                 </div>
                                 {{-- Dropdown menu same as before --}}
-                                <div class="dropdown-menu dropdown-menu-right shadow border-0 mt-2 p-3 text-center" style="width: 280px; border-radius: 12px;">
-                                    <div class="user-avatar mx-auto mb-2" style="width: 60px; height: 60px; font-size: 24px;">{{ substr(Auth::user()->name, 0, 1) }}</div>
+                                <div class="dropdown-menu dropdown-menu-right shadow border-0 mt-2 p-3 text-center"
+                                    style="width: 280px; border-radius: 12px;">
+                                    <div class="user-avatar mx-auto mb-2"
+                                        style="width: 60px; height: 60px; font-size: 24px;">
+                                        {{ substr(Auth::user()->name, 0, 1) }}</div>
                                     <h6 class="mb-0 font-weight-bold">{{ Auth::user()->name }}</h6>
                                     <p class="small text-muted mb-3">{{ Auth::user()->email }}</p>
                                     <hr>
-                                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary btn-block btn-sm mb-2 rounded-pill">Kelola Akun Dashbord</a>
-                                    <a href="{{ route('logout') }}" class="btn btn-light btn-block btn-sm border rounded-pill">Keluar</a>
+                                    <a href="{{ route('dashboard') }}"
+                                        class="btn btn-outline-secondary btn-block btn-sm mb-2 rounded-pill">Kelola Akun
+                                        Dashbord</a>
+                                    <a href="{{ route('logout') }}"
+                                        class="btn btn-light btn-block btn-sm border rounded-pill">Keluar</a>
                                 </div>
                             </div>
                         @else
-                            <a href="{{ route('login') }}" class="btn-google-login px-3 py-1" style="font-size: 12px;">Sign in</a>
+                            <a href="{{ route('login') }}" class="btn-google-login px-3 py-1"
+                                style="font-size: 12px;">Sign in</a>
                         @endauth
                     </div>
                 </div>
@@ -581,9 +592,9 @@
             {{-- Desktop Layout (Full Featured) --}}
             <div class="d-none d-lg-flex align-items-center w-100 py-2">
                 <a href="{{ route('semantic.index') }}" class="results-logo mr-5">
-                    <span style="color: #4285F4;">M</span><span style="color: #EA4335;">y</span><span
-                        style="color: #FBBC05;">b</span><span style="color: #4285F4;">a</span><span
-                        style="color: #34A853;">a</span><span style="color: #EA4335;">k</span>
+                    <span style="color: #4285F4;">A</span><span style="color: #EA4335;">r</span><span
+                        style="color: #FBBC05;">s</span><span style="color: #4285F4;">i</span><span
+                        style="color: #34A853;">p</span>
                     <span style="color: #4285F4;">U</span><span style="color: #34A853;">I</span><span
                         style="color: #FBBC05;">S</span>
                 </a>
@@ -607,7 +618,8 @@
 
                     @auth
                         <div class="dropdown">
-                            <div class="user-avatar" id="userMenuDesktop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="user-avatar" id="userMenuDesktop" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
                                 {{ substr(Auth::user()->name, 0, 1) }}
                             </div>
                             <div class="dropdown-menu dropdown-menu-right shadow border-0 mt-2 p-3 text-center"
@@ -619,8 +631,10 @@
                                 <p class="small text-muted mb-3">{{ Auth::user()->email }}</p>
                                 <hr>
                                 <a href="{{ route('dashboard') }}"
-                                    class="btn btn-outline-secondary btn-block btn-sm mb-2 rounded-pill">Kelola Akun Dashbord</a>
-                                <a href="{{ route('logout') }}" class="btn btn-light btn-block btn-sm border rounded-pill">Keluar</a>
+                                    class="btn btn-outline-secondary btn-block btn-sm mb-2 rounded-pill">Kelola Akun
+                                    Dashbord</a>
+                                <a href="{{ route('logout') }}"
+                                    class="btn btn-light btn-block btn-sm border rounded-pill">Keluar</a>
                             </div>
                         </div>
                     @else
@@ -774,9 +788,9 @@
                                         <div class="pagination-wrapper d-inline-block">
                                             <div class="google-logo-pagination d-flex align-items-end justify-content-center mb-1"
                                                 style="font-family: 'Outfit', Arial, sans-serif; font-size: 32px; font-weight: 500; letter-spacing: -1px;">
-                                                <span style="color: #4285f4;">M</span>
-                                                <span style="color: #ea4335;">y</span>
-                                                <span style="color: #fbbc05;">b</span>
+                                                <span style="color: #4285f4;">A</span>
+                                                <span style="color: #ea4335;">r</span>
+                                                <span style="color: #fbbc05;">s</span>
                                                 @php
                                                     $total_pages = $results->lastPage();
                                                     $current_page = $results->currentPage();
@@ -790,15 +804,14 @@
 
                                                 @for ($i = $start; $i <= $end; $i++)
                                                     @if ($i == $start && $total_pages == 1)
-                                                        <span style="color: #4285f4;">a</span>
-                                                        <span style="color: #34a853;">a</span>
+                                                        <span style="color: #4285f4;">i</span>
                                                     @else
                                                         <span
-                                                            style="color: {{ $i % 2 == 0 ? '#34a853' : '#4285f4' }};">a</span>
+                                                            style="color: {{ $i % 2 == 0 ? '#34a853' : '#4285f4' }};">i</span>
                                                     @endif
                                                 @endfor
 
-                                                <span style="color: #ea4335;">k</span>
+                                                <span style="color: #ea4335;">p</span>
                                                 <span style="margin-left: 8px; color: #4285f4;">U</span>
                                                 <span style="color: #ea4335;">I</span>
                                                 <span style="color: #fbbc05;">S</span>
@@ -919,21 +932,25 @@
                                     Kec. Lubuk Baja, Kota Batam, Kepulauan Riau 29444</a>
                             </div>
                             <div class="kp-field" style="margin-bottom: 12px; font-size: 14px; line-height: 1.4;">
-                                <b>Didirikan:</b> 26 Agustus 2019</div>
+                                <b>Didirikan:</b> 26 Agustus 2019
+                            </div>
                             <div class="kp-field" style="margin-bottom: 12px; font-size: 14px; line-height: 1.4;">
                                 <b>Provinsi:</b> <a href="https://www.google.com/search?q=Kepulauan+Riau"
                                     target="_blank" style="color: #1a73e8; text-decoration: none;">Kepulauan Riau</a>
                             </div>
                             <div class="kp-field" style="margin-bottom: 12px; font-size: 14px; line-height: 1.4;">
                                 <b>Telepon:</b> <a href="tel:082170078887"
-                                    style="color: #1a73e8; text-decoration: none;">0821-7007-8887</a></div>
+                                    style="color: #1a73e8; text-decoration: none;">0821-7007-8887</a>
+                            </div>
                             <div class="kp-field" style="margin-bottom: 12px; font-size: 14px; line-height: 1.4;">
                                 <b>Produk dan Layanan:</b> <a href="https://uis.ac.id" target="_blank"
-                                    style="color: #1a73e8; text-decoration: none;">uis.ac.id</a></div>
+                                    style="color: #1a73e8; text-decoration: none;">uis.ac.id</a>
+                            </div>
                             <div class="kp-field" style="margin-bottom: 12px; font-size: 14px; line-height: 1.4;">
                                 <b>Jam:</b> <span style="color: #d93025; font-weight: 500;">Tutup</span> · Buka Sen
                                 pukul 00.00 <i class="fas fa-chevron-down"
-                                    style="font-size: 10px; margin-left: 2px;"></i></div>
+                                    style="font-size: 10px; margin-left: 2px;"></i>
+                            </div>
 
                             <div style="margin-top: 25px; padding-top: 10px; font-size: 13px;">
                                 <a href="https://www.google.com/search?q=Universitas+Ibnu+Sina+Batam&num=10&sca_esv=595262744&hl=id&gl=ID&authuser=0&tbm=lcl&ei=6V2WZdW-E4W2seMP8L-FmAQ&start=0&sa=N&sstk=A6O-u67t_T-k1m99o8z2p9r6p0Z1y-0v-X8&ved=2ahUKEwiVu6D777-DAxUFW2wGHfBfAUM4ChDy0wN6BAgBEAQ"
