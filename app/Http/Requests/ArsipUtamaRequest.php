@@ -14,7 +14,8 @@ class ArsipUtamaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'kategori_arsip_id' => 'required|exists:kategori_arsips,id',
+            'kategori_arsip_id' => 'required_without:custom_kategori',
+            'custom_kategori'   => 'nullable|string',
             'tahun_arsip'       => 'required|string|max:10',
             'nama_arsip'        => 'required|string|max:255',
             'file_arsip'        => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',

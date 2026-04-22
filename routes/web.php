@@ -107,6 +107,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('profile', ProfileController::class);
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::put('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.updatePassword');
+    Route::post('/kategoriarsip/store-ajax', [KategoriArsipController::class, 'storeAjax'])->name('kategoriarsip.store-ajax');
     Route::resource('kategoriarsip', KategoriArsipController::class);
     Route::post('/arsiputama/import', [ArsipUtamaController::class, 'import'])->name('arsiputama.import');
     Route::get('/arsiputama/export-template', [ArsipUtamaController::class, 'exportTemplate'])->name('arsiputama.export-template');

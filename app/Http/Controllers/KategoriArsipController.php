@@ -43,6 +43,18 @@ class KategoriArsipController extends Controller
         return redirect()->route('kategoriarsip.index');
     }
 
+    public function storeAjax(KategoriArsipRequest $request)
+    {
+        $validated = $request->validated();
+        $kategori = KategoriArsip::create($validated);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Kategori berhasil ditambahkan',
+            'data'    => $kategori
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */

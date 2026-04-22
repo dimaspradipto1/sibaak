@@ -40,7 +40,7 @@ class ArsipUtamaTemplateExport implements FromCollection, WithHeadings, WithEven
             AfterSheet::class => function (AfterSheet $event) {
                 $sheet = $event->sheet;
 
-                $kategori = KategoriArsip::pluck('kategori')->toArray();
+                $kategori = KategoriArsip::pluck('kategori_arsip')->toArray();
                 $sheet->setCellValue('G1', 'DAFTAR KATEGORI:');
                 $sheet->getStyle('G1')->getFont()->setBold(true);
 

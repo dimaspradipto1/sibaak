@@ -60,6 +60,21 @@ class ArsipUtamaController extends Controller
     {
         try {
             $data = $request->validated();
+            
+            // Handle custom category
+            if ($request->filled('custom_kategori')) {
+                $newKategori = KategoriArsip::firstOrCreate([
+                    'kategori_arsip' => $request->custom_kategori
+                ]);
+                $data['kategori_arsip_id'] = $newKategori->id;
+            } elseif (!is_numeric($data['kategori_arsip_id'])) {
+                // Fallback for select2 tags
+                $newKategori = KategoriArsip::firstOrCreate([
+                    'kategori_arsip' => $data['kategori_arsip_id']
+                ]);
+                $data['kategori_arsip_id'] = $newKategori->id;
+            }
+
             $data['user_id'] = Auth::id();
 
             if ($request->hasFile('file_arsip')) {
@@ -122,6 +137,21 @@ class ArsipUtamaController extends Controller
     {
         try {
             $data = $request->validated();
+
+            // Handle custom category
+            if ($request->filled('custom_kategori')) {
+                $newKategori = KategoriArsip::firstOrCreate([
+                    'kategori_arsip' => $request->custom_kategori
+                ]);
+                $data['kategori_arsip_id'] = $newKategori->id;
+            } elseif (!is_numeric($data['kategori_arsip_id'])) {
+                // Fallback for select2 tags
+                $newKategori = KategoriArsip::firstOrCreate([
+                    'kategori_arsip' => $data['kategori_arsip_id']
+                ]);
+                $data['kategori_arsip_id'] = $newKategori->id;
+            }
+
             $data['user_id'] = Auth::id();
 
             if ($request->hasFile('file_arsip')) {

@@ -13,15 +13,16 @@ class ArsipUtamaImport implements ToModel, WithHeadingRow, WithValidation
 {
     public function model(array $row)
     {
-        $kategori = KategoriArsip::where('kategori', 'like', '%' . $row['kategori'] . '%')->first();
+        $kategori = KategoriArsip::firstOrCreate([
+            'kategori_arsip' => $row['kategori']
+        ]);
 
         return new ArsipUtama([
-            'users_id'       => Auth::id(),
-            'kategori_id'    => $kategori ? $kategori->id : null,
-            'tahun_arsip'    => $row['tahun'],
-            'nama_arsip'     => $row['nama_arsip'],
-            'file_arsip'     => $row['link_file_drive'] ?? null,
-            'keterangan'     => $row['keterangan'] ?? '-',
+            'user_id'           => Auth::id(),
+            'kategori_arsip_id' => $kategori->id,
+            'tahun_arsip'       => $row['tahun'],
+            'nama_arsip'        => $row['nama_arsip'],
+            'file_arsip'        => $row['link_file_drive'] ?? null,
         ]);
     }
 
