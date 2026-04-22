@@ -21,12 +21,12 @@ class UnitKerjaDataTable extends DataTable
             })
             ->addColumn('action', function ($item) {
                 return '
-                <div class="d-flex justify-content-center">
-                    <a href="' . route('unitkerja.edit', $item->id) . '" class="btn btn-warning btn-sm mx-1 shadow-sm rounded-lg" title="Edit"><i class="fas fa-edit text-white"></i></a>
-                    <form action="' . route('unitkerja.destroy', $item->id) . '" method="POST" class="d-inline">
+                <div class="d-flex justify-content-center align-items-center" style="gap: 5px;">
+                    <a href="' . route('unitkerja.edit', $item->id) . '" class="btn btn-sm btn-warning text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Edit"><i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i></a>
+                    <form action="' . route('unitkerja.destroy', $item->id) . '" method="POST" class="m-0">
                         ' . csrf_field() . '
                         ' . method_field('delete') . '
-                        <button type="submit" class="btn btn-danger btn-sm mx-1 shadow-sm rounded-lg" title="Hapus" onclick="return confirm(\'Hapus unit ini?\')"><i class="fas fa-trash-alt"></i></button>
+                        <button type="submit" class="btn btn-danger btn-sm rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Hapus" onclick="return confirm(\'Hapus unit ini?\')"><i class="fa-solid fa-trash-can" style="font-size: 11px;"></i></button>
                     </form>
                 </div>';
             })

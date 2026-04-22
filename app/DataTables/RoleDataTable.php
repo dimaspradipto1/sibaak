@@ -19,28 +19,28 @@ class RoleDataTable extends DataTable
             ->addColumn('DT_RowIndex', '')
             ->addColumn('action', function ($item) {
                 return '
-                    <div class="d-flex justify-content-center align-items-center">
+                    <div class="d-flex justify-content-center align-items-center" style="gap: 5px;">
                         <a href="' . route('role.edit-permission', $item->id) . '" 
-                           class="btn btn-sm rounded shadow-sm d-inline-flex align-items-center mx-1" 
-                           style="background-color: #00A551; color: white; border: none; padding: 6px 12px;"
+                           class="btn btn-sm btn-success text-white rounded shadow-sm d-flex align-items-center px-3" 
+                           style="height: 30px; background-color: #00A551; border: none;"
                            title="Pengaturan Hak Akses">
-                            <i class="fa-solid fa-shield-halved mr-1" style="font-size: 0.85rem;"></i> <span style="font-size: 0.85rem; font-weight: 600;">Akses</span>
+                            <i class="fa-solid fa-shield-halved mr-1" style="font-size: 11px;"></i> <span style="font-size: 11px; font-weight: 600;">AKSES</span>
                         </a>
                         <a href="' . route('role.edit', $item->id) . '" 
-                           class="btn btn-sm rounded shadow-sm d-inline-flex align-items-center justify-content-center mx-1" 
-                           style="background-color: #4099ff; color: white; border: none; width: 34px; height: 34px;"
+                           class="btn btn-sm btn-info text-white rounded shadow-sm d-flex align-items-center justify-content-center" 
+                           style="width: 30px; height: 30px; background-color: #4099ff; border: none;"
                            title="Edit Role">
-                            <i class="fa-solid fa-pen-to-square" style="font-size: 0.85rem;"></i>
+                            <i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i>
                         </a>
-                        <form action="' . route('role.destroy', $item->id) . '" method="POST" class="d-inline">
+                        <form action="' . route('role.destroy', $item->id) . '" method="POST" class="m-0">
                             ' . csrf_field() . '
                             ' . method_field('delete') . '
                             <button type="submit" 
-                                    class="btn btn-sm rounded shadow-sm d-inline-flex align-items-center justify-content-center mx-1" 
-                                    style="background-color: #FF5370; color: white; border: none; width: 34px; height: 34px;"
+                                    class="btn btn-sm btn-danger text-white rounded shadow-sm d-flex align-items-center justify-content-center" 
+                                    style="width: 30px; height: 30px; background-color: #FF5370; border: none;"
                                     title="Hapus Role"
                                     onclick="return confirm(\'Anda yakin ingin menghapus role ini?\')">
-                                <i class="fa-solid fa-trash-can" style="font-size: 0.85rem;"></i>
+                                <i class="fa-solid fa-trash-can" style="font-size: 11px;"></i>
                             </button>
                         </form>
                     </div>

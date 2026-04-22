@@ -6,31 +6,31 @@
     @endphp
 
 
-    <div class="card">
-        <div class="card-header bg-white py-3 border-bottom">
+    <div class="card border-0 shadow-sm" style="border-radius: 15px; overflow: hidden; border-top: 5px solid #046B26 !important;">
+        <div class="card-header bg-white border-bottom py-3">
             <div class="row align-items-center">
                 <div class="col-md-8">
                     @can('mahasiswa_create')
-                    <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary btn-round btn-sm px-3 shadow-sm mr-1">
-                        <i class="fa-solid fa-plus mr-1"></i> Tambah
+                    <a href="{{ route('mahasiswa.create') }}" class="btn btn-success rounded btn-sm font-weight-bold px-3 py-2 shadow-sm rounded-lg border-0 mr-1" style="background-color: #046B26;">
+                        <i class="fa-solid fa-plus mr-1"></i> TAMBAH
                     </a>
-                    <button type="button" class="btn btn-outline-success btn-round btn-sm px-3 shadow-sm mr-1" data-toggle="modal" data-target="#importMahasiswaModal">
-                        <i class="fa-solid fa-file-import mr-1"></i> Impor Excel
+                    <button type="button" class="btn btn-outline-success rounded btn-sm font-weight-bold px-3 py-2 shadow-sm rounded-lg mr-1" data-toggle="modal" data-target="#importMahasiswaModal">
+                        <i class="fa-solid fa-file-import mr-1"></i> IMPOR EXCEL
                     </button>
-                    <a href="{{ route('mahasiswa.export-template') }}" class="btn btn-outline-info btn-round btn-sm px-3 shadow-sm">
-                        <i class="fa-solid fa-file-download mr-1"></i> Download Format
+                    <a href="{{ route('mahasiswa.export-template') }}" class="btn btn-outline-info rounded btn-sm font-weight-bold px-3 py-2 shadow-sm rounded-lg">
+                        <i class="fa-solid fa-file-download mr-1"></i> DOWNLOAD FORMAT
                     </a>
                     @endcan
 
                     @if (auth()->user()->is_mahasiswa)
                         <form action="{{ route('suratAktif.pengajuan') }}" method="POST" style="display: inline;">
                             @csrf
-                            <button type="submit" class="btn btn-success btn-round btn-sm px-3 shadow-sm mr-1">
-                                <i class="fa-solid fa-plus mr-1"></i> Pengajuan Surat Aktif
+                            <button type="submit" class="btn btn-success btn-sm font-weight-bold px-3 py-2 shadow-sm rounded-lg border-0 mr-1" style="background-color: #046B26;">
+                                <i class="fa-solid fa-plus mr-1"></i> PENGAJUAN SURAT AKTIF
                             </button>
                         </form>
-                        <a href="{{ route('suratAkademik.create') }}" class="btn btn-secondary btn-round btn-sm px-3 shadow-sm">
-                            <i class="fa-solid fa-plus mr-1"></i> Pengajuan Surat Akademik
+                        <a href="{{ route('suratAkademik.create') }}" class="btn btn-secondary btn-sm font-weight-bold px-3 py-2 shadow-sm rounded-lg border-0">
+                            <i class="fa-solid fa-plus mr-1"></i> PENGAJUAN SURAT AKADEMIK
                         </a>
                     @endif
                 </div>
@@ -39,6 +39,7 @@
                 </div>
             </div>
         </div>
+
 
         <!-- Import Modal -->
         <div class="modal fade" id="importMahasiswaModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
@@ -85,6 +86,27 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+    <style>
+        #mahasiswa-table thead th {
+            background-color: #f8f9fc;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            color: #5a5c69;
+            border-bottom: 2px solid #e3e6f0;
+            padding: 15px 10px;
+            vertical-align: middle;
+        }
+        #mahasiswa-table tbody td {
+            vertical-align: middle;
+            padding: 12px 10px;
+            color: #5a5c69;
+            font-size: 13px;
+        }
+    </style>
+@endpush
 
 @push('scripts')
     <script>

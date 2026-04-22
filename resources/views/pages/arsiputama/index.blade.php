@@ -117,15 +117,15 @@
 
         <!-- Data Table Area -->
         <div class="col-xl-9 col-lg-8">
-            <div class="card border-0 shadow-sm mb-4" style="border-radius: 15px; overflow: hidden;">
+            <div class="card border-0 shadow-sm mb-4" style="border-radius: 15px; overflow: hidden; border-top: 5px solid #046B26 !important;">
                 <!-- Main Header -->
                 <div class="card-header bg-white border-bottom py-3 px-4">
                     <div class="row align-items-center">
                         <div class="col-md-7">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex mr-3">
-                                    <div style="width: 4px; height: 25px; background: #28a745; border-radius: 2px;"></div>
-                                    <div style="width: 4px; height: 25px; background: #28a745; border-radius: 2px; margin-left: 3px; opacity: 0.5;"></div>
+                                    <div style="width: 4px; height: 25px; background: #046B26; border-radius: 2px;"></div>
+                                    <div style="width: 4px; height: 25px; background: #046B26; border-radius: 2px; margin-left: 3px; opacity: 0.5;"></div>
                                 </div>
                                 <div>
                                     <h5 class="m-0 font-weight-bold text-dark">Daftar Arsip Utama</h5>
@@ -136,7 +136,7 @@
                         <div class="col-md-5 text-md-right mt-3 mt-md-0">
                             <div class="d-inline-flex shadow-sm rounded-lg overflow-hidden" style="border: 1px solid #e3e6f0;">
                                 @can('arsip_utama_create')
-                                <a href="{{ route('arsiputama.create') }}" class="btn btn-success btn-sm font-weight-bold px-3 py-2 border-0 rounded-0" style="background-color: #28a745; color: white;">
+                                <a href="{{ route('arsiputama.create') }}" class="btn btn-success btn-sm font-weight-bold px-3 py-2 border-0 rounded-0" style="background-color: #046B26; color: white;">
                                     <i class="fas fa-plus mr-1"></i> TAMBAH
                                 </a>
                                 @endcan

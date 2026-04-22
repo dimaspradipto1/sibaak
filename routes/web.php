@@ -76,6 +76,8 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('programStudi', ProgramStudiController::class);
     Route::resource('jenissk', JenisSKController::class);
     Route::resource('pegawai', PegawaiController::class);
+    Route::post('/dosen/import', [DosenController::class, 'import'])->name('dosen.import');
+    Route::get('/dosen/export-template', [DosenController::class, 'exportTemplate'])->name('dosen.export-template');
     Route::resource('dosen', DosenController::class);
     Route::get('/suratAktif/export-template', [SuratAktifController::class, 'exportTemplate'])->name('suratAktif.export-template');
     Route::post('/suratAktif/import', [SuratAktifController::class, 'import'])->name('suratAktif.import');

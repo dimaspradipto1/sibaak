@@ -38,26 +38,26 @@ class ArtikelDataTable extends DataTable
                 return '<span class="text-muted small">Tidak ada link</span>';
             })
             ->addColumn('action', function ($item) {
-                $actions = '<div class="d-flex align-items-center justify-content-center" style="gap: 5px; flex-wrap: nowrap;">';
+                $actions = '<div class="d-flex align-items-center justify-content-center" style="gap: 5px;">';
                 
                 // Preview button
-                $actions .= '<a href="' . route('artikel.show', $item->id) . '" class="btn btn-sm btn-info text-white p-2 rounded" title="Lihat Detail">
-                                <i class="fa-solid fa-eye"></i>
+                $actions .= '<a href="' . route('artikel.show', $item->id) . '" class="btn btn-sm btn-info text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Lihat Detail">
+                                <i class="fa-solid fa-eye" style="font-size: 11px;"></i>
                              </a>';
 
                 if (Gate::check('artikel_edit')) {
-                    $actions .= '<a href="' . route('artikel.edit', $item->id) . '" class="btn btn-sm btn-warning text-white p-2 rounded" title="Edit">
-                                    <i class="fa-solid fa-pen-to-square"></i>
+                    $actions .= '<a href="' . route('artikel.edit', $item->id) . '" class="btn btn-sm btn-warning text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Edit">
+                                    <i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i>
                                  </a>';
                 }
 
                 if (Gate::check('artikel_delete')) {
                     $actions .= '
-                        <form action="' . route('artikel.destroy', $item->id) . '" method="POST" class="d-inline mb-0">
+                        <form action="' . route('artikel.destroy', $item->id) . '" method="POST" class="m-0">
                             ' . csrf_field() . '
                             ' . method_field('delete') . '
-                            <button type="submit" class="btn btn-danger btn-sm p-2 rounded" title="Hapus" onclick="return confirm(\'Hapus artikel ini?\')">
-                                <i class="fa-solid fa-trash-can"></i>
+                            <button type="submit" class="btn btn-danger btn-sm rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Hapus" onclick="return confirm(\'Hapus artikel ini?\')">
+                                <i class="fa-solid fa-trash-can" style="font-size: 11px;"></i>
                             </button>
                         </form>
                     ';

@@ -2,24 +2,24 @@
 
 
 @section('content')
-    <div class="card">
-        <div class="card-header bg-white py-3 border-bottom">
+    <div class="card border-0 shadow-sm" style="border-radius: 15px; overflow: hidden; border-top: 5px solid #046B26 !important;">
+        <div class="card-header bg-white border-bottom py-3">
             <div class="row align-items-center">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     @can('users_create')
-                    <a href="{{ route('users.create') }}" class="btn btn-primary btn-round btn-sm px-3 shadow-sm mr-2">
-                        <i class="fa-solid fa-plus mr-1"></i> Tambah
+                    <a href="{{ route('users.create') }}" class="btn btn-success btn-sm font-weight-bold px-3 py-2 shadow-sm rounded-lg border-0 mr-1" style="background-color: #046B26;">
+                        <i class="fa-solid fa-plus mr-1"></i> TAMBAH
                     </a>
-                    <button type="button" class="btn btn-outline-success btn-round btn-sm px-3 shadow-sm mr-2" data-toggle="modal" data-target="#importModal">
-                        <i class="fa-solid fa-file-import mr-1"></i> Impor Excel
+                    <button type="button" class="btn btn-outline-success btn-sm font-weight-bold px-3 py-2 shadow-sm rounded-lg mr-1" data-toggle="modal" data-target="#importModal">
+                        <i class="fa-solid fa-file-import mr-1"></i> IMPOR EXCEL
                     </button>
-                    <a href="{{ route('users.export-template') }}" class="btn btn-outline-info btn-round btn-sm px-3 shadow-sm">
-                        <i class="fa-solid fa-file-download mr-1"></i> Download Format
+                    <a href="{{ route('users.export-template') }}" class="btn btn-outline-info btn-sm font-weight-bold px-3 py-2 shadow-sm rounded-lg">
+                        <i class="fa-solid fa-file-download mr-1"></i> DOWNLOAD FORMAT
                     </a>
                     @endcan
                 </div>
-                <div class="col-md-6 text-right">
-                    <h5 class="m-0 font-weight-bold text-dark">Manajemen Pengguna</h5>
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 font-weight-bold text-dark">Data Pengguna</h5>
                 </div>
             </div>
         </div>
@@ -69,6 +69,27 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+    <style>
+        #user-table thead th {
+            background-color: #f8f9fc;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            color: #5a5c69;
+            border-bottom: 2px solid #e3e6f0;
+            padding: 15px 10px;
+            vertical-align: middle;
+        }
+        #user-table tbody td {
+            vertical-align: middle;
+            padding: 12px 10px;
+            color: #5a5c69;
+            font-size: 13px;
+        }
+    </style>
+@endpush
 
 @push('scripts')
     <script>

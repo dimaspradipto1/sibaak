@@ -26,25 +26,19 @@ class TahunAkademikDataTable extends DataTable
             ->addIndexColumn()  
             ->addColumn('DT_RowIndex', '')
             ->addColumn('action', function ($item) {
-                $btn = '';
+                $btn = '<div class="d-flex justify-content-center align-items-center" style="gap: 5px;">';
                 if (Gate::check('tahun_akademik_edit')) {
-                    $btn .= '<a href="' . route('tahunAkademik.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded mx-1" title="edit"><i class="fa-solid fa-pen-to-square"></i></a>';
+                    $btn .= '<a href="' . route('tahunAkademik.edit', $item->id) . '" class="btn btn-sm btn-warning text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Edit"><i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i></a>';
                 }
                 if (Gate::check('tahun_akademik_delete')) {
-                    $btn .= '
-                        <form action="' . route('tahunAkademik.destroy', $item->id) . '" method="POST" class="d-inline">
-                        ' . csrf_field() . '
-                        ' . method_field('delete') . '
-                        <button type="submit" class="btn btn-danger btn-sm px-3 rounded mx-1" title="hapus" onclick="return confirm(\'Hapus data ini?\')">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                        </form>
-                    ';
+                    $btn .= '<form action="' . route('tahunAkademik.destroy', $item->id) . '" method="POST" class="m-0">' . csrf_field() . method_field('delete') . '<button type="submit" class="btn btn-danger btn-sm rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Hapus" onclick="return confirm(\'Hapus data ini?\')"><i class="fa-solid fa-trash-can" style="font-size: 11px;"></i></button></form>';
                 }
-                if (empty(trim($btn))) {
-                    $btn = '<span class="text-muted small">-</span>';
+                $btn .= '</div>';
+                
+                if (Gate::check('tahun_akademik_edit') || Gate::check('tahun_akademik_delete')) {
+                    return $btn;
                 }
-                return $btn;
+                return '<span class="text-muted small">-</span>';
             })
             ->setRowId('DT_RowIndex')
             ->rawColumns(['action'])
