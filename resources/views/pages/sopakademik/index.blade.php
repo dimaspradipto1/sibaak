@@ -53,4 +53,39 @@
     @else
         {!! $dataTable->scripts() !!}
     @endif
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.btn-toggle-status', function() {
+                var btn = $(this);
+                var id = btn.data('id');
+                var status = btn.data('status');
+
+                $.ajax({
+                    url: "{{ route('sopakademik.toggle-status') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id,
+                        status: status
+                    },
+                    beforeSend: function() {
+                        btn.prop('disabled', true).html(
+                            '<i class="fas fa-spinner fa-spin"></i>');
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            window.LaravelDataTables['sopakademik-table'].draw();
+                        } else {
+                            alert(response.message);
+                            window.LaravelDataTables['sopakademik-table'].draw();
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Terjadi kesalahan saat mengubah status.');
+                        window.LaravelDataTables['sopakademik-table'].draw();
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

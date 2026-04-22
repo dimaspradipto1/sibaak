@@ -40,6 +40,21 @@ class WasdalbinDataTable extends DataTable
                             <i class="fa-solid fa-eye"></i> Lihat Dokumen
                         </a>';
             })
+            ->addColumn('status', function ($item) {
+                if ($item->is_active) {
+                    return '
+                        <button type="button" class="btn btn-sm btn-primary badge-pill shadow-sm px-3 py-1 btn-toggle-status" data-id="' . $item->id . '" data-status="0" style="font-size: 10px; min-width: 80px; border: none;">
+                            <i class="fas fa-toggle-on mr-1"></i> AKTIF
+                        </button>
+                    ';
+                } else {
+                    return '
+                        <button type="button" class="btn btn-sm btn-secondary badge-pill shadow-sm px-3 py-1 btn-toggle-status" data-id="' . $item->id . '" data-status="1" style="font-size: 10px; min-width: 80px; border: none; background: #e0e0e0; color: #777;">
+                            <i class="fas fa-toggle-off mr-1"></i> INAKTIF
+                        </button>
+                    ';
+                }
+            })
             ->addColumn('action', function ($item) {
                 $btn = '';
                 if (Gate::check('wasdalbin_edit')) {
@@ -64,7 +79,7 @@ class WasdalbinDataTable extends DataTable
                 return $btn;
             })
             ->setRowId('DT_RowIndex')
-            ->rawColumns(['action', 'file', 'users_id']);
+            ->rawColumns(['action', 'file', 'users_id', 'status']);
     }
 
     /**
@@ -123,6 +138,10 @@ class WasdalbinDataTable extends DataTable
                 ->title('FAKULTAS'),
             Column::make('file')
                 ->title('DOKUMEN')
+                ->addClass('text-center'),
+            Column::computed('status')
+                ->title('STATUS')
+                ->width('10%')
                 ->addClass('text-center'),
             Column::make('users_id')
                 ->title('DIAJUKAN OLEH'),

@@ -235,4 +235,23 @@ class PedomanController extends Controller
             ->timerProgressBar();
         return redirect()->route('pedoman.index');
     }
+
+    public function toggleStatus(Request $request)
+    {
+        try {
+            $pedoman = Pedoman::findOrFail($request->id);
+            $pedoman->is_active = $request->status;
+            $pedoman->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status berhasil diubah'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengubah status: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

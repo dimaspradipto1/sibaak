@@ -10,6 +10,11 @@ use App\Models\Pedoman;
 use App\Models\SkKepanitiaan;
 use App\Models\SopAkademik;
 use App\Models\Wasdalbin;
+use App\Models\Mahasiswa;
+use App\Models\Dosen;
+use App\Models\User;
+use App\Models\SuratAktif;
+use App\Models\SuratAkademik;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
@@ -25,8 +30,11 @@ class SemanticArsipController extends Controller
         $top_result = null;
 
         if ($query) {
+            // Split query into words for more flexible searching
+            $words = explode(' ', $query);
+            $flexibleQuery = '%' . str_replace(' ', '%', $query) . '%';
             // Helper to get Google Drive Thumbnail if available
-            $getThumbnail = function($url) {
+            $getThumbnail = function ($url) {
                 if (preg_match('/d\/([a-zA-Z0-9_-]+)/', $url, $matches)) {
                     return "https://drive.google.com/thumbnail?id=" . $matches[1] . "&sz=w600";
                 }
@@ -35,24 +43,32 @@ class SemanticArsipController extends Controller
 
             // Search in Artikel (Prioritized for Knowledge Panel)
             $artikelItems = Artikel::with(['user.role'])
-                ->where(function($q) use ($query) {
+                ->where(function ($q) use ($query, $words, $flexibleQuery) {
                     $q->where('judul', 'like', "%$query%")
-                      ->orWhere('tipe', 'like', "%$query%")
-                      ->orWhere('konten', 'like', "%$query%")
-                      ->orWhere('keyword', 'like', "%$query%");
+                        ->orWhere('judul', 'like', $flexibleQuery)
+                        ->orWhere('tipe', 'like', "%$query%")
+                        ->orWhere('konten', 'like', "%$query%")
+                        ->orWhere('keyword', 'like', "%$query%");
+
+                    foreach ($words as $word) {
+                        if (strlen($word) > 1) {
+                            $q->orWhere('judul', 'like', "%$word%")
+                                ->orWhere('keyword', 'like', "%$word%");
+                        }
+                    }
                 })
                 ->get()
-                ->map(function($item) {
+                ->map(function ($item) {
                     $item->type = 'Artikel';
                     $item->title = $item->judul;
-                    
+
                     // Improved Narrative Logic
                     $plain_text = trim(strip_tags($item->konten));
                     if (empty($plain_text)) {
                         $source = 'portal berita';
                         if ($item->is_youtube) $source = 'saluran YouTube';
                         if ($item->is_facebook) $source = 'halaman Facebook';
-                        
+
                         $item->description = "Lihat informasi lengkap mengenai {$item->title} yang tersedia di {$source} resmi Universitas Ibnu Sina. Akses arsip digital untuk melihat detail publikasi ini.";
                     } else {
                         $item->description = Str::limit($plain_text, 170, '...');
@@ -62,11 +78,11 @@ class SemanticArsipController extends Controller
                     $item->icon = 'fa-newspaper';
                     $item->color = 'text-info';
                     $item->thumbnail = $item->gambar ? asset('storage/' . $item->gambar) : null;
-                    
+
                     // Specific YouTube Handling
                     $item->is_youtube = false;
                     $item->is_facebook = false;
-                    
+
                     if ($item->media_url && preg_match('/(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $item->media_url, $matches)) {
                         $item->is_youtube = true;
                         $item->youtube_id = $matches[2];
@@ -84,8 +100,8 @@ class SemanticArsipController extends Controller
                     // Detect if media_url is a Map
                     $item->is_map = strpos($item->media_url, 'maps') !== false || strpos($item->media_url, 'goo.gl/maps') !== false;
                     $item->external_link = $item->media_url;
-                    $item->kategori = $item->kategori; 
-                    
+                    $item->kategori = $item->kategori;
+
                     return $item;
                 });
 
@@ -97,17 +113,28 @@ class SemanticArsipController extends Controller
             // Search in Arsip Utama
             $arsipUtama = ArsipUtama::with(['user.role', 'kategoriArsip'])
                 ->where('is_active', true) // Filter dokumen yang aktif saja
-                ->where(function($q) use ($query) {
+                ->where(function ($q) use ($query, $words, $flexibleQuery) {
                     $q->where('nama_arsip', 'like', "%$query%")
-                      ->orWhereHas('kategoriArsip', function($sq) use ($query) {
-                          $sq->where('kategori_arsip', 'like', "%$query%");
-                      })
-                      ->orWhereHas('user.role', function($sq) use ($query) {
-                          $sq->where('nama_role', 'like', "%$query%");
-                      });
+                        ->orWhere('nama_arsip', 'like', $flexibleQuery)
+                        ->orWhereHas('kategoriArsip', function ($sq) use ($query, $flexibleQuery) {
+                            $sq->where('kategori_arsip', 'like', "%$query%")
+                                ->orWhere('kategori_arsip', 'like', $flexibleQuery);
+                        })
+                        ->orWhereHas('user.role', function ($sq) use ($query) {
+                            $sq->where('nama_role', 'like', "%$query%");
+                        });
+
+                    foreach ($words as $word) {
+                        if (strlen($word) > 1) {
+                            $q->orWhere('nama_arsip', 'like', "%$word%");
+                            $q->orWhereHas('kategoriArsip', function ($sq) use ($word) {
+                                $sq->where('kategori_arsip', 'like', "%$word%");
+                            });
+                        }
+                    }
                 })
                 ->get()
-                ->map(function($item) use ($getThumbnail) {
+                ->map(function ($item) use ($getThumbnail) {
                     $item->type = 'Arsip Utama';
                     $item->title = $item->nama_arsip;
                     $item->description = 'Dokumen ini merupakan arsip digital yang terdaftar dalam kategori ' . ($item->kategoriArsip->kategori_arsip ?? 'Umum') . '. Berkas ini disimpan untuk keperluan administrasi dan akreditasi internal UIS.';
@@ -120,18 +147,27 @@ class SemanticArsipController extends Controller
 
             // Search in SK Kepanitiaan
             $sk = SkKepanitiaan::with(['users.role', 'jenissk'])
-                ->where(function($q) use ($query) {
+                ->where('is_active', true)
+                ->where(function ($q) use ($query, $words, $flexibleQuery) {
                     $q->where('nama_dokumen', 'like', "%$query%")
-                      ->orWhere('nomor_sk', 'like', "%$query%")
-                      ->orWhereHas('jenissk', function($sq) use ($query) {
-                          $sq->where('jenis_sk', 'like', "%$query%");
-                      })
-                      ->orWhereHas('users.role', function($sq) use ($query) {
-                          $sq->where('nama_role', 'like', "%$query%");
-                      });
+                        ->orWhere('nama_dokumen', 'like', $flexibleQuery)
+                        ->orWhere('nomor_sk', 'like', "%$query%")
+                        ->orWhereHas('jenissk', function ($sq) use ($query) {
+                            $sq->where('jenis_sk', 'like', "%$query%");
+                        })
+                        ->orWhereHas('users.role', function ($sq) use ($query) {
+                            $sq->where('nama_role', 'like', "%$query%");
+                        });
+
+                    foreach ($words as $word) {
+                        if (strlen($word) > 1) {
+                            $q->orWhere('nama_dokumen', 'like', "%$word%")
+                                ->orWhere('nomor_sk', 'like', "%$word%");
+                        }
+                    }
                 })
                 ->get()
-                ->map(function($item) use ($getThumbnail) {
+                ->map(function ($item) use ($getThumbnail) {
                     $item->type = 'SK Kepanitiaan';
                     $item->title = $item->nama_dokumen . ' (' . $item->nomor_sk . ')';
                     $item->description = 'Salinan resmi Dokumen SK Kepanitiaan dengan nomor registrasi ' . $item->nomor_sk . '. Dokumen ini telah diverifikasi dan tersimpan dalam pangkalan data arsip digital UIS.';
@@ -144,15 +180,16 @@ class SemanticArsipController extends Controller
 
             // Search in LPJ
             $lpj = LpjKepanitiaan::with(['users.role'])
-                ->where(function($q) use ($query) {
+                ->where('is_active', true)
+                ->where(function ($q) use ($query) {
                     $q->where('nama_dokumen', 'like', "%$query%")
-                      ->orWhere('ketua', 'like', "%$query%")
-                      ->orWhereHas('users.role', function($sq) use ($query) {
-                          $sq->where('nama_role', 'like', "%$query%");
-                      });
+                        ->orWhere('ketua', 'like', "%$query%")
+                        ->orWhereHas('users.role', function ($sq) use ($query) {
+                            $sq->where('nama_role', 'like', "%$query%");
+                        });
                 })
                 ->get()
-                ->map(function($item) use ($getThumbnail) {
+                ->map(function ($item) use ($getThumbnail) {
                     $item->type = 'LPJ Kepanitiaan';
                     $item->description = 'Laporan Pertanggungjawaban (LPJ) kegiatan. Ketua pelaksana: ' . $item->ketua . '.';
                     $item->title = $item->nama_dokumen;
@@ -165,14 +202,15 @@ class SemanticArsipController extends Controller
 
             // Search in Kurikulum
             $kurikulum = Kurikulum::with(['user.role'])
-                ->where(function($q) use ($query) {
+                ->where('is_active', true)
+                ->where(function ($q) use ($query) {
                     $q->where('nama_kurikulum', 'like', "%$query%")
-                      ->orWhereHas('user.role', function($sq) use ($query) {
-                          $sq->where('nama_role', 'like', "%$query%");
-                      });
+                        ->orWhereHas('user.role', function ($sq) use ($query) {
+                            $sq->where('nama_role', 'like', "%$query%");
+                        });
                 })
                 ->get()
-                ->map(function($item) use ($getThumbnail) {
+                ->map(function ($item) use ($getThumbnail) {
                     $item->type = 'Kurikulum';
                     $item->title = $item->nama_kurikulum;
                     $item->link = $item->file;
@@ -184,14 +222,15 @@ class SemanticArsipController extends Controller
 
             // Search in Pedoman
             $pedoman = Pedoman::with(['users.role'])
-                ->where(function($q) use ($query) {
+                ->where('is_active', true)
+                ->where(function ($q) use ($query) {
                     $q->where('nama_pedoman', 'like', "%$query%")
-                      ->orWhereHas('users.role', function($sq) use ($query) {
-                          $sq->where('nama_role', 'like', "%$query%");
-                      });
+                        ->orWhereHas('users.role', function ($sq) use ($query) {
+                            $sq->where('nama_role', 'like', "%$query%");
+                        });
                 })
                 ->get()
-                ->map(function($item) use ($getThumbnail) {
+                ->map(function ($item) use ($getThumbnail) {
                     $item->type = 'Pedoman';
                     $item->title = $item->nama_pedoman;
                     $item->link = $item->file;
@@ -203,14 +242,15 @@ class SemanticArsipController extends Controller
 
             // Search in SOP
             $sop = SopAkademik::with(['users.role'])
-                ->where(function($q) use ($query) {
+                ->where('is_active', true)
+                ->where(function ($q) use ($query) {
                     $q->where('nama_sop', 'like', "%$query%")
-                      ->orWhereHas('users.role', function($sq) use ($query) {
-                          $sq->where('nama_role', 'like', "%$query%");
-                      });
+                        ->orWhereHas('users.role', function ($sq) use ($query) {
+                            $sq->where('nama_role', 'like', "%$query%");
+                        });
                 })
                 ->get()
-                ->map(function($item) use ($getThumbnail) {
+                ->map(function ($item) use ($getThumbnail) {
                     $item->type = 'SOP Akademik';
                     $item->title = $item->nama_sop;
                     $item->link = $item->file;
@@ -222,14 +262,15 @@ class SemanticArsipController extends Controller
 
             // Search in Wasdalbin
             $wasdalbin = Wasdalbin::with(['users.role'])
-                ->where(function($q) use ($query) {
+                ->where('is_active', true)
+                ->where(function ($q) use ($query) {
                     $q->where('nama_wasdalbin', 'like', "%$query%")
-                      ->orWhereHas('users.role', function($sq) use ($query) {
-                          $sq->where('nama_role', 'like', "%$query%");
-                      });
+                        ->orWhereHas('users.role', function ($sq) use ($query) {
+                            $sq->where('nama_role', 'like', "%$query%");
+                        });
                 })
                 ->get()
-                ->map(function($item) use ($getThumbnail) {
+                ->map(function ($item) use ($getThumbnail) {
                     $item->type = 'Wasdalbin';
                     $item->title = $item->nama_wasdalbin;
                     $item->link = $item->file;
@@ -239,14 +280,53 @@ class SemanticArsipController extends Controller
                     return $item;
                 });
 
+            // Search in Surat Aktif
+            $suratAktif = SuratAktif::with(['users'])
+                ->where('no_surat', 'like', "%$query%")
+                ->orWhere('npm', 'like', "%$query%")
+                ->orWhereHas('users', function ($sq) use ($query) {
+                    $sq->where('name', 'like', "%$query%");
+                })
+                ->get()
+                ->map(function ($item) {
+                    $item->type = 'Surat Aktif';
+                    $item->title = "Surat Keterangan Aktif (" . ($item->no_surat ?? 'Draft') . ")";
+                    $item->description = "Layanan surat keterangan aktif kuliah untuk mahasiswa " . ($item->users->name ?? '-') . ". NPM: " . $item->npm;
+                    $item->link = route('suratAktif.index', ['q' => $item->npm]);
+                    $item->icon = 'fa-file-signature';
+                    $item->color = 'text-success';
+                    return $item;
+                });
+
+            // Search in Surat Akademik
+            $suratAkademik = SuratAkademik::with(['user'])
+                ->where('npm', 'like', "%$query%")
+                ->orWhere('permohonan', 'like', "%$query%")
+                ->orWhereHas('user', function ($sq) use ($query) {
+                    $sq->where('name', 'like', "%$query%");
+                })
+                ->get()
+                ->map(function ($item) {
+                    $item->type = 'Surat Akademik';
+                    $item->title = "Surat Layanan Akademik (" . $item->permohonan . ")";
+                    $item->description = "Dokumen layanan akademik mahasiswa " . ($item->user->name ?? '-') . ". NPM: " . $item->npm;
+                    $item->link = route('suratAkademik.index', ['q' => $item->npm]);
+                    $item->icon = 'fa-file-lines';
+                    $item->color = 'text-primary';
+                    return $item;
+                });
+
+
             $results = $results->concat($artikelItems)
-                               ->concat($arsipUtama)
-                               ->concat($sk)
-                               ->concat($lpj)
-                               ->concat($kurikulum)
-                               ->concat($pedoman)
-                               ->concat($sop)
-                               ->concat($wasdalbin);
+                ->concat($arsipUtama)
+                ->concat($sk)
+                ->concat($lpj)
+                ->concat($kurikulum)
+                ->concat($pedoman)
+                ->concat($sop)
+                ->concat($wasdalbin)
+                ->concat($suratAktif)
+                ->concat($suratAkademik);
 
             // Filter logic based on tab
             if ($tab == 'terbaru') {
@@ -254,11 +334,11 @@ class SemanticArsipController extends Controller
             } elseif ($tab == 'gambar') {
                 $results = $results->whereNotNull('thumbnail')->where('thumbnail', '!=', '');
             } elseif ($tab == 'video') {
-                $results = $results->filter(function($item) {
+                $results = $results->filter(function ($item) {
                     return (isset($item->is_youtube) && $item->is_youtube) || (isset($item->is_facebook) && $item->is_facebook);
                 });
             } elseif ($tab == 'berita') {
-                $results = $results->filter(function($item) {
+                $results = $results->filter(function ($item) {
                     return $item->type == 'Artikel' && in_array($item->kategori, ['Berita', 'Informasi', 'Pengumuman', 'Tutorial']);
                 });
             }

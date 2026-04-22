@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Google\Client as GoogleClient;
 use Google\Service\Drive as GoogleDrive;
 use App\Models\User;
@@ -243,5 +244,24 @@ class LpjKepanitiaanController extends Controller
             ->toToast()
             ->timerProgressBar();
         return redirect()->route('lpjkepanitiaan.index');
+    }
+
+    public function toggleStatus(Request $request)
+    {
+        try {
+            $lpj = LpjKepanitiaan::findOrFail($request->id);
+            $lpj->is_active = $request->status;
+            $lpj->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status berhasil diubah'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengubah status: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

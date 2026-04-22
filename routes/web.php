@@ -114,6 +114,12 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::post('/arsiputama/import', [ArsipUtamaController::class, 'import'])->name('arsiputama.import');
     Route::get('/arsiputama/export-template', [ArsipUtamaController::class, 'exportTemplate'])->name('arsiputama.export-template');
     Route::post('/arsiputama/toggle-status', [ArsipUtamaController::class, 'toggleStatus'])->name('arsiputama.toggle-status');
+    Route::post('/skkepanitiaan/toggle-status', [SkKepanitiaanController::class, 'toggleStatus'])->name('skkepanitiaan.toggle-status');
+    Route::post('/lpjkepanitiaan/toggle-status', [LpjKepanitiaanController::class, 'toggleStatus'])->name('lpjkepanitiaan.toggle-status');
+    Route::post('/kurikulum/toggle-status', [KurikulumController::class, 'toggleStatus'])->name('kurikulum.toggle-status');
+    Route::post('/pedoman/toggle-status', [PedomanController::class, 'toggleStatus'])->name('pedoman.toggle-status');
+    Route::post('/sopakademik/toggle-status', [SopAkademikController::class, 'toggleStatus'])->name('sopakademik.toggle-status');
+    Route::post('/wasdalbin/toggle-status', [WasdalbinController::class, 'toggleStatus'])->name('wasdalbin.toggle-status');
     Route::resource('arsiputama', ArsipUtamaController::class);
     Route::resource('unitkerja', UnitKerjaController::class);
     Route::resource('artikel', ArtikelController::class);

@@ -233,4 +233,23 @@ class SopAkademikController extends Controller
             ->iconHtml('<i class="fa fa-check-circle"></i>');
         return redirect()->route('sopakademik.index');
     }
+
+    public function toggleStatus(Request $request)
+    {
+        try {
+            $sop = SopAkademik::findOrFail($request->id);
+            $sop->is_active = $request->status;
+            $sop->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status berhasil diubah'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengubah status: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

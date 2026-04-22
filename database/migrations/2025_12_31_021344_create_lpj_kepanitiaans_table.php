@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('sekretaris');
             $table->string('fakultas');
             $table->string('file')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

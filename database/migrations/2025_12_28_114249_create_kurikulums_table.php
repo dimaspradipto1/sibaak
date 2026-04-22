@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_kurikulum');
             $table->string('fakultas');
             $table->string('file');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

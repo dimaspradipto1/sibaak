@@ -242,4 +242,23 @@ class SkKepanitiaanController extends Controller
             ->timerProgressBar();
         return redirect()->route('skkepanitiaan.index');
     }
+
+    public function toggleStatus(Request $request)
+    {
+        try {
+            $sk = SkKepanitiaan::findOrFail($request->id);
+            $sk->is_active = $request->status;
+            $sk->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status berhasil diubah'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengubah status: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

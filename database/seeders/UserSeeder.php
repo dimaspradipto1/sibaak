@@ -14,7 +14,9 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = \App\Models\Role::all()->pluck('id', 'nama_role');
+        $roles = \App\Models\Role::all()->mapWithKeys(function ($role) {
+            return [strtoupper($role->nama_role) => $role->id];
+        });
 
         $users = [
             [
@@ -27,7 +29,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'email' => 'admin@gmail.com',
-                'password' => Hash::make('852456dimas'),
+                'password' => Hash::make('password'),
                 'role_id' => $roles['ADMIN'] ?? null,
                 'is_active' => true,
             ],
@@ -77,21 +79,21 @@ class UserSeeder extends Seeder
                 'name' => 'TU FST',
                 'email' => 'fst@uis.ac.id',
                 'password' => Hash::make('password'),
-                'role_id' => $roles['TATA USAHA FAKULTAS SAINS DAN TEKNOLOGI'] ?? null,
+                'role_id' => $roles['TATA USAHA FST'] ?? null,
                 'is_active' => true,
             ],
             [
                 'name' => 'TU FEB',
                 'email' => 'feb@uis.ac.id',
                 'password' => Hash::make('password'),
-                'role_id' => $roles['TATA USAHA SARJANA (FEB)'] ?? null,
+                'role_id' => $roles['TATA USAHA FEB'] ?? null,
                 'is_active' => true,
             ],
             [
                 'name' => 'TU FIKES',
                 'email' => 'fikes@uis.ac.id',
                 'password' => Hash::make('password'),
-                'role_id' => $roles['TATA USAHA FAKULTAS ILMU KESEHATAN'] ?? null,
+                'role_id' => $roles['TATA USAHA FIKES'] ?? null,
                 'is_active' => true,
             ],
             [
@@ -114,7 +116,7 @@ class UserSeeder extends Seeder
             if ($userData['role_id'] === null) {
                 continue;
             }
-            
+
             $userData['created_at'] = now();
             $userData['updated_at'] = now();
 

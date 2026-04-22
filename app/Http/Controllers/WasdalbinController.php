@@ -231,4 +231,23 @@ class WasdalbinController extends Controller
             ->iconHtml('<i class="fa fa-check-circle"></i>');
         return redirect()->route('wasdalbin.index');
     }
+
+    public function toggleStatus(Request $request)
+    {
+        try {
+            $wasdalbin = Wasdalbin::findOrFail($request->id);
+            $wasdalbin->is_active = $request->status;
+            $wasdalbin->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status berhasil diubah'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengubah status: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

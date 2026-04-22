@@ -235,4 +235,23 @@ class KurikulumController extends Controller
             ->timerProgressBar();
         return redirect()->route('kurikulum.index');
     }
+
+    public function toggleStatus(Request $request)
+    {
+        try {
+            $kurikulum = Kurikulum::findOrFail($request->id);
+            $kurikulum->is_active = $request->status;
+            $kurikulum->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status berhasil diubah'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengubah status: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

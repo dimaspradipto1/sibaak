@@ -582,7 +582,8 @@
                 <div class="w-100 mb-2">
                     <div class="search-bar-results" style="max-width: 100%;">
                         <input type="text" name="q" class="form-control border-0 no-focus py-2"
-                            value="{{ $query }}" form="searchForm" style="font-size: 14px;">
+                            value="{{ $query }}" form="searchForm" style="font-size: 14px;"
+                            onkeydown="if(event.key === 'Enter') document.getElementById('searchForm').submit();">
                         <i class="fa-solid fa-magnifying-glass text-primary ml-auto cursor-pointer"
                             onclick="document.getElementById('searchForm').submit();"></i>
                     </div>
@@ -600,7 +601,8 @@
                 </a>
                 <div class="search-bar-results flex-grow-1" style="max-width: 692px;">
                     <input type="text" name="q" class="form-control border-0 no-focus py-2"
-                        value="{{ $query }}" form="searchForm">
+                        value="{{ $query }}" form="searchForm"
+                        onkeydown="if(event.key === 'Enter') document.getElementById('searchForm').submit();">
                     <i class="fa-solid fa-magnifying-glass text-primary ml-auto cursor-pointer"
                         onclick="document.getElementById('searchForm').submit();"></i>
                 </div>

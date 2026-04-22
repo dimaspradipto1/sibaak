@@ -33,5 +33,40 @@
     @else
         {!! $dataTable->scripts() !!}
     @endif
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.btn-toggle-status', function() {
+                var btn = $(this);
+                var id = btn.data('id');
+                var status = btn.data('status');
+
+                $.ajax({
+                    url: "{{ route('kurikulum.toggle-status') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id,
+                        status: status
+                    },
+                    beforeSend: function() {
+                        btn.prop('disabled', true).html(
+                            '<i class="fas fa-spinner fa-spin"></i>');
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            window.LaravelDataTables['kurikulum-table'].draw();
+                        } else {
+                            alert(response.message);
+                            window.LaravelDataTables['kurikulum-table'].draw();
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Terjadi kesalahan saat mengubah status.');
+                        window.LaravelDataTables['kurikulum-table'].draw();
+                    }
+                });
+            });
+        });
+    </script>
 @endpush
 
