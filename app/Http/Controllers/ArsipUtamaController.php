@@ -25,7 +25,7 @@ class ArsipUtamaController extends Controller
     {
         $user = Auth::user();
         $title = 'Arsip Utama';
-        $kategoriArsips = KategoriArsip::orderBy('kategori_arsip')->get();
+        $kategoriArsips = KategoriArsip::orderBy('kategori_arsip', 'asc')->get();
         
         // Ambil data unit kerja berdasarkan hak akses
         $unitKerjaQuery = UnitKerja::with('children');
@@ -52,7 +52,7 @@ class ArsipUtamaController extends Controller
     public function create()
     {
         $title = 'Form Arsip Utama';
-        $kategoriArsips = KategoriArsip::orderBy('kategori_arsip')->get();
+        $kategoriArsips = KategoriArsip::orderBy('kategori_arsip', 'asc')->get();
         return view('pages.arsiputama.create', compact('title', 'kategoriArsips'));
     }
 
@@ -129,7 +129,7 @@ class ArsipUtamaController extends Controller
     public function edit(ArsipUtama $arsiputama)
     {
         $title = 'Edit Arsip Utama';
-        $kategoriArsips = KategoriArsip::orderBy('kategori_arsip')->get();
+        $kategoriArsips = KategoriArsip::orderBy('kategori_arsip', 'asc')->get();
         return view('pages.arsiputama.edit', compact('title', 'arsiputama', 'kategoriArsips'));
     }
 

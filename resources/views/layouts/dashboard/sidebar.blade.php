@@ -311,63 +311,73 @@
             </ul>
         @endcanany
 
-        @canany(['users_view', 'role_view']) {{-- Gunakan izin admin/master untuk User Guide Admin --}}
+        @canany(['users_view', 'role_view'])
             <div class="pcoded-navigation-label">User Guide Admin</div>
             <ul class="pcoded-item pcoded-left-item">
-                <li class="">
-                    <a href="{{ route('userGuideTatausaha.index') }}" class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
-                        <span class="pcoded-mtext text-capitalize">Tata Usaha</span>
+                <li class="pcoded-hasmenu">
+                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                        <span class="pcoded-micon"><i class="fa-solid fa-user-gear"></i></span>
+                        <span class="pcoded-mtext text-capitalize">Panduan Admin</span>
                         <span class="pcoded-mcaret"></span>
                     </a>
-                </li>
-            </ul>
-            <ul class="pcoded-item pcoded-left-item">
-                <li class="">
-                    <a href="{{ route('userGuideMahasiswa.index') }}" class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
-                        <span class="pcoded-mtext text-capitalize">Mahasiswa</span>
-                        <span class="pcoded-mcaret"></span>
-                    </a>
-                </li>
-            </ul>
-            <ul class="pcoded-item pcoded-left-item">
-                <li class="">
-                    <a href="{{ route('faq.index') }}" class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
-                        <span class="pcoded-mtext text-capitalize">FAQ</span>
-                        <span class="pcoded-mcaret"></span>
-                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class="">
+                            <a href="{{ route('userGuideTatausaha.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext text-capitalize">Tata Usaha</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="{{ route('userGuideMahasiswa.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext text-capitalize">Mahasiswa</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="{{ route('faq.index') }}" class="waves-effect waves-dark">
+                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                <span class="pcoded-mtext text-capitalize">FAQ</span>
+                                <span class="pcoded-mcaret"></span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         @endcanany
 
         <div class="pcoded-navigation-label">User Guide</div>
         <ul class="pcoded-item pcoded-left-item">
-            <li class="">
-                <a href="{{ route('userGuidePenggunaTatausaha') }}" class="waves-effect waves-dark">
-                    <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
-                    <span class="pcoded-mtext text-capitalize">Tata Usaha</span>
+            <li class="pcoded-hasmenu">
+                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                    <span class="pcoded-micon"><i class="fa-solid fa-book"></i></span>
+                    <span class="pcoded-mtext text-capitalize">Panduan Pengguna</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
-            </li>
-        </ul>
-        <ul class="pcoded-item pcoded-left-item">
-            <li class="">
-                <a href="{{ route('userGuidePenggunaMahasiswa') }}" class="waves-effect waves-dark">
-                    <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
-                    <span class="pcoded-mtext text-capitalize">Mahasiswa</span>
-                    <span class="pcoded-mcaret"></span>
-                </a>
-            </li>
-        </ul>
-        <ul class="pcoded-item pcoded-left-item">
-            <li class="">
-                <a href="{{ route('userguidepengguna') }}" class="waves-effect waves-dark">
-                    <span class="pcoded-micon"><i class="fa-regular fa-file-lines"></i></span>
-                    <span class="pcoded-mtext text-capitalize">FAQ</span>
-                    <span class="pcoded-mcaret"></span>
-                </a>
+                <ul class="pcoded-submenu">
+                    <li class="">
+                        <a href="{{ route('userGuidePenggunaTatausaha') }}" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                            <span class="pcoded-mtext text-capitalize">Tata Usaha</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ route('userGuidePenggunaMahasiswa') }}" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                            <span class="pcoded-mtext text-capitalize">Mahasiswa</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{{ route('userguidepengguna') }}" class="waves-effect waves-dark">
+                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                            <span class="pcoded-mtext text-capitalize">FAQ</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
 

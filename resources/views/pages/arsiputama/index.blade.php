@@ -133,18 +133,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5 text-md-right mt-3 mt-md-0">
-                            <div class="d-inline-flex shadow-sm rounded-lg overflow-hidden" style="border: 1px solid #e3e6f0;">
+                        <div class="col-md-5 text-md-right mt-2 mt-md-0">
+                            <div class="d-inline-flex shadow-sm overflow-hidden" style="border: 1px solid #e3e6f0; border-radius: 30px;">
                                 @can('arsip_utama_create')
-                                <a href="{{ route('arsiputama.create') }}" class="btn btn-success btn-sm font-weight-bold px-3 py-2 border-0 rounded-0" style="background-color: #046B26; color: white;">
+                                <a href="{{ route('arsiputama.create') }}" class="btn btn-success btn-xs font-weight-bold px-3 py-1 border-0" style="background-color: #046B26; color: white; font-size: 10px; height: 32px; line-height: 24px; border-top-left-radius: 30px; border-bottom-left-radius: 30px;">
                                     <i class="fas fa-plus mr-1"></i> TAMBAH
                                 </a>
                                 @endcan
-                                <button class="btn btn-white btn-sm px-3 py-2 border-0 border-left rounded-0 text-danger" id="btnBulkDelete">
+                                <button class="btn btn-white btn-xs px-3 py-1 border-0 border-left rounded-0 text-danger" id="btnBulkDelete" style="font-size: 10px; height: 32px; line-height: 24px;">
                                     <i class="fas fa-trash-alt mr-1"></i> HAPUS
                                 </button>
                                 <div class="dropdown d-inline-block border-left">
-                                    <button class="btn btn-white btn-sm px-3 py-2 border-0 rounded-0 font-weight-bold dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <button class="btn btn-white btn-xs px-3 py-1 border-0 font-weight-bold dropdown-toggle" type="button" data-toggle="dropdown" style="font-size: 10px; height: 32px; line-height: 24px; border-top-right-radius: 30px; border-bottom-right-radius: 30px;">
                                         <i class="fas fa-file-export mr-1 text-primary"></i> EXPORT
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right shadow border-0 mt-1">
@@ -159,19 +159,19 @@
                 
                 <div class="card-body p-0">
                     <!-- Data Management Toolbar -->
-                    <div class="px-4 py-3 border-bottom d-flex align-items-center justify-content-between bg-white">
+                    <div class="px-4 py-2 border-bottom d-flex align-items-center justify-content-between bg-white">
                         <div class="d-flex align-items-center flex-grow-1">
                             <div class="ml-4 d-none d-lg-flex align-items-center">
-                                <span class="badge badge-pill bg-white border text-muted px-3 py-2 font-weight-normal mr-2 d-flex align-items-center shadow-sm">
-                                    <span class="dot bg-primary mr-2" style="width: 7px; height: 7px; border-radius: 50%;"></span> Aktif
+                                <span class="badge badge-pill bg-white border text-muted px-2 py-1 font-weight-normal mr-2 d-flex align-items-center shadow-sm" style="font-size: 10px;">
+                                    <span class="dot bg-primary mr-1" style="width: 6px; height: 6px; border-radius: 50%;"></span> Aktif
                                 </span>
-                                <span class="badge badge-pill bg-white border text-muted px-3 py-2 font-weight-normal d-flex align-items-center shadow-sm">
-                                    <span class="dot bg-info mr-2" style="width: 7px; height: 7px; border-radius: 50%;"></span> Inaktif
+                                <span class="badge badge-pill bg-white border text-muted px-2 py-1 font-weight-normal d-flex align-items-center shadow-sm" style="font-size: 10px;">
+                                    <span class="dot bg-info mr-1" style="width: 6px; height: 6px; border-radius: 50%;"></span> Inaktif
                                 </span>
                             </div>
                         </div>
-                        <button class="btn btn-sm btn-white border-0 shadow-sm ml-2" id="btnRefreshTable" title="Muat Ulang" style="width: 36px; height: 36px; border-radius: 10px;">
-                            <i class="fas fa-sync-alt text-muted small"></i>
+                        <button class="btn btn-xs btn-white border shadow-sm ml-2" id="btnRefreshTable" title="Muat Ulang" style="width: 30px; height: 30px; border-radius: 8px;">
+                            <i class="fas fa-sync-alt text-muted" style="font-size: 10px;"></i>
                         </button>
                     </div>
                     
@@ -197,6 +197,23 @@
     </div>
 
     <style>
+        /* Compact layout adjustments */
+        .card { margin-bottom: 0.8rem !important; }
+        .card-header { padding: 0.8rem 1.2rem !important; }
+        .card-body, .card-block { padding: 0.8rem 1.2rem !important; }
+        
+        /* Sidebar Filter Compact */
+        .bg-white.p-3.mb-3.shadow-sm.rounded { padding: 0.6rem 1rem !important; margin-bottom: 0.6rem !important; }
+        .accordion .card.mb-3 { margin-bottom: 0.6rem !important; }
+        .accordion .card-header.p-3 { padding: 0.6rem 1rem !important; }
+        .accordion .card-body.p-3 { padding: 0.6rem 1rem 0.6rem !important; }
+        .tree li { padding: 2px 0 !important; }
+        .tree-node { font-size: 0.72rem !important; padding: 1px 5px !important; }
+        
+        /* Main Table Area Compact */
+        .card-header.bg-white.border-bottom.py-3.px-4 { padding: 0.6rem 1.2rem !important; }
+        .px-4.py-3.border-bottom.bg-white { padding: 0.4rem 1.2rem !important; }
+        
         /* Hide Default DataTables Elements */
         .dataTables_filter, .dataTables_length {
             display: none !important;
@@ -214,7 +231,7 @@
             padding: 0;
         }
         ul.tree ul {
-            margin-left: 20px;
+            margin-left: 15px;
             position: relative;
         }
         ul.tree ul:before {
@@ -224,70 +241,42 @@
             position: absolute;
             top: 0;
             bottom: 0;
-            left: -12px;
+            left: -10px;
             border-left: 1px dotted #28a745;
         }
         ul.tree li {
             margin: 0;
-            padding: 5px 0;
+            padding: 3px 0;
             line-height: normal;
             position: relative;
         }
         ul.tree li:before {
             content: "";
             display: block;
-            width: 15px;
+            width: 12px;
             height: 0;
             border-top: 1px dotted #28a745;
             position: absolute;
-            top: 15px;
-            left: -12px;
-        }
-        ul.tree li:last-child:before {
-            background: #fff;
-            height: auto;
-            top: 15px;
-            bottom: 0;
+            top: 12px;
+            left: -10px;
         }
         
-        .tree-node {
-            display: inline-block;
-            font-size: 0.78rem;
-            cursor: pointer;
-            color: #333;
-            transition: all 0.2s;
-            font-weight: 500;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-        .tree-node:hover {
-            color: #28a745;
-            background-color: #f0fff4;
-        }
-        .tree-node.leaf {
-            color: #555;
-        }
-        .tree-node.parent {
-            color: #28a745;
-            font-weight: bold;
-        }
-
-        /* Premium Table Styles */
+        /* Premium Table Styles Compact */
         #arsiputama-table thead th {
             background-color: #f8f9fc;
             text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.5px;
+            font-size: 10px;
+            letter-spacing: 0.4px;
             color: #4e73df;
             border-top: none;
             border-bottom: 2px solid #e3e6f0;
-            padding: 15px 10px;
+            padding: 8px 10px !important;
         }
         #arsiputama-table tbody td {
             vertical-align: middle;
-            padding: 12px 10px;
+            padding: 6px 10px !important;
             color: #5a5c69;
-            font-size: 13px;
+            font-size: 12px;
             border-bottom: 1px solid #f1f3f9;
         }
         #arsiputama-table tbody tr:hover {
@@ -295,9 +284,9 @@
         }
 
         /* Utility */
-        .text-xs { font-size: 11px; }
+        .text-xs { font-size: 10px; }
         .dot { display: inline-block; }
-        .rounded-lg { border-radius: 10px !important; }
+        .rounded-lg { border-radius: 8px !important; }
         
         /* Fix Button Borders in Group */
         .btn-white {
@@ -313,39 +302,22 @@
             background-color: #ff9800;
             border-color: #ff9800;
         }
-        /* Select2 Premium Customization */
+        /* Select2 Premium Customization Compact */
         .select2-container--default .select2-selection--single {
             border: 1px solid #e3e6f0 !important;
-            height: 38px !important;
-            padding: 5px !important;
-            border-radius: 8px !important;
+            height: 32px !important;
+            padding: 2px !important;
+            border-radius: 6px !important;
             transition: all 0.2s;
             background-color: #f8f9fc !important;
         }
-        .select2-container--default .select2-selection--single:focus {
-            border-color: #ff9800 !important;
-        }
-        .select2-container {
-            width: 100% !important;
-            display: block !important;
-        }
-        .select2-dropdown {
-            border: 1px solid #e3e6f0 !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
-            border-radius: 8px !important;
-            z-index: 1060;
-            width: 100% !important;
-        }
-        .select2-container--default .select2-results__option--highlighted[aria-selected] {
-            background-color: #ff9800 !important;
-        }
         .select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: 36px !important;
+            height: 30px !important;
         }
         .select2-container--default .select2-selection--single .select2-selection__rendered {
             color: #6e707e !important;
-            font-size: 13px !important;
-            line-height: 28px !important;
+            font-size: 12px !important;
+            line-height: 24px !important;
         }
     </style>
 @endsection

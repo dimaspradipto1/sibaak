@@ -9,7 +9,8 @@
                 </div>
                 <div class="card-block">
                     <h4 class="sub-title">Form Inputs</h4>
-                    <form action="{{ route('arsiputama.update', $arsiputama->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('arsiputama.update', $arsiputama->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -17,30 +18,35 @@
                             .custom-input-group {
                                 display: flex;
                                 width: 100%;
-                                box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+                                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
                                 border-radius: 10px;
                                 overflow: hidden;
                                 border: 1px solid #ced4da;
                                 transition: all 0.3s ease;
                             }
+
                             .custom-input-group:focus-within {
                                 border-color: #046B26;
                                 box-shadow: 0 0 0 0.2rem rgba(4, 107, 38, 0.25);
                             }
-                            .custom-input-group .form-control, 
+
+                            .custom-input-group .form-control,
                             .custom-input-group .select2-container--default .select2-selection--single {
                                 border: none !important;
                                 border-radius: 0 !important;
                                 height: 45px !important;
                                 line-height: 45px !important;
                             }
+
                             .custom-input-group .select2-container--default .select2-selection--single .select2-selection__rendered {
                                 line-height: 45px !important;
                                 padding-left: 15px;
                             }
+
                             .custom-input-group .select2-container--default .select2-selection--single .select2-selection__arrow {
                                 height: 45px !important;
                             }
+
                             .custom-input-group .btn {
                                 border-radius: 0 !important;
                                 height: 45px !important;
@@ -51,18 +57,22 @@
                                 letter-spacing: 0.5px;
                                 border: none !important;
                             }
+
                             .btn-save-ajax {
                                 background-color: #046B26 !important;
                                 color: white !important;
                             }
+
                             .btn-save-ajax:hover {
                                 background-color: #035a20 !important;
                             }
+
                             .btn-toggle-ui {
                                 background-color: #f8f9fa !important;
                                 color: #046B26 !important;
                                 border-left: 1px solid #eee !important;
                             }
+
                             .btn-toggle-ui:hover {
                                 background-color: #e9ecef !important;
                             }
@@ -92,21 +102,25 @@
 
                                 <div id="custom-kategori-container" style="display: none;">
                                     <div class="custom-input-group">
-                                        <input type="text" id="custom_kategori_name" class="form-control" placeholder="Ketik nama kategori baru di sini...">
+                                        <input type="text" id="custom_kategori_name" class="form-control"
+                                            placeholder="Ketik nama kategori baru di sini...">
                                         <button type="button" class="btn btn-save-ajax" id="btn-save-custom">
                                             <i class="fa-solid fa-check-circle mr-1"></i> Simpan
                                         </button>
-                                        <button type="button" class="btn btn-danger" id="btn-toggle-select" style="background-color: #dc3545 !important;">
+                                        <button type="button" class="btn btn-danger" id="btn-toggle-select"
+                                            style="background-color: #dc3545 !important;">
                                             <i class="fa-solid fa-times-circle mr-1"></i> Batal
                                         </button>
                                     </div>
                                     <small class="text-muted mt-2 d-block ml-1">
-                                        <i class="fa-solid fa-info-circle text-success mr-1"></i> Simpan untuk menambahkan ke daftar pilihan secara otomatis.
+                                        <i class="fa-solid fa-info-circle text-success mr-1"></i> Simpan untuk menambahkan
+                                        ke daftar pilihan secara otomatis.
                                     </small>
                                 </div>
 
                                 @error('kategori_arsip_id')
-                                    <div class="text-danger small mt-2 ml-1"><i class="fa-solid fa-exclamation-triangle mr-1"></i> {{ $message }}</div>
+                                    <div class="text-danger small mt-2 ml-1"><i
+                                            class="fa-solid fa-exclamation-triangle mr-1"></i> {{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -115,8 +129,8 @@
                             <label class="col-sm-2 col-form-label">Tahun Arsip</label>
                             <div class="col-sm-10">
                                 <input type="text" name="tahun_arsip"
-                                    value="{{ old('tahun_arsip', $arsiputama->tahun_arsip) }}"
-                                    class="form-control rounded" placeholder="Contoh: 2025">
+                                    value="{{ old('tahun_arsip', $arsiputama->tahun_arsip) }}" class="form-control rounded"
+                                    placeholder="Contoh: 2025">
                                 @error('tahun_arsip')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -137,7 +151,8 @@
                             <label class="col-sm-2 col-form-label">Dokumen Saat Ini</label>
                             <div class="col-sm-10">
                                 @if ($arsiputama->file_arsip)
-                                    <a href="{{ $arsiputama->file_arsip }}" target="_blank" class="btn btn-sm btn-success px-3 rounded mb-2">
+                                    <a href="{{ $arsiputama->file_arsip }}" target="_blank"
+                                        class="btn btn-sm btn-success px-3 rounded mb-2">
                                         <i class="fa-solid fa-eye"></i> Lihat Dokumen
                                     </a>
                                 @else
@@ -149,7 +164,8 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Ganti Dokumen (PDF)</label>
                             <div class="col-sm-10">
-                                <input type="file" name="file_arsip" class="form-control rounded" id="file-input" accept=".pdf">
+                                <input type="file" name="file_arsip" class="form-control rounded" id="file-input"
+                                    accept=".pdf">
                                 <small class="text-muted">Biarkan kosong jika tidak ingin mengganti file.</small>
                                 @error('file_arsip')
                                     <div class="text-danger">{{ $message }}</div>
@@ -179,7 +195,7 @@
 
 @push('scripts')
     <script>
-        document.getElementById('file-input').addEventListener('change', function (e) {
+        document.getElementById('file-input').addEventListener('change', function(e) {
             const file = e.target.files[0];
             const previewContainer = document.getElementById('preview-container');
             previewContainer.innerHTML = '';
@@ -193,7 +209,7 @@
         });
     </script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#kategori_arsip_id').select2({
                 placeholder: "-- Pilih Kategori Arsip --",
                 allowClear: true
@@ -230,9 +246,10 @@
                 success: function(response) {
                     if (response.success) {
                         // Tambah ke select2
-                        let newOption = new Option(response.data.kategori_arsip, response.data.id, true, true);
+                        let newOption = new Option(response.data.kategori_arsip, response.data.id, true,
+                            true);
                         $('#kategori_arsip_id').append(newOption).trigger('change');
-                        
+
                         // Switch back
                         $('#custom-kategori-container').hide();
                         $('#select-kategori-container').show();
@@ -250,7 +267,9 @@
                 error: function(xhr) {
                     let errors = xhr.responseJSON.errors;
                     let msg = '';
-                    $.each(errors, function(k, v) { msg += v[0] + '<br>'; });
+                    $.each(errors, function(k, v) {
+                        msg += v[0] + '<br>';
+                    });
                     Swal.fire('Gagal', msg, 'error');
                 }
             });

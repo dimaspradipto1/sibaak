@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\DataTables\KategoriArsipDataTable;
 use App\Http\Requests\KategoriArsipRequest;
 use RealRashid\SweetAlert\Facades\Alert;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\KategoriArsipImport;
+use App\Exports\KategoriArsipTemplateExport;
 
 class KategoriArsipController extends Controller
 {
@@ -98,5 +101,26 @@ class KategoriArsipController extends Controller
             ->timerProgressBar()
             ->iconHtml('<i class="fa fa-check-circle"></i>');
         return redirect()->route('kategoriarsip.index');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        Excel::import(new KategoriArsipImport, $request->file('file'));
+
+        Alert::success('Data berhasil diimport')
+            ->toToast()
+            ->autoClose(4000)
+            ->timerProgressBar();
+
+        return redirect()->route('kategoriarsip.index');
+    }
+
+    public function exportTemplate()
+    {
+        return Excel::download(new KategoriArsipTemplateExport, 'template_kategori_arsip.xlsx');
     }
 }
