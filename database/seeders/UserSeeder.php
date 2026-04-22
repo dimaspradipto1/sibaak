@@ -76,8 +76,8 @@ class UserSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'name' => 'TU FST',
-                'email' => 'fst@uis.ac.id',
+                'name' => 'M. Ansar',
+                'email' => 'm.ansar@uis.ac.id',
                 'password' => Hash::make('password'),
                 'role_id' => $roles['TATA USAHA FST'] ?? null,
                 'is_active' => true,
