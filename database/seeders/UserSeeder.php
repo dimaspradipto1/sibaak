@@ -77,7 +77,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'M. Ansar',
-                'email' => 'm.ansar@uis.ac.id',
+                'email' => 'ansar@uis.ac.id',
                 'password' => Hash::make('password'),
                 'role_id' => $roles['TATA USAHA FST'] ?? null,
                 'is_active' => true,
