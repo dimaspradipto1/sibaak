@@ -209,6 +209,8 @@
             color: #2c3e50 !important;
         }
     </style>
+    @stack('style')
+    @stack('styles')
 </head>
 
 <body>
@@ -364,7 +366,6 @@
 
     @stack('script')
     @stack('scripts')
-    @stack('style')
 </body>
 
 </html>
