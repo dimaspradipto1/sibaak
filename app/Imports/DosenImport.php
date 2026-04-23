@@ -7,8 +7,11 @@ use App\Models\ProgramStudi;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Validators\Failure;
 
-class DosenImport implements ToModel, WithHeadingRow, WithValidation
+class DosenImport implements ToModel, WithHeadingRow, WithValidation, SkipsEmptyRows, SkipsOnFailure
 {
     /**
     * @param array $row
@@ -17,15 +20,23 @@ class DosenImport implements ToModel, WithHeadingRow, WithValidation
     */
     public function model(array $row)
     {
-        // Find Program Studi by name
-        $prodi = ProgramStudi::where('program_studi', 'like', '%' . $row['prodi'] . '%')->first();
+        // Flexible key mapping (supports 'nama' or 'nama_dosen')
+        $nama = $row['nama_dosen'] ?? $row['nama'] ?? null;
+        $prodiName = $row['prodi'] ?? $row['program_studi'] ?? null;
+
+        if (!$nama || !$prodiName) {
+            return null;
+        }
+
+        // Find Program Studi by name (more robust search)
+        $prodi = ProgramStudi::where('program_studi', 'like', '%' . trim($prodiName) . '%')->first();
 
         return new Dosen([
-            'nama_dosen'        => $row['nama_dosen'],
-            'nidn'              => $row['nidn'],
-            'nup'               => $row['nup'],
-            'nuptk'             => $row['nuptk'],
-            'email'             => $row['email'],
+            'nama_dosen'        => trim($nama),
+            'nidn'              => $row['nidn'] ?? null,
+            'nup'               => $row['nup'] ?? null,
+            'nuptk'             => $row['nuptk'] ?? null,
+            'email'             => $row['email'] ?? null,
             'program_studi_id'  => $prodi ? $prodi->id : null,
         ]);
     }
@@ -33,9 +44,14 @@ class DosenImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'nama_dosen' => 'required|string',
-            'prodi'      => 'required|string',
-            'email'      => 'nullable|email',
+            '*.nama_dosen' => 'nullable|string',
+            '*.nama'       => 'nullable|string',
+            '*.prodi'      => 'required|string',
         ];
+    }
+
+    public function onFailure(Failure ...$failures)
+    {
+        // Failures are handled by the controller
     }
 }

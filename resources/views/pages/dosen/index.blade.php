@@ -95,22 +95,46 @@
 
 @push('styles')
     <style>
+        /* Force override global table styles */
+        #dosen-table {
+            border-collapse: collapse !important;
+            border-spacing: 0 !important;
+            border: 1px solid #dee2e6 !important;
+            margin-top: 10px !important;
+        }
         #dosen-table thead th {
-            background-color: #f8f9fc;
+            background-color: #004b8d !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
             text-transform: uppercase;
             font-size: 11px;
-            letter-spacing: 0.5px;
-            color: #5a5c69;
-            border-bottom: 2px solid #e3e6f0;
-            padding: 15px 10px;
+            font-weight: bold;
+            padding: 12px 10px !important;
             vertical-align: middle;
+            text-align: center;
         }
         #dosen-table tbody td {
+            border: 1px solid #dee2e6 !important;
             vertical-align: middle;
-            padding: 12px 10px;
+            padding: 10px 10px !important;
             color: #5a5c69;
-            font-size: 13px;
+            font-size: 12px;
+            background-color: #fff !important;
         }
+        #dosen-table tbody tr {
+            background-color: #fff !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+        #dosen-table tbody tr td:first-child, 
+        #dosen-table tbody tr td:last-child {
+            border-radius: 0 !important;
+        }
+        #dosen-table tbody tr:hover {
+            background-color: rgba(0, 75, 141, 0.05) !important;
+        }
+        .btn-white { background-color: #fff; color: #6e707e; border: 1px solid #e3e6f0; }
+        .btn-white:hover { background-color: #f8f9fc; color: #4e73df; }
     </style>
 @endpush
 

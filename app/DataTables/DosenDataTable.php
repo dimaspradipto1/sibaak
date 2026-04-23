@@ -100,7 +100,7 @@ class DosenDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')
-                ->title('No')
+                ->title('NO')
                 ->width('5%'),
             Column::make('nama_dosen')
                 ->title('Nama Dosen'),
