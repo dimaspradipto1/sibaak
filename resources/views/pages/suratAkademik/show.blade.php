@@ -326,18 +326,18 @@
     <!-- Signature Section with multiple signatures -->
     <div class="signature-section">
         <!-- Signature 1: Pembimbing Akademik -->
-        <div class="signature-item" style="margin-top: -60px;">
+        <div class="signature-item" style="margin-top: -60px; width: 45%;">
             <p>Mengetahui/Menyetujui</p>
             <p style="margin-top: -10px;">Pembimbing Akademik</p>
-            <p style="margin-top: 70px; text-decoration: underline; font-weight: bold;">{{ $dosen->nama_dosen }}</p>
+            <p style="margin-top: 70px; text-decoration: underline; font-weight: bold; white-space: nowrap;">{{ $dosen->nama_dosen }}</p>
             <p style="margin-top: -12px;">NIDN: {{ $dosen->nidn }}</p>
         </div>
 
         <!-- Signature 2: Hormat Saya -->
-        <div class="signature-item" style="margin-top: -60px;">
+        <div class="signature-item" style="margin-top: -60px; width: 30%;">
             <p>Batam, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
             <p style="margin-top: -10px;">Hormat Saya</p>
-            <p style="margin-top: 70px; text-decoration: underline; font-weight: bold;">
+            <p style="margin-top: 70px; text-decoration: underline; font-weight: bold; white-space: nowrap;">
                 {{ $suratAkademik->user->name }}</p>
             <p style="margin-top: -12px;">{{ $suratAkademik->npm }}</p>
         </div>
@@ -348,7 +348,7 @@
         <!-- Signature 3: Ka. Prodi (Centered) -->
         <div class="signature-item center">
             <p>Ketua Prodi</p>
-            <p style="margin-top: 70px; text-decoration: underline; font-weight: bold;">{{ $kaprodi->nama_dosen }}</p>
+            <p style="margin-top: 70px; text-decoration: underline; font-weight: bold; white-space: nowrap;">{{ $kaprodi->nama_dosen }}</p>
             <p style="margin-top: -12px;">NUP: {{ $kaprodi->nup }}</p>
         </div>
     </div>
@@ -356,17 +356,17 @@
     <!-- Signature Section with "Ka. BAAK" and "Ka. BAUK" -->
     <div class="signature-section">
         <!-- Signature 4: Ka. BAAK -->
-        <div class="signature-item" style="margin-top: -130px;">
+        <div class="signature-item" style="margin-top: -130px; width: 40%;">
             <p>Ka. BAAK</p>
-            <p style="margin-top: 90px; text-decoration: underline; font-weight: bold;">
+            <p style="margin-top: 90px; text-decoration: underline; font-weight: bold; white-space: nowrap;">
                 {{ $kabaak->nama_staff ?? '-' }}</p>
             <p style="margin-top: -12px;">NUP. {{ $kabaak->nup ?? '-' }}</p>
         </div>
 
         <!-- Signature 5: Ka. BAUK -->
-        <div class="signature-item" style="margin-top: -130px;">
+        <div class="signature-item" style="margin-top: -130px; width: 50%;">
             <p>Ka. BAUK</p>
-            <p style="margin-top: 90px; margin-left: -10px; text-decoration: underline; font-weight: bold;">
+            <p style="margin-top: 90px; text-decoration: underline; font-weight: bold; white-space: nowrap;">
                 {{ $kabauk->nama_staff ?? '-' }}</p>
             <p style="margin-top: -12px;">NUP. {{ $kabauk->nup ?? '-' }}</p>
         </div>

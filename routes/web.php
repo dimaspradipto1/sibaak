@@ -58,6 +58,7 @@ Route::get('/semantic-search', function() {
 Route::post('/suratAktif/pengajuan', [SuratAktifController::class, 'pengajuan'])->name('suratAktif.pengajuan');
 Route::post('/suratAkademik/pengajuan', [SuratAkademikController::class, 'pengajuan'])->name('suratAkademik.pengajuan');
 Route::get('/suratAktif/{suratAktif}/validasi', [SuratAktifController::class, 'validasi'])->name('suratAktif.validasi');
+Route::get('/suratAkademik/{suratAkademik}/validasi', [SuratAkademikController::class, 'validasi'])->name('suratAkademik.validasi');
 Route::get('/suratAktif/{suratAktif}/preview', [SuratAktifController::class, 'preview'])->name('suratAktif.preview');
 Route::get('/suratAktif/{suratAktif}/print', [SuratAktifController::class, 'print'])->name('suratAktif.print');
 
