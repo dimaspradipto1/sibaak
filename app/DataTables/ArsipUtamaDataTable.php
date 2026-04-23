@@ -47,13 +47,13 @@ class ArsipUtamaDataTable extends DataTable
             ->addColumn('status', function ($item) {
                 if ($item->is_active) {
                     return '
-                        <button type="button" class="btn btn-sm btn-primary badge-pill shadow-sm px-3 py-1 btn-toggle-status" data-id="'.$item->id.'" data-status="0" style="font-size: 10px; min-width: 80px; border: none;">
+                        <button type="button" class="btn btn-sm btn-primary badge-pill shadow-sm px-3 py-1 btn-toggle-status" data-id="' . $item->id . '" data-status="0" style="font-size: 10px; min-width: 80px; border: none;">
                             <i class="fas fa-toggle-on mr-1"></i> AKTIF
                         </button>
                     ';
                 } else {
                     return '
-                        <button type="button" class="btn btn-sm btn-secondary badge-pill shadow-sm px-3 py-1 btn-toggle-status" data-id="'.$item->id.'" data-status="1" style="font-size: 10px; min-width: 80px; border: none; background: #e0e0e0; color: #777;">
+                        <button type="button" class="btn btn-sm btn-secondary badge-pill shadow-sm px-3 py-1 btn-toggle-status" data-id="' . $item->id . '" data-status="1" style="font-size: 10px; min-width: 80px; border: none; background: #e0e0e0; color: #777;">
                             <i class="fas fa-toggle-off mr-1"></i> INAKTIF
                         </button>
                     ';
@@ -68,7 +68,7 @@ class ArsipUtamaDataTable extends DataTable
                 }
 
                 $btn = '<div class="d-flex justify-content-center align-items-center">';
-                
+
                 if ($hasEdit) {
                     $btn .= '
                         <a href="' . route('arsiputama.edit', $item->id) . '" class="btn btn-warning btn-sm shadow-sm border-0 rounded mx-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="Edit">
@@ -76,14 +76,14 @@ class ArsipUtamaDataTable extends DataTable
                         </a>
                     ';
                 }
-                
+
                 if ($hasDelete) {
                     $btn .= '
                         <form action="' . route('arsiputama.destroy', $item->id) . '" method="POST" class="d-inline">
                             ' . csrf_field() . '
                             ' . method_field('delete') . '
                             <button type="submit" class="btn btn-danger btn-sm shadow-sm border-0 rounded mx-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="Hapus" onclick="return confirm(\'Hapus data ini?\')">'
-                                . '<i class="fas fa-trash-alt" style="font-size: 13px;"></i>
+                        . '<i class="fas fa-trash-alt" style="font-size: 13px;"></i>
                             </button>
                         </form>
                     ';
@@ -109,12 +109,12 @@ class ArsipUtamaDataTable extends DataTable
 
             if ($unitKerja) {
                 $roleName = strtoupper($user->role->nama_role);
-                
+
                 // Jika jabatan mengandung kata kunci pimpinan (KEPALA, KA. BIRO, WAKIL REKTOR, dsb)
                 if (str_contains($roleName, 'KEPALA') || str_contains($roleName, 'KA. BIRO') || str_contains($roleName, 'REKTOR')) {
                     $accessibleUnitIds = $unitKerja->getAllDescendantIds();
-                    
-                    $query->whereHas('user.role', function($q) use ($accessibleUnitIds) {
+
+                    $query->whereHas('user.role', function ($q) use ($accessibleUnitIds) {
                         $q->whereIn('unit_kerja_id', $accessibleUnitIds);
                     });
                 } else {
@@ -155,16 +155,16 @@ class ArsipUtamaDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('arsiputama-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->parameters([
-                        'scrollX' => true,
-                        'processing' => false,
-                        'responsive' => false,
-                    ]);
+            ->setTableId('arsiputama-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->parameters([
+                'scrollX' => true,
+                'processing' => false,
+                'responsive' => false,
+            ]);
     }
 
     public function getColumns(): array

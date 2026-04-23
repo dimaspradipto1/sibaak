@@ -113,7 +113,7 @@ class UnitKerjaSeeder extends Seeder
         UnitKerja::create(['nama_unit' => 'Sekretaris Prodi Pascasarjana Magister Manajemen', 'parent_id' => $dekanFeb->id]);
         UnitKerja::create(['nama_unit' => 'UPMI FEB', 'parent_id' => $dekanFeb->id]);
         UnitKerja::create(['nama_unit' => 'UPPM FEB', 'parent_id' => $dekanFeb->id]);
-        UnitKerja::create(['nama_unit' => 'Tata Usaha Sarjana FEB', 'parent_id' => $dekanFeb->id]);
+        UnitKerja::create(['nama_unit' => 'Tata Usaha FEB', 'parent_id' => $dekanFeb->id]);
         UnitKerja::create(['nama_unit' => 'Tata Usaha Pascasarjana FEB', 'parent_id' => $dekanFeb->id]);
         UnitKerja::create(['nama_unit' => 'Humas Dan Publikasi Web FEB', 'parent_id' => $dekanFeb->id]);
 

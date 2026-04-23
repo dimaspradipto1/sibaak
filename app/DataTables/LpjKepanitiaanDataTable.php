@@ -149,38 +149,44 @@ class LpjKepanitiaanDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
+        $columns = [
             Column::make('DT_RowIndex')
                 ->title('NO')
                 ->width('5%'),
-            Column::make('users_id')
-                ->title('NAMA STAFF'),
-            Column::make('tahun_akademik_id')
-                ->title('TAHUN AKADEMIK')
-                ->width('20%'),
-            Column::make('nama_dokumen')
-                ->title('NAMA LPJ'),
-            Column::make('ketua')
-                ->title('KETUA')
-                ->width('30%'),
-            Column::make('sekretaris')
-                ->title('SEKRETARIS')
-                ->width('30%'),
-            Column::make('fakultas')
-                ->title('FAKULTAS'),
-            Column::make('file')
-                ->title('DOKUMEN'),
-            Column::computed('status')
-                ->title('STATUS')
-                ->width('10%')
-                ->addClass('text-center'),
-            Column::computed('action')
-                ->title('AKSI')
-                ->exportable(false)
-                ->printable(false)
-                ->width('15%')
-                ->addClass('text-center'),
         ];
+
+        if (Auth::check() && Auth::user()->can_see_staff_name) {
+            $columns[] = Column::make('users_id')
+                ->title('NAMA STAFF');
+        }
+
+        $columns[] = Column::make('tahun_akademik_id')
+            ->title('TAHUN AKADEMIK')
+            ->width('20%');
+        $columns[] = Column::make('nama_dokumen')
+            ->title('NAMA LPJ');
+        $columns[] = Column::make('ketua')
+            ->title('KETUA')
+            ->width('30%');
+        $columns[] = Column::make('sekretaris')
+            ->title('SEKRETARIS')
+            ->width('30%');
+        $columns[] = Column::make('fakultas')
+            ->title('FAKULTAS');
+        $columns[] = Column::make('file')
+            ->title('DOKUMEN');
+        $columns[] = Column::computed('status')
+            ->title('STATUS')
+            ->width('10%')
+            ->addClass('text-center');
+        $columns[] = Column::computed('action')
+            ->title('AKSI')
+            ->exportable(false)
+            ->printable(false)
+            ->width('15%')
+            ->addClass('text-center');
+
+        return $columns;
     }
 
     /**

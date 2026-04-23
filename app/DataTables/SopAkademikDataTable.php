@@ -117,7 +117,7 @@ class SopAkademikDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
+        $columns = [
             Column::make('DT_RowIndex')
                 ->title('NO')
                 ->addClass('text-center')
@@ -132,15 +132,21 @@ class SopAkademikDataTable extends DataTable
                 ->title('STATUS')
                 ->width('10%')
                 ->addClass('text-center'),
-            Column::make('users_id')
-                ->title('DIAJUKAN OLEH'),
-            Column::computed('action')
-                ->exportable(false)
-                ->title('AKSI')
-                ->printable(false)
-                ->width('15%')
-                ->addClass('text-center'),
         ];
+
+        if (Auth::check() && Auth::user()->can_see_staff_name) {
+            $columns[] = Column::make('users_id')
+                ->title('DIAJUKAN OLEH');
+        }
+
+        $columns[] = Column::computed('action')
+            ->exportable(false)
+            ->title('AKSI')
+            ->printable(false)
+            ->width('15%')
+            ->addClass('text-center');
+
+        return $columns;
     }
 
     /**

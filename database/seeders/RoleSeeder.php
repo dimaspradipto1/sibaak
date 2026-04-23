@@ -58,19 +58,25 @@ class RoleSeeder extends Seeder
             }
         }
 
-        // 5. Berikan Izin Arsip Utama ke SEMUA Role (Kecuali Mahasiswa)
-        $arsipPermission = \App\Models\Permission::where('slug', 'arsip_utama_view')->first();
-        if ($arsipPermission) {
+        // 6. Berikan Izin Arsip Utama ke SEMUA Role (Kecuali Mahasiswa)
+        $arsipUtamaPermission = \App\Models\Permission::where('slug', 'arsip_utama_view')->first();
+        if ($arsipUtamaPermission) {
             $nonMahasiswaRoles = Role::where('nama_role', '!=', 'Mahasiswa')
                                     ->whereNotIn('nama_role', $adminRoles)
                                     ->get();
             foreach ($nonMahasiswaRoles as $role) {
-                // Gunakan attach/syncWithoutDetaching agar izin yang sudah ada tidak hilang
-                $role->permissions()->syncWithoutDetaching([$arsipPermission->id]);
+                $role->permissions()->syncWithoutDetaching([$arsipUtamaPermission->id]);
             }
         }
 
-        // 6. Pastikan Akun Bapak (Admin Pertama) tetap bisa login dengan role tertinggi
+        // 7. Khusus TATA USAHA: Berikan SEMUA Izin Menu Arsip
+        $allArsipPermissions = \App\Models\Permission::where('module', 'Arsip')->pluck('id')->toArray();
+        $tuRoles = Role::where('nama_role', 'like', 'Tata Usaha%')->get();
+        foreach ($tuRoles as $role) {
+            $role->permissions()->syncWithoutDetaching($allArsipPermissions);
+        }
+
+        // 8. Pastikan Akun Bapak (Admin Pertama) tetap bisa login dengan role tertinggi
         $admin = User::first();
         if ($admin) {
             $superRole = Role::where('nama_role', 'Super Admin')->first();

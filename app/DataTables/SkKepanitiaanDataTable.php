@@ -158,7 +158,7 @@ class SkKepanitiaanDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
+        $columns = [
             Column::make('DT_RowIndex')
                 ->title('NO')
                 ->width('5%')
@@ -167,21 +167,27 @@ class SkKepanitiaanDataTable extends DataTable
                 ->title('TAHUN AKADEMIK'),
             Column::make('jenissk_id')
                 ->title('JENIS SK'),
-            Column::make('users_id')
-                ->title('NAMA STAFF'),
-            Column::make('fakultas')
-                ->title('FAKULTAS'),
-            Column::make('file')
-                ->title('DOKUMEN'),
-            Column::computed('status')
-                ->title('STATUS')
-                ->width('10%')
-                ->addClass('text-center'),
-            Column::computed('action')
-                ->title('AKSI')
-                ->width('15%')
-                ->addClass('text-center'),
         ];
+
+        if (Auth::check() && Auth::user()->can_see_staff_name) {
+            $columns[] = Column::make('users_id')
+                ->title('NAMA STAFF');
+        }
+
+        $columns[] = Column::make('fakultas')
+            ->title('FAKULTAS');
+        $columns[] = Column::make('file')
+            ->title('DOKUMEN');
+        $columns[] = Column::computed('status')
+            ->title('STATUS')
+            ->width('10%')
+            ->addClass('text-center');
+        $columns[] = Column::computed('action')
+            ->title('AKSI')
+            ->width('15%')
+            ->addClass('text-center');
+
+        return $columns;
     }
 
     /**

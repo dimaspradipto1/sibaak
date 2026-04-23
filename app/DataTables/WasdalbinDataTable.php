@@ -125,7 +125,7 @@ class WasdalbinDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
+        $columns = [
             Column::make('DT_RowIndex')
                 ->title('No')
                 ->width('5%')
@@ -143,15 +143,21 @@ class WasdalbinDataTable extends DataTable
                 ->title('STATUS')
                 ->width('10%')
                 ->addClass('text-center'),
-            Column::make('users_id')
-                ->title('DIAJUKAN OLEH'),
-            Column::computed('action')
-                ->title('AKSI')
-                ->exportable(false)
-                ->printable(false)
-                ->width('15%')
-                ->addClass('text-center'),
         ];
+
+        if (Auth::check() && Auth::user()->can_see_staff_name) {
+            $columns[] = Column::make('users_id')
+                ->title('DIAJUKAN OLEH');
+        }
+
+        $columns[] = Column::computed('action')
+            ->title('AKSI')
+            ->exportable(false)
+            ->printable(false)
+            ->width('15%')
+            ->addClass('text-center');
+
+        return $columns;
     }
 
     /**

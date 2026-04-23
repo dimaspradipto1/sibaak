@@ -65,6 +65,16 @@ class User extends Authenticatable
         return str_contains($this->role?->nama_role ?? '', 'OPERATOR');
     }
 
+    public function getCanSeeStaffNameAttribute()
+    {
+        if ($this->is_superadmin || $this->is_admin) {
+            return true;
+        }
+
+        $roleName = strtoupper($this->role?->nama_role ?? '');
+        return str_contains($roleName, 'KABID.') || str_contains($roleName, 'KA. BIRO');
+    }
+
     public function getFakultasAttribute()
     {
         $roleName = strtoupper($this->role?->nama_role ?? '');
