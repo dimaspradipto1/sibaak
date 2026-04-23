@@ -587,33 +587,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
         }
 
-        .table-custom {
-            border-collapse: collapse !important;
-            width: 100%;
-            border: 1px solid #dee2e6 !important;
-        }
-
-        .table-custom thead th {
-            background-color: #004b8d !important;
-            color: white !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important;
-            font-weight: bold;
-            font-size: 12px;
-            padding: 15px 10px !important;
-            vertical-align: middle;
-            text-transform: uppercase;
-        }
-
-        .table-custom tbody td {
-            border: 1px solid #dee2e6 !important;
-            vertical-align: middle;
-            font-size: 13px;
-            padding: 12px 10px !important;
-        }
-
-        .table-custom tbody tr:hover {
-            background-color: rgba(0, 75, 141, 0.05);
-        }
     </style>
 @endpush
 @endsection

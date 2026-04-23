@@ -73,48 +73,6 @@
 @endsection
 
 @push('styles')
-    <style>
-        /* Force override global table styles */
-        #user-table {
-            border-collapse: collapse !important;
-            border-spacing: 0 !important;
-            border: 1px solid #dee2e6 !important;
-            margin-top: 10px !important;
-        }
-        #user-table thead th {
-            background-color: #004b8d !important;
-            color: white !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important;
-            text-transform: uppercase;
-            font-size: 11px;
-            font-weight: bold;
-            padding: 12px 10px !important;
-            vertical-align: middle;
-            text-align: center;
-        }
-        #user-table tbody td {
-            border: 1px solid #dee2e6 !important;
-            vertical-align: middle;
-            padding: 10px 10px !important;
-            color: #5a5c69;
-            font-size: 12px;
-            background-color: #fff !important; /* Override global tr bg */
-        }
-        #user-table tbody tr {
-            background-color: #fff !important;
-            box-shadow: none !important;
-            transform: none !important;
-        }
-        #user-table tbody tr td:first-child, 
-        #user-table tbody tr td:last-child {
-            border-radius: 0 !important; /* Remove global rounding */
-        }
-        #user-table tbody tr:hover {
-            background-color: rgba(0, 75, 141, 0.05) !important;
-        }
-        .btn-white { background-color: #fff; color: #6e707e; border: 1px solid #e3e6f0; }
-        .btn-white:hover { background-color: #f8f9fc; color: #4e73df; }
-    </style>
 @endpush
 
 @push('scripts')

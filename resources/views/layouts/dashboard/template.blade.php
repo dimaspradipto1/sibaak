@@ -166,37 +166,59 @@
             background: #f8f9fc !important;
         }
 
-        /* Modern Table Styling */
+        /* Unified Premium Table Styling */
         .table {
-            border-collapse: separate !important;
-            border-spacing: 0 8px !important;
+            border-collapse: collapse !important;
+            border-spacing: 0 !important;
+            width: 100% !important;
+            border: 1px solid #dee2e6 !important;
+            margin-bottom: 1rem !important;
         }
+
         .table thead th {
-            border: none !important;
-            background-color: #f8f9fa !important;
-            color: #333 !important;
-            font-weight: 600 !important;
+            background-color: #004b8d !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            font-weight: 700 !important;
             text-transform: uppercase !important;
             font-size: 11px !important;
-            letter-spacing: 1px !important;
-            padding: 15px !important;
+            letter-spacing: 0.5px !important;
+            padding: 12px 10px !important;
+            vertical-align: middle !important;
+            text-align: center !important;
         }
+
+        .table tbody td {
+            border: 1px solid #dee2e6 !important;
+            padding: 12px 10px !important;
+            vertical-align: middle !important;
+            background-color: #ffffff !important;
+            color: #555 !important;
+            font-size: 13px !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
         .table tbody tr {
             background-color: #ffffff !important;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02) !important;
             transition: all 0.2s ease !important;
         }
+
         .table tbody tr:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08) !important;
-            transform: scale(1.002) !important;
+            background-color: rgba(0, 75, 141, 0.05) !important;
+            box-shadow: none !important;
+            transform: none !important;
         }
-        .table tbody td {
-            padding: 15px !important;
-            vertical-align: middle !important;
-            border: none !important;
+
+        /* Adjustments for DataTables components */
+        .dataTables_wrapper .dataTables_length, 
+        .dataTables_wrapper .dataTables_filter,
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_paginate {
+            font-size: 13px !important;
+            margin-bottom: 10px !important;
         }
-        .table tbody tr td:first-child { border-radius: 10px 0 0 10px !important; }
-        .table tbody tr td:last-child { border-radius: 0 10px 10px 0 !important; }
 
         /* Card Customization */
         .card {

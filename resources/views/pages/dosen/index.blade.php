@@ -23,29 +23,7 @@
                     @endcan
                 </div>
             </div>
-        </div>
-
-        <style>
-            #dosen-table thead th {
-                background-color: #f8f9fc;
-                text-transform: uppercase;
-                font-size: 10px;
-                letter-spacing: 0.4px;
-                color: #4e73df;
-                border-bottom: 2px solid #e3e6f0;
-                padding: 8px 10px !important;
-            }
-            #dosen-table tbody td {
-                vertical-align: middle;
-                padding: 6px 10px !important;
-                color: #5a5c69;
-                font-size: 12px;
-                border-bottom: 1px solid #f1f3f9;
-            }
-            .btn-white { background-color: #fff; color: #6e707e; }
-            .btn-white:hover { background-color: #f8f9fc; color: #4e73df; }
-        </style>
-
+        
         <!-- Import Modal -->
         <div class="modal fade" id="importDosenModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -92,51 +70,6 @@
         </div>
     </div>
 @endsection
-
-@push('styles')
-    <style>
-        /* Force override global table styles */
-        #dosen-table {
-            border-collapse: collapse !important;
-            border-spacing: 0 !important;
-            border: 1px solid #dee2e6 !important;
-            margin-top: 10px !important;
-        }
-        #dosen-table thead th {
-            background-color: #004b8d !important;
-            color: white !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important;
-            text-transform: uppercase;
-            font-size: 11px;
-            font-weight: bold;
-            padding: 12px 10px !important;
-            vertical-align: middle;
-            text-align: center;
-        }
-        #dosen-table tbody td {
-            border: 1px solid #dee2e6 !important;
-            vertical-align: middle;
-            padding: 10px 10px !important;
-            color: #5a5c69;
-            font-size: 12px;
-            background-color: #fff !important;
-        }
-        #dosen-table tbody tr {
-            background-color: #fff !important;
-            box-shadow: none !important;
-            transform: none !important;
-        }
-        #dosen-table tbody tr td:first-child, 
-        #dosen-table tbody tr td:last-child {
-            border-radius: 0 !important;
-        }
-        #dosen-table tbody tr:hover {
-            background-color: rgba(0, 75, 141, 0.05) !important;
-        }
-        .btn-white { background-color: #fff; color: #6e707e; border: 1px solid #e3e6f0; }
-        .btn-white:hover { background-color: #f8f9fc; color: #4e73df; }
-    </style>
-@endpush
 
 @push('scripts')
     <script>
