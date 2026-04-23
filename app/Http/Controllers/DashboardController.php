@@ -15,6 +15,8 @@ use App\Models\Pedoman;
 use App\Models\SopAkademik;
 use Illuminate\Http\Request;
 use App\Models\SuratAkademik;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Artisan;
 
 class DashboardController extends Controller
 {
@@ -28,7 +30,7 @@ class DashboardController extends Controller
         $totalUser = User::count();
         $pegawai = Pegawai::count();
         $mahasiswa = Mahasiswa::count();
-        $suratAkademik = SuratAkademik::count();
+        $suratAkademikCount = SuratAkademik::count();
         $dosen = Dosen::count();
 
         // Data Arsip
@@ -69,7 +71,40 @@ class DashboardController extends Controller
             ];
         }
 
+        // Rekapitulasi per Semester (Gasal & Genap)
+        // Fetch paginated academic years (5 years per page = 10 rows in the table)
+        $yearsPaginated = \App\Models\TahunAkademik::latest()->paginate(5, ['*'], 'rekap_page');
+        $rekapSemester = [];
+
+        foreach ($yearsPaginated as $y_obj) {
+            $y = $y_obj->tahun_akademik;
+            // Logic for Year Row (e.g. 2025/2026)
+            $startYear = explode('/', $y)[0];
+            $endYear = explode('/', $y)[1] ?? $startYear;
+
+            // Gasal (Ganjil)
+            $rekapSemester[$y . ' - Gasal'] = [
+                'aktif_pending' => SuratAktif::where('tahun_akademik', $y)->whereIn('status_semester', ['Gasal', 'Ganjil'])->where('status', 'pending')->count(),
+                'aktif_diterima' => SuratAktif::where('tahun_akademik', $y)->whereIn('status_semester', ['Gasal', 'Ganjil'])->where('status', 'diterima')->count(),
+                'akademik_pending' => SuratAkademik::whereYear('created_at', $startYear)->where(function($q) {
+                    $q->where('semester', 'LIKE', '%Ganjil%')->orWhere('semester', 'LIKE', '%Gasal%')->orWhere('semester', 'LIKE', '%I%')->orWhere('semester', 'LIKE', '%III%')->orWhere('semester', 'LIKE', '%V%')->orWhere('semester', 'LIKE', '%VII%');
+                })->count(),
+                'akademik_diterima' => 0,
+            ];
+
+            // Genap
+            $rekapSemester[$y . ' - Genap'] = [
+                'aktif_pending' => SuratAktif::where('tahun_akademik', $y)->where('status_semester', 'Genap')->where('status', 'pending')->count(),
+                'aktif_diterima' => SuratAktif::where('tahun_akademik', $y)->where('status_semester', 'Genap')->where('status', 'diterima')->count(),
+                'akademik_pending' => SuratAkademik::whereYear('created_at', $endYear)->where(function($q) {
+                    $q->where('semester', 'LIKE', '%Genap%')->orWhere('semester', 'LIKE', '%II%')->orWhere('semester', 'LIKE', '%IV%')->orWhere('semester', 'LIKE', '%VI%')->orWhere('semester', 'LIKE', '%VIII%');
+                })->count(),
+                'akademik_diterima' => 0,
+            ];
+        }
+
         return view('layouts.dashboard.index', compact(
+            'yearsPaginated',
             'suratAktifpending',
             'suratAktifDiterima',
             'suratAktifDitolak',
@@ -77,7 +112,7 @@ class DashboardController extends Controller
             'mahasiswa',
             'pegawai',
             'dosen',
-            'suratAkademik',
+            'suratAkademikCount',
             'skKepanitiaanCount',
             'lpjKepanitiaanCount',
             'kurikulumCount',
@@ -85,6 +120,7 @@ class DashboardController extends Controller
             'sopAkademikCount',
             'wasdalbinCount',
             'chartData',
+            'rekapSemester',
             'latestSuratAktif',
             'suratMenunggu',
             'roleName',
