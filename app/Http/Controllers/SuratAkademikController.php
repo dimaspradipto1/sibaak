@@ -24,7 +24,7 @@ class SuratAkademikController extends Controller
         return Excel::download(new SuratAkademikTemplateExport, 'template_surat_akademik.xlsx');
     }
 
-    public function import(Request $request) 
+    public function import(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv'
@@ -56,7 +56,7 @@ class SuratAkademikController extends Controller
     {
         $dosens = Dosen::all();
         $title = 'Form Surat Akademik';
-        
+
         if (Auth::user()->is_mahasiswa) {
             $users = User::where('id', Auth::id())->get();
         } else {
@@ -64,7 +64,7 @@ class SuratAkademikController extends Controller
                 $query->where('nama_role', 'MAHASISWA');
             })->get();
         }
-        
+
         $programStudi = ProgramStudi::all();
         return view('pages.suratAkademik.create', compact('users', 'programStudi', 'title', 'dosens'));
     }
@@ -85,16 +85,18 @@ class SuratAkademikController extends Controller
             return redirect()->back()->with('error', 'Program studi mahasiswa tidak ditemukan!');
         }
 
-        $kabaak = Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)%')->first();
-        $kabauk = Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN%')->first();
+        $kabaak = Pegawai::where('nama_staff', 'LIKE', '%Leni%')->first();
+        $kabauk = Pegawai::where('jabatan', 'LIKE', '%BIRO%')
+            ->where('jabatan', 'LIKE', '%UMUM%')
+            ->first();
 
         if (!$kabaak) {
-            Alert::error('Gagal', 'Data KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK) tidak ditemukan!')->autoclose(3000)->toToast();
+            Alert::error('Gagal', 'Data Kepala Biro Administrasi Akademik (Leni) tidak ditemukan!')->autoclose(3000)->toToast();
             return redirect()->back();
         }
 
         if (!$kabauk) {
-            Alert::error('Gagal', 'Data KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN tidak ditemukan!')->autoclose(3000)->toToast();
+            Alert::error('Gagal', 'Data Kepala Biro Administrasi Umum tidak ditemukan!')->autoclose(3000)->toToast();
             return redirect()->back();
         }
 
@@ -138,8 +140,10 @@ class SuratAkademikController extends Controller
 
         $dosen = Dosen::find($suratAkademik->dosen_pembimbing_akademik);
         $kaprodi = Dosen::find($suratAkademik->kaprodi);
-        $kabaak = Pegawai::find($suratAkademik->kabaak);
-        $kabauk = Pegawai::find($suratAkademik->kabauk);
+        $kabaak = Pegawai::where('nama_staff', 'LIKE', '%Leni%')->first();
+        $kabauk = Pegawai::where('jabatan', 'LIKE', '%BIRO%')
+            ->where('jabatan', 'LIKE', '%UMUM%')
+            ->first();
         $programStudi = ProgramStudi::find($mahasiswa->program_studi_id);
         $fakultas = $mahasiswa->fakultas;
         $user = User::find($suratAkademik->users_id);

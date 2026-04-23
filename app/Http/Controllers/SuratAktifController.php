@@ -24,7 +24,7 @@ class SuratAktifController extends Controller
         return Excel::download(new SuratAktifTemplateExport, 'template_surat_aktif.xlsx');
     }
 
-    public function import(Request $request) 
+    public function import(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv'
@@ -55,15 +55,15 @@ class SuratAktifController extends Controller
     public function create()
     {
         $title = 'Form Surat Aktif';
-        
+
         if (Auth::user()->is_mahasiswa) {
             $users = User::where('id', Auth::id())->get();
         } else {
-            $users = User::whereHas('role', function($query) {
+            $users = User::whereHas('role', function ($query) {
                 $query->where('nama_role', 'MAHASISWA');
             })->get();
         }
-        
+
         $programStudi = ProgramStudi::all();
         return view('pages.suratAktif.create', compact('users', 'programStudi', 'title'));
     }
@@ -169,11 +169,8 @@ class SuratAktifController extends Controller
     {
         $no_surat = $suratAktif->no_surat;
         $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
-        $user = User::with('pegawai')->whereHas('role', function($query) {
-            $query->where('nama_role', 'APPROVAL');
-        })->first();
-
-        $pegawai = $user ? $user->pegawai : null;
+        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)%')->first();
+        $user = $pegawai ? $pegawai->user : null;
         $bulanRomawi = $this->getBulanRomawi();
         return view('pages.suratAktif.show', compact('suratAktif', 'no_surat', 'program_studi', 'bulanRomawi', 'user', 'pegawai'));
     }
@@ -226,10 +223,8 @@ class SuratAktifController extends Controller
 
     public function validasi(SuratAktif $suratAktif)
     {
-        $userApproval = User::with('pegawai')->whereHas('role', function($query) {
-            $query->where('nama_role', 'APPROVAL');
-        })->first();
-        $pegawai = $userApproval ? $userApproval->pegawai : null;
+        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)%')->first();
+        $userApproval = $pegawai ? $pegawai->user : null;
 
         return view('pages.suratAktif.detailsuratakademik', compact('suratAktif', 'pegawai', 'userApproval'));
     }
@@ -238,11 +233,8 @@ class SuratAktifController extends Controller
     {
         $no_surat = $suratAktif->no_surat;
         $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
-        $user = User::with('pegawai')->whereHas('role', function($query) {
-            $query->where('nama_role', 'APPROVAL');
-        })->first();
-
-        $pegawai = $user ? $user->pegawai : null;
+        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)%')->first();
+        $user = $pegawai ? $pegawai->user : null;
         $bulanRomawi = $this->getBulanRomawi();
         $is_preview = true;
         return view('pages.suratAktif.show', compact('suratAktif', 'no_surat', 'program_studi', 'bulanRomawi', 'user', 'pegawai', 'is_preview'));
@@ -251,11 +243,8 @@ class SuratAktifController extends Controller
     {
         $no_surat = $suratAktif->no_surat;
         $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
-        $user = User::with('pegawai')->whereHas('role', function($query) {
-            $query->where('nama_role', 'APPROVAL');
-        })->first();
-
-        $pegawai = $user ? $user->pegawai : null;
+        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)%')->first();
+        $user = $pegawai ? $pegawai->user : null;
         $bulanRomawi = $this->getBulanRomawi();
         return view('pages.suratAktif.show', compact('suratAktif', 'no_surat', 'program_studi', 'bulanRomawi', 'user', 'pegawai'));
     }

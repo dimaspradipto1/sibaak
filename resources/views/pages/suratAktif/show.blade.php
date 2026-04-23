@@ -274,7 +274,7 @@
                 <td>Nama</td>
                 <td>:</td>
                 <td>
-                    {{ $user->name ?? 'Data tidak ditemukan' }}
+                    {{ $pegawai->nama_staff ?? 'Data tidak ditemukan' }}
                 </td>
             </tr>
             <tr>
@@ -346,7 +346,7 @@
                     </div>
 
                     <p style="margin: 0; font-weight: bold; text-decoration: underline;">
-                        {{ $pegawai->user->name ?? 'Data tidak ditemukan' }}
+                        {{ $pegawai->nama_staff ?? 'Data tidak ditemukan' }}
                     </p>
                     <p style="margin: 0;">NUP. {{ $pegawai->nup ?? 'Data tidak ditemukan' }}</p>
                 </div>
