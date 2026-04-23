@@ -36,7 +36,9 @@ class UnitKerjaDataTable extends DataTable
 
     public function query(UnitKerja $model): QueryBuilder
     {
-        return $model->newQuery()->select('unit_kerjas.*')->with('parent');
+        return $model->newQuery()->select('unit_kerjas.*')->with(['parent' => function($q) {
+            $q->select('id', 'nama_unit');
+        }]);
     }
 
     public function html(): HtmlBuilder
@@ -49,7 +51,7 @@ class UnitKerjaDataTable extends DataTable
                     ->selectStyleSingle()
                     ->parameters([
                          'scrollX' => true,
-                         'processing' => false,
+                         'processing' => true,
                          'responsive' => false,
                          'language' => ['searchPlaceholder' => 'Cari unit...']
                     ]);
@@ -66,8 +68,8 @@ class UnitKerjaDataTable extends DataTable
                 ->orderable(false),
             Column::make('nama_unit')->title('NAMA UNIT'),
             Column::make('kode_unit')->title('KODE UNIT')->addClass('text-center'),
-            Column::computed('parent')->title('ATASAN / PARENT'),
-            Column::computed('action')->title('AKSI')->width('15%')->addClass('text-center'),
+            Column::computed('parent')->title('ATASAN / PARENT')->searchable(false)->orderable(false),
+            Column::computed('action')->title('AKSI')->width('15%')->addClass('text-center')->searchable(false)->orderable(false),
         ];
     }
 }
