@@ -13,8 +13,33 @@ use Illuminate\Support\Facades\Auth;
 use App\DataTables\SuratAktifDataTable;
 use RealRashid\SweetAlert\Facades\Alert;
 
+use App\Imports\SuratAktifImport;
+use App\Exports\SuratAktifTemplateExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class SuratAktifController extends Controller
 {
+    public function exportTemplate()
+    {
+        return Excel::download(new SuratAktifTemplateExport, 'template_surat_aktif.xlsx');
+    }
+
+    public function import(Request $request) 
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            Excel::import(new SuratAktifImport, $request->file('file'));
+            Alert::success('Berhasil', 'Data Surat Aktif berhasil diimport')->autoclose(3000)->toToast();
+        } catch (\Exception $e) {
+            Alert::error('Gagal', 'Terjadi kesalahan saat import: ' . $e->getMessage())->autoclose(5000)->toToast();
+        }
+
+        return redirect()->route('suratAktif.index');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -30,7 +55,15 @@ class SuratAktifController extends Controller
     public function create()
     {
         $title = 'Form Surat Aktif';
-        $users = User::where('is_mahasiswa', true)->get();
+        
+        if (Auth::user()->is_mahasiswa) {
+            $users = User::where('id', Auth::id())->get();
+        } else {
+            $users = User::whereHas('role', function($query) {
+                $query->where('nama_role', 'MAHASISWA');
+            })->get();
+        }
+        
         $programStudi = ProgramStudi::all();
         return view('pages.suratAktif.create', compact('users', 'programStudi', 'title'));
     }
@@ -82,11 +115,11 @@ class SuratAktifController extends Controller
         $lastSurat = SuratAktif::latest('no_surat')->first();
         $noSurat = $lastSurat ? (int) $lastSurat->no_surat + 1 : 1;
         $noSuratFormatted = sprintf("%03d", $noSurat);
-        $users_id = Auth::user()->id;
+        $userId = Auth::user()->is_mahasiswa ? Auth::id() : $request->users_id;
 
         $data = [
             'no_surat' => $noSuratFormatted,
-            'users_id' => $users_id,
+            'users_id' => $userId,
             'program_studi_id' => $request->program_studi_id,
             'tempat_lahir' => $request->tempat_lahir,
             'tgl_lahir' => $request->tgl_lahir,
@@ -136,7 +169,9 @@ class SuratAktifController extends Controller
     {
         $no_surat = $suratAktif->no_surat;
         $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
-        $user = User::with('pegawai')->where('is_approval', 1)->first();
+        $user = User::with('pegawai')->whereHas('role', function($query) {
+            $query->where('nama_role', 'APPROVAL');
+        })->first();
 
         $pegawai = $user ? $user->pegawai : null;
         $bulanRomawi = $this->getBulanRomawi();
@@ -191,7 +226,9 @@ class SuratAktifController extends Controller
 
     public function validasi(SuratAktif $suratAktif)
     {
-        $userApproval = User::with('pegawai')->where('is_approval', 1)->first();
+        $userApproval = User::with('pegawai')->whereHas('role', function($query) {
+            $query->where('nama_role', 'APPROVAL');
+        })->first();
         $pegawai = $userApproval ? $userApproval->pegawai : null;
 
         return view('pages.suratAktif.detailsuratakademik', compact('suratAktif', 'pegawai', 'userApproval'));
@@ -201,7 +238,9 @@ class SuratAktifController extends Controller
     {
         $no_surat = $suratAktif->no_surat;
         $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
-        $user = User::with('pegawai')->where('is_approval', 1)->first();
+        $user = User::with('pegawai')->whereHas('role', function($query) {
+            $query->where('nama_role', 'APPROVAL');
+        })->first();
 
         $pegawai = $user ? $user->pegawai : null;
         $bulanRomawi = $this->getBulanRomawi();
@@ -212,7 +251,9 @@ class SuratAktifController extends Controller
     {
         $no_surat = $suratAktif->no_surat;
         $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
-        $user = User::with('pegawai')->where('is_approval', 1)->first();
+        $user = User::with('pegawai')->whereHas('role', function($query) {
+            $query->where('nama_role', 'APPROVAL');
+        })->first();
 
         $pegawai = $user ? $user->pegawai : null;
         $bulanRomawi = $this->getBulanRomawi();

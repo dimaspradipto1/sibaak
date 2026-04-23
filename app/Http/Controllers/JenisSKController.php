@@ -13,7 +13,7 @@ class JenisSKController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index( JenisSKDataTable $dataTable)
+    public function index(JenisSKDataTable $dataTable)
     {
         $title = 'Jenis SK';
         return $dataTable->render('pages.jenissk.index', compact('title'));

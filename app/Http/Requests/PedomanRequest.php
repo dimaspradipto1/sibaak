@@ -24,7 +24,7 @@ class PedomanRequest extends FormRequest
         return [
             'tahun' => 'required',
             'nama_pedoman' => 'required',
-            'fakultas' => 'required',
+            'fakultas' => 'nullable',
             'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }

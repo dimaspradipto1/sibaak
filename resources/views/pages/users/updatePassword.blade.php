@@ -21,8 +21,15 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Password</label>
                             <div class="col-sm-10">
-                                <input type="password" name="new_password" value="{{ old('new_password') }}"
-                                    class="form-control" id="new_password">
+                                <div class="input-group">
+                                    <input type="password" name="new_password" value="{{ old('new_password') }}"
+                                        class="form-control" id="new_password">
+                                    <div class="input-group-append" style="cursor: pointer;" onclick="toggleVisibility('new_password', 'eye1')">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-eye" id="eye1"></i>
+                                        </span>
+                                    </div>
+                                </div>
                                 @error('new_password')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -32,9 +39,16 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Confirm Password</label>
                             <div class="col-sm-10">
-                                <input type="password" name="new_password_confirmation"
-                                    value="{{ old('new_password_confirmation') }}" class="form-control"
-                                    id="new_password_confirmation">
+                                <div class="input-group">
+                                    <input type="password" name="new_password_confirmation"
+                                        value="{{ old('new_password_confirmation') }}" class="form-control"
+                                        id="new_password_confirmation">
+                                    <div class="input-group-append" style="cursor: pointer;" onclick="toggleVisibility('new_password_confirmation', 'eye2')">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-eye" id="eye2"></i>
+                                        </span>
+                                    </div>
+                                </div>
                                 @error('new_password_confirmation')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -55,3 +69,21 @@
     </div>
     <!-- Basic Form Inputs card end -->
 @endsection
+
+@push('script')
+    <script>
+        function toggleVisibility(inputId, eyeId) {
+            const field = document.getElementById(inputId);
+            const eye = document.getElementById(eyeId);
+            if (field.type === "password") {
+                field.type = "text";
+                eye.classList.remove("fa-eye");
+                eye.classList.add("fa-eye-slash");
+            } else {
+                field.type = "password";
+                eye.classList.remove("fa-eye-slash");
+                eye.classList.add("fa-eye");
+            }
+        }
+    </script>
+@endpush

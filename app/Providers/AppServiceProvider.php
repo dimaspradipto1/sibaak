@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +28,27 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Paginator::useBootstrap();
+
+        // Register Dynamic Gates from Database
+        try {
+            if (Schema::hasTable('permissions')) {
+                $permissions = \App\Models\Permission::all();
+                foreach ($permissions as $permission) {
+                    Gate::define($permission->slug, function ($user) use ($permission) {
+                        return $user->role && $user->role->hasPermission($permission->slug);
+                    });
+                }
+            }
+        } catch (\Exception $e) {
+            // Silently fail if table doesn't exist yet
+        }
+
+        // Grant all permissions to SUPER ADMIN and ADMIN
+        Gate::before(function ($user, $ability) {
+            if ($user->hasRole('SUPER ADMIN') || $user->hasRole('ADMIN')) {
+                return true;
+            }
+        });
 
         // View composer for navbar and sidebar notifications
         view()->composer(['layouts.dashboard.navbar', 'layouts.dashboard.sidebar'], function ($view) {

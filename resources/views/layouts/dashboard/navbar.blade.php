@@ -1,7 +1,7 @@
-<nav class="navbar header-navbar pcoded-header" style="background: linear-gradient(45deg, #087C39, #FFF742);">
+<nav class="navbar header-navbar pcoded-header">
     <div class="navbar-wrapper">
         <div class="navbar-logo">
-            <a class="mobile-menu waves-effect waves-light" id="mobile-collapse" href="#!">
+            <a class="mobile-menu waves-effect waves-light" id="mobile-collapse" href="javascript:void(0)">
                 <i class="ti-menu"></i>
             </a>
             <div class="mobile-search waves-effect waves-light">
@@ -21,7 +21,7 @@
                 <img class="img-fluid" src="{{ asset('assets/images/logouis.png') }}" style="width: 30px; height: 30px;"
                     alt="UIS Logo" />
             </a>
-            <span class="navbar-brand mb-0 text-white ml-2">MYBAAK</span>
+            <span class="navbar-brand mb-0 text-white ml-2">MYBAAK UIS</span>
             <a class="mobile-options waves-effect waves-light">
                 <i class="ti-more"></i>
             </a>
@@ -33,14 +33,14 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#!" onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
+                    <a href="javascript:void(0)" onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
                         <i class="ti-fullscreen"></i>
                     </a>
                 </li>
             </ul>
             <ul class="nav-right">
                 <li class="header-notification">
-                    <a href="#!" class="waves-effect waves-light">
+                    <a href="javascript:void(0)" class="waves-effect waves-light">
                         <i class="ti-bell"></i>
                         @if ($totalPending > 0)
                             <span class="badge bg-c-red">{{ $totalPending }}</span>
@@ -62,7 +62,7 @@
                                         <h5 class="notification-user">Surat Aktif</h5>
                                         <p class="notification-msg">Ada {{ $pendingSuratAktifCount }} pengajuan surat
                                             aktif pending.</p>
-                                        @if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak)
+                                        @if (Auth::check() && (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak))
                                             <a href="{{ route('suratAktif.index') }}" class="text-primary small">Lihat
                                                 Detail</a>
                                         @endif
@@ -79,7 +79,7 @@
                                         <h5 class="notification-user">Surat Akademik</h5>
                                         <p class="notification-msg">Ada {{ $pendingSuratAkademikCount }} pengajuan surat
                                             akademik pending.</p>
-                                        @if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak)
+                                        @if (Auth::check() && (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak))
                                             <a href="{{ route('suratAkademik.index') }}"
                                                 class="text-primary small">Lihat Detail</a>
                                         @endif
@@ -89,11 +89,7 @@
                         @endif
 
                         {{-- Data Arsip Terbaru --}}
-                        @if (Auth::user()->is_admin ||
-                                Auth::user()->is_superadmin ||
-                                Auth::user()->is_tata_usaha ||
-                                Auth::user()->is_operator ||
-                                Auth::user()->is_staffbaak)
+                        @if (Auth::check() && (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_tata_usaha || Auth::user()->is_operator || Auth::user()->is_staffbaak))
                             <li class="waves-effect waves-light">
                                 <h6 class="p-2 bg-light small font-weight-bold">Arsip Terbaru</h6>
                             </li>
@@ -118,7 +114,8 @@
                     </ul>
                 </li>
                 <li class="user-profile header-notification">
-                    <a href="#!" class="waves-effect waves-light">
+                    @auth
+                    <a href="javascript:void(0)" class="waves-effect waves-light">
                         <img src="{{ Auth::user()->profile && Auth::user()->profile->foto ? asset('storage/' . Auth::user()->profile->foto) : asset('assets/images/user.png') }}"
                             class="img-radius" alt="User-Profile-Image"
                             style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
@@ -126,6 +123,11 @@
                         <i class="ti-angle-down"></i>
                     </a>
                     <ul class="show-notification profile-notification">
+                        <li class="waves-effect waves-light">
+                            <a href="{{ route('semantic.index') }}">
+                                <i class="ti-settings"></i> Search Engine
+                            </a>
+                        </li>
                         <li class="waves-effect waves-light">
                             <a href="{{ route('settings.index') }}">
                                 <i class="ti-settings"></i> Settings
@@ -152,6 +154,11 @@
                             </a>
                         </li>
                     </ul>
+                    @else
+                    <a href="{{ route('login') }}" class="waves-effect waves-light btn btn-primary btn-sm text-white px-3 mt-2" style="border-radius: 20px;">
+                        <i class="fa-solid fa-right-to-bracket mr-1"></i> Login
+                    </a>
+                    @endauth
                 </li>
             </ul>
         </div>

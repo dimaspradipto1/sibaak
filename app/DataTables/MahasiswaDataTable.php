@@ -6,6 +6,7 @@ use App\Models\Mahasiswa;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
@@ -37,24 +38,24 @@ class MahasiswaDataTable extends DataTable
                 return $item->programStudi ? $item->programStudi->program_studi : '-';
             })
             ->addColumn('action', function ($item) {
-                $actions = '
-                    <a href="'.route('mahasiswa.show', $item->id).'" class="btn btn-sm btn-dark text-white px-3 rounded" title="detail"><i class="fa-solid fa-eye"></i></a> 
-                    <a href="'.route('mahasiswa.edit', $item->id).'" class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
-                ';
-            
-                if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak) {
-                    $actions .= '
-                        <form action="'.route('mahasiswa.destroy', $item->id).'" method="POST" class="d-inline">
-                            ' . csrf_field() . '
-                            ' . method_field('delete') . '
-                            <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus"><i class="fa-solid fa-trash-can"></i></button>
-                        </form>
-                    ';
+                $btn = '<div class="d-flex justify-content-center align-items-center" style="gap: 5px;">';
+                if (Gate::check('mahasiswa_view')) {
+                    $btn .= '<a href="' . route('mahasiswa.show', $item->id) . '" class="btn btn-sm btn-info text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Detail"><i class="fa-solid fa-eye" style="font-size: 11px;"></i></a>';
                 }
-            
-                return $actions;
+                if (Gate::check('mahasiswa_edit')) {
+                    $btn .= '<a href="' . route('mahasiswa.edit', $item->id) . '" class="btn btn-sm btn-warning text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Edit"><i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i></a>';
+                }
+                if (Gate::check('mahasiswa_delete')) {
+                    $btn .= '<form action="' . route('mahasiswa.destroy', $item->id) . '" method="POST" class="m-0">' . csrf_field() . method_field('delete') . '<button type="submit" class="btn btn-danger btn-sm rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Hapus" onclick="return confirm(\'Hapus data ini?\')"><i class="fa-solid fa-trash-can" style="font-size: 11px;"></i></button></form>';
+                }
+                $btn .= '</div>';
+                
+                if (Gate::check('mahasiswa_view') || Gate::check('mahasiswa_edit') || Gate::check('mahasiswa_delete')) {
+                    return $btn;
+                }
+                return '<span class="text-muted small">-</span>';
             })
-            ->setRowId('DT_RowIndex')
+            ->setRowId('id')
             ->rawColumns(['action', 'user.name', 'user.email', 'programStudi.program_studi', 'detail'])
             ->filterColumn('DT_RowIndex', function ($query, $keyword) {
                 $query->where('id', 'like', "%{$keyword}%");

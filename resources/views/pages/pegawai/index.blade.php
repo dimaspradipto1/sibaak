@@ -2,20 +2,21 @@
 
 @section('title', 'Pegawai')
 @section('content')
-    <div class="card">
-        <div class="card-header">
-            <a href="{{ route('pegawai.create') }}" class="btn btn-primary rounded btn-sm"><i class="fa-solid fa-plus"></i>
-                Tambah</a>
-            <div class="card-header-right">
-                <ul class="list-unstyled card-option">
-                    <li><i class="fa fa fa-wrench open-card-option"></i></li>
-                    <li><i class="fa fa-window-maximize full-card"></i></li>
-                    <li><i class="fa fa-minus minimize-card"></i></li>
-                    <li><i class="fa fa-refresh reload-card"></i></li>
-                    <li><i class="fa fa-trash close-card"></i></li>
-                </ul>
+    <div class="card border-0 shadow-sm" style="border-radius: 15px; overflow: hidden; border-top: 5px solid #046B26 !important;">
+        <div class="card-header bg-white border-bottom py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <div style="width: 4px; height: 25px; background: #046B26; border-radius: 2px;" class="mr-2"></div>
+                    <h5 class="m-0 font-weight-bold text-dark">Data Pegawai</h5>
+                </div>
+                @can('pegawai_create')
+                <a href="{{ route('pegawai.create') }}" class="btn btn-success btn-sm font-weight-bold px-3 py-2 shadow-sm rounded-lg border-0" style="background-color: #046B26;">
+                    <i class="fas fa-plus mr-1"></i> TAMBAH
+                </a>
+                @endcan
             </div>
         </div>
+
         <div class="card-block table-border-style">
             <div class="table-responsive">
                {{ $dataTable->table([
@@ -26,6 +27,27 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+    <style>
+        #pegawai-table thead th {
+            background-color: #f8f9fc;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            color: #5a5c69;
+            border-bottom: 2px solid #e3e6f0;
+            padding: 15px 10px;
+            vertical-align: middle;
+        }
+        #pegawai-table tbody td {
+            vertical-align: middle;
+            padding: 12px 10px;
+            color: #5a5c69;
+            font-size: 13px;
+        }
+    </style>
+@endpush
 
 @push('scripts')
     @if(app()->environment('production'))

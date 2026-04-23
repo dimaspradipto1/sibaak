@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login SIBAAK</title>
+    <title>Login MYBAAK UIS</title>
     <link rel="icon" href="{{ asset('assets/images/logouis.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -203,7 +203,7 @@
         <form class="login-form" action="{{ route('loginproses') }}" method="post">
             @csrf
 
-            <p class="text-left">MYBAAK</p>
+            <p class="text-left">MYBAAK UIS</p>
             <input type="email" name="email" placeholder="Email atau nomor ponsel" class="input-field" required>
             <div class="password-container">
                 <input type="password" name="password" id="password" placeholder="Sandi" class="input-field" required>
@@ -216,7 +216,8 @@
             </div> --}}
         </form>
         <div class="new-to-baak">
-            <p>Baru di MYBAAK? <a href="{{ route('register') }}">Daftar sekarang.</a></p>
+            <p>Baru di MYBAAK UIS? <a href="{{ route('register') }}">Daftar sekarang.</a></p>
+            <p>Pencarian Dokumen <a href="{{ route('semantic.index') }}">Disini.</a></p>
         </div>
     </div>
 

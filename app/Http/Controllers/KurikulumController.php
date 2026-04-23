@@ -50,6 +50,11 @@ class KurikulumController extends Controller
             $data = $request->validated();
             $data['users_id'] = Auth::id();
 
+            // Set fakultas otomatis jika tidak ada di request
+            if (!isset($data['fakultas']) || empty($data['fakultas'])) {
+                $data['fakultas'] = Auth::user()->fakultas;
+            }
+
             if ($request->hasFile('file')) {
                 $uploaded = $request->file('file');
                 $safeOriginal = preg_replace('/[^A-Za-z0-9\.\-_ ]/', '', $uploaded->getClientOriginalName());
@@ -133,6 +138,11 @@ class KurikulumController extends Controller
         try {
             $data = $request->validated();
             $data['users_id'] = Auth::id();
+
+            // Set fakultas otomatis jika tidak ada di request
+            if (!isset($data['fakultas']) || empty($data['fakultas'])) {
+                $data['fakultas'] = Auth::user()->fakultas;
+            }
 
             if ($request->hasFile('file')) {
                 // Hapus file lama jika ada (Drive or Local)
@@ -224,5 +234,24 @@ class KurikulumController extends Controller
             ->toToast()
             ->timerProgressBar();
         return redirect()->route('kurikulum.index');
+    }
+
+    public function toggleStatus(Request $request)
+    {
+        try {
+            $kurikulum = Kurikulum::findOrFail($request->id);
+            $kurikulum->is_active = $request->status;
+            $kurikulum->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status berhasil diubah'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengubah status: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

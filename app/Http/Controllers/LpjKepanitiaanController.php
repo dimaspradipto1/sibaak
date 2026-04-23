@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Google\Client as GoogleClient;
 use Google\Service\Drive as GoogleDrive;
 use App\Models\User;
@@ -54,6 +55,11 @@ class LpjKepanitiaanController extends Controller
         try {
             $data = $request->validated();
             $data['users_id'] = Auth::id();
+
+            // Set fakultas otomatis jika tidak ada di request
+            if (!isset($data['fakultas']) || empty($data['fakultas'])) {
+                $data['fakultas'] = Auth::user()->fakultas;
+            }
 
             if ($request->hasFile('file')) {
                 $uploaded = $request->file('file');
@@ -141,6 +147,11 @@ class LpjKepanitiaanController extends Controller
         try {
             $data = $request->validated();
             $data['users_id'] = Auth::id();
+
+            // Set fakultas otomatis jika tidak ada di request
+            if (!isset($data['fakultas']) || empty($data['fakultas'])) {
+                $data['fakultas'] = Auth::user()->fakultas;
+            }
 
             if ($request->hasFile('file')) {
                 // Hapus file lama jika ada (Drive or Local)
@@ -233,5 +244,24 @@ class LpjKepanitiaanController extends Controller
             ->toToast()
             ->timerProgressBar();
         return redirect()->route('lpjkepanitiaan.index');
+    }
+
+    public function toggleStatus(Request $request)
+    {
+        try {
+            $lpj = LpjKepanitiaan::findOrFail($request->id);
+            $lpj->is_active = $request->status;
+            $lpj->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status berhasil diubah'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengubah status: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

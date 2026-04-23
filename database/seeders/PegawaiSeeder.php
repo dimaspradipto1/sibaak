@@ -16,7 +16,7 @@ class PegawaiSeeder extends Seeder
     {
         $pegawai = [
             [
-                'users_id' => 2,
+                'email' => 'leni@uis.ac.id',
                 'nama_staff' => 'LENI UTAMI, S.Si., M.KM',
                 'jabatan' => 'KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)',
                 'nidn' => '1001057904',
@@ -24,7 +24,7 @@ class PegawaiSeeder extends Seeder
                 'homebase' => 'Fakultas Ilmu Kesehatan (FIKES)',
             ],
             [
-                'users_id' => 3,
+                'email' => 'andihidayatul@uis.ac.id',
                 'nama_staff' => 'Andi Hidayatul Fadlilah, SE,M. Si.AK',
                 'jabatan' => 'KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN',
                 'nidn' => '1011088401',
@@ -34,6 +34,12 @@ class PegawaiSeeder extends Seeder
         ];
 
         foreach ($pegawai as $pegawaiData) {
+            $user = \App\Models\User::where('email', $pegawaiData['email'])->first();
+            if (!$user) continue;
+
+            unset($pegawaiData['email']);
+            $pegawaiData['users_id'] = $user->id;
+            
             $p = \App\Models\Pegawai::create($pegawaiData);
 
             // Link ke Profile

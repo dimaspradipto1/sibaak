@@ -11,6 +11,10 @@ use App\DataTables\MahasiswaDataTable;
 use App\Http\Requests\MahasiswaRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 
+use App\Imports\MahasiswaImport;
+use App\Exports\MahasiswaTemplateExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class MahasiswaController extends Controller
 {
     /**
@@ -30,7 +34,9 @@ class MahasiswaController extends Controller
         $title = 'Form Mahasiswa';
         $isMahasiswa = Mahasiswa::where('users_id', Auth::id())->exists();
         $programStudi = ProgramStudi::all();
-        $users = User::where('is_mahasiswa', true)->get();
+        $users = User::whereHas('role', function($query) {
+            $query->where('nama_role', 'MAHASISWA');
+        })->get();
         return view('pages.mahasiswa.create', compact('users', 'programStudi', 'isMahasiswa', 'title'));
     }
 
@@ -74,7 +80,9 @@ class MahasiswaController extends Controller
     {
         $title = 'Form Mahasiswa';
         $mahasiswa = Mahasiswa::with('user', 'programStudi')->findOrFail($mahasiswa->id);
-        $users = User::where('is_mahasiswa', true)->get();
+        $users = User::whereHas('role', function($query) {
+            $query->where('nama_role', 'MAHASISWA');
+        })->get();
         $programStudi = ProgramStudi::all();
         return view('pages.mahasiswa.edit', compact('mahasiswa', 'programStudi', 'users', 'title'));
     }
@@ -112,5 +120,31 @@ class MahasiswaController extends Controller
             ->timerProgressBar()
             ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
         return redirect()->route('mahasiswa.index');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            Excel::import(new MahasiswaImport, $request->file('file'));
+            
+            Alert::success('Sukses', 'Data Mahasiswa berhasil diimpor')
+                ->autoclose(4000)
+                ->toToast();
+        } catch (\Exception $e) {
+            Alert::error('Gagal', 'Terjadi kesalahan saat impor: ' . $e->getMessage())
+                ->autoclose(5000)
+                ->toToast();
+        }
+
+        return redirect()->back();
+    }
+
+    public function exportTemplate()
+    {
+        return Excel::download(new MahasiswaTemplateExport, 'format_import_mahasiswa.xlsx');
     }
 }

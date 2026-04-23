@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -31,38 +32,23 @@ class UserDataTable extends DataTable
                 return $item->email;
             })
             ->addColumn('status', function ($item) {
-                $statuses = [];
-
-                // Cek setiap status dan tambahkan ke array jika statusnya aktif
-                if ($item->is_admin) {
-                    $statuses[] = 'Admin';
-                }
-                if ($item->is_staffbaak) {
-                    $statuses[] = 'Staff BAAK';
-                }
-                if ($item->is_mahasiswa) {
-                    $statuses[] = 'Mahasiswa';
-                }
-                if ($item->is_tata_usaha) {
-                    $statuses[] = 'Tata Usaha';
-                }
-                if ($item->is_approval) {
-                    $statuses[] = 'Approval';
-                }
-
-                // Gabungkan semua status yang ada, dipisahkan dengan koma
-                return implode(', ', $statuses);
+                return $item->role?->nama_role ?? '-';
             })
             ->addColumn('action', function ($user) {
-                return '
-                    <a href="' . route('users.updatePassword', $user->id) . '" class="btn btn-sm btn-info text-white px-3 rounded"><i class="fa-solid fa-key"></i></a>
-                    <a href="' . route('users.edit', $user->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded" ><i class="fa-solid fa-pen-to-square"></i></a>
-                    <form action="' . route('users.destroy', $user->id) . '" method="POST" style="display: inline">
-                        ' . csrf_field() . '
-                        ' . method_field('DELETE') . '
-                        <button type="submit" class="btn btn-sm btn-danger px-3 rounded" onclick="return confrm(\'Yakin ingin menghapus data ini?\')"><i class="fa-solid fa-trash"></i></button>
-                    </form>
-                ';
+                $btn = '<div class="d-flex justify-content-center align-items-center" style="gap: 5px;">';
+                if (Gate::check('users_edit')) {
+                    $btn .= '<a href="' . route('users.updatePassword', $user->id) . '" class="btn btn-sm btn-info text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Update Password"><i class="fa-solid fa-key" style="font-size: 11px;"></i></a>';
+                    $btn .= '<a href="' . route('users.edit', $user->id) . '" class="btn btn-sm btn-warning text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Edit"><i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i></a>';
+                }
+                if (Gate::check('users_delete')) {
+                    $btn .= '<form action="' . route('users.destroy', $user->id) . '" method="POST" class="m-0">' . csrf_field() . method_field('DELETE') . '<button type="submit" class="btn btn-danger btn-sm rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Hapus" onclick="return confirm(\'Yakin ingin menghapus data ini?\')"><i class="fa-solid fa-trash-can" style="font-size: 11px;"></i></button></form>';
+                }
+                $btn .= '</div>';
+                
+                if (Gate::check('users_edit') || Gate::check('users_delete')) {
+                    return $btn;
+                }
+                return '<span class="text-muted small">-</span>';
             })
             ->setRowId('DT_RowIndex')
             ->rawColumns(['action', 'status'])
@@ -73,7 +59,9 @@ class UserDataTable extends DataTable
                 $query->where('email', 'like', "%{$keyword}%");
             })
             ->filterColumn('status', function ($query, $keyword) {
-                $query->whereRaw("CONCAT_WS(',', is_admin, is_staffbaak, is_mahasiswa, is_tata_usaha, is_approval) like ?", ["%{$keyword}%"]);
+                $query->whereHas('role', function ($q) use ($keyword) {
+                    $q->where('nama_role', 'like', "%{$keyword}%");
+                });
             });
     }
 
@@ -84,7 +72,7 @@ class UserDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('role');
     }
 
     /**

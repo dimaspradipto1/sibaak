@@ -6,6 +6,7 @@ use App\Models\SuratAktif;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
@@ -40,22 +41,56 @@ class SuratAktifDataTable extends DataTable
             })
             ->addColumn('action', function ($item) {
                 $actions = '';
-                if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak) {
+
+                // Tombol Cetak & aksi admin: gated by permission
+                if (Gate::check('surat_aktif_edit') || Gate::check('surat_aktif_delete')) {
+                    // Print/Cetak hanya untuk yang punya akses edit (staff/admin)
                     $actions .= '
-                            <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Silahkan Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Silahkan Cetak Surat</span></a>
-                            <a href="' . route('suratAktif.edit', $item) . '" class="btn btn-sm btn-warning text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a> 
-                            <form action="' . route('suratAktif.destroy', $item) . '" method="POST" class="d-inline">
-                                ' . csrf_field() . '
-                                ' . method_field('delete') . '
-                                <button type="submit" class="btn btn-danger btn-sm py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
-                            </form>
-                        ';
+                        <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Cetak Surat" target="_blank">
+                            <i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Cetak Surat</span>
+                        </a>
+                    ';
+                }
+                if (Gate::check('surat_aktif_edit')) {
+                    $actions .= '
+                        <a href="' . route('suratAktif.edit', $item) . '" class="btn btn-sm btn-warning text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    ';
+                }
+                if (Gate::check('surat_aktif_delete')) {
+                    $actions .= '
+                        <form action="' . route('suratAktif.destroy', $item) . '" method="POST" class="d-inline">
+                            ' . csrf_field() . '
+                            ' . method_field('delete') . '
+                            <button type="submit" class="btn btn-danger btn-sm py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Hapus" onclick="return confirm(\'Hapus data ini?\')"><i class="fa-solid fa-trash-can"></i></button>
+                        </form>
+                    ';
                 }
 
-                if ($item->status == 'diterima' && Auth::user()->is_mahasiswa) {
-                    $actions .= '
-                            <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-success text-white px-2 px-md-3 mr-1 mr-md-2 rounded" title="Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Cetak Surat</span></a>
+                // Tombol aksi untuk mahasiswa
+                if (Auth::user()->is_mahasiswa) {
+                    if ($item->status == 'pending') {
+                        $actions .= '<span class="text-info small font-italic"><i class="fa-solid fa-clock mr-1"></i>Estimasi surat diproses 3 hari kerja</span>';
+                    } else {
+                        $actions .= '
+                            <a href="' . route('suratAktif.validasi', $item) . '" class="btn btn-sm btn-info text-white px-2 px-md-3 mr-1 mr-md-2 rounded" title="Lihat Detail">
+                                <i class="fa-solid fa-eye"></i><span class="d-none d-md-inline"> Detail</span>
+                            </a>
                         ';
+                        
+                        if ($item->status == 'diterima') {
+                            $actions .= '
+                                <a href="' . route('suratAktif.show', $item) . '" class="btn btn-sm btn-success text-white px-2 px-md-3 mr-1 mr-md-2 rounded" title="Cetak Surat" target="_blank">
+                                    <i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Cetak Surat</span>
+                                </a>
+                            ';
+                        }
+                    }
+                }
+
+                if (empty(trim($actions))) {
+                    $actions = '<span class="text-muted small">-</span>';
                 }
 
                 return $actions;

@@ -52,11 +52,19 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
+        $roleMahasiswa = \App\Models\Role::where('nama_role', 'MAHASISWA')->first();
+        
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'is_mahasiswa' => 1,
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => Hash::make($request->password),
+            'role_id'   => $roleMahasiswa->id,
+            'is_active' => 1,
+        ]);
+
+        // Buat profile otomatis
+        \App\Models\Profile::create([
+            'users_id' => $user->id
         ]);
 
         Auth::login($user);
@@ -76,6 +84,6 @@ class LoginController extends Controller
             ->toToast()
             ->timerProgressBar()
             ->iconHtml('<i class="fa-solid fa-check"></i>');
-        return redirect()->route('login');
+        return redirect()->route('semantic.index');
     }
 }

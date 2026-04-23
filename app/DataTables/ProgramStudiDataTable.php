@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\ProgramStudi;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -25,15 +26,20 @@ class ProgramStudiDataTable extends DataTable
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
             ->addColumn('action', function ($item) {
-                return '
-                        <a href="' . route('programStudi.edit', $item->id) . '" class="btn btn-sm btn-warning text-white px-3 rounded" title="edit"><i class="fa-solid fa-pen-to-square"></i></a> 
-                        <form action="' . route('programStudi.destroy', $item->id) . '" method="POST" class="d-inline">
-                        ' . csrf_field() . '
-                        ' . method_field('delete') . '
-                        <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus"><i class="fa-solid fa-trash-can" ></i></button>
-                        </form>
-                    ';
-                })
+                $btn = '<div class="d-flex justify-content-center align-items-center" style="gap: 5px;">';
+                if (Gate::check('program_studi_edit')) {
+                    $btn .= '<a href="' . route('programStudi.edit', $item->id) . '" class="btn btn-sm btn-warning text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Edit"><i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i></a>';
+                }
+                if (Gate::check('program_studi_delete')) {
+                    $btn .= '<form action="' . route('programStudi.destroy', $item->id) . '" method="POST" class="m-0">' . csrf_field() . method_field('delete') . '<button type="submit" class="btn btn-danger btn-sm rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Hapus" onclick="return confirm(\'Hapus data ini?\')"><i class="fa-solid fa-trash-can" style="font-size: 11px;"></i></button></form>';
+                }
+                $btn .= '</div>';
+                
+                if (Gate::check('program_studi_edit') || Gate::check('program_studi_delete')) {
+                    return $btn;
+                }
+                return '<span class="text-muted small">-</span>';
+            })
             ->setRowId('DT_RowIndex')
             ->rawColumns(['action'])
             ->filterColumn('DT_RowIndex', function ($query, $keyword) {

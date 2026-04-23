@@ -25,14 +25,7 @@ class CheckRole
             return redirect()->route('login');
         }
 
-        if (
-            Auth::user()->is_admin ||
-            Auth::user()->is_operator ||
-            Auth::user()->is_mahasiswa ||
-            Auth::user()->is_tata_usaha ||
-            Auth::user()->is_staffbaak ||
-            Auth::user()->is_superadmin
-        ) {
+        if (Auth::user()->role_id !== null && Auth::user()->is_active) {
             return $next($request);
         }
 

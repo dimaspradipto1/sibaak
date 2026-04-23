@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_sop');
             $table->string('fakultas');
             $table->string('file');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

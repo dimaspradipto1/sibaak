@@ -4,6 +4,8 @@ namespace App\DataTables;
 
 use App\Models\Kurikulum;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -30,6 +32,21 @@ class KurikulumDataTable extends DataTable
                         <i class="fa-solid fa-eye"></i> Lihat Dokumen
                     </a>';
             })
+            ->addColumn('status', function ($item) {
+                if ($item->is_active) {
+                    return '
+                        <button type="button" class="btn btn-sm btn-primary badge-pill shadow-sm px-3 py-1 btn-toggle-status" data-id="' . $item->id . '" data-status="0" style="font-size: 10px; min-width: 80px; border: none;">
+                            <i class="fas fa-toggle-on mr-1"></i> AKTIF
+                        </button>
+                    ';
+                } else {
+                    return '
+                        <button type="button" class="btn btn-sm btn-secondary badge-pill shadow-sm px-3 py-1 btn-toggle-status" data-id="' . $item->id . '" data-status="1" style="font-size: 10px; min-width: 80px; border: none; background: #e0e0e0; color: #777;">
+                            <i class="fas fa-toggle-off mr-1"></i> INAKTIF
+                        </button>
+                    ';
+                }
+            })
             ->editColumn('users_id', function ($item) {
                 return $item->user ? $item->user->name : '-';
             })
@@ -39,21 +56,34 @@ class KurikulumDataTable extends DataTable
                 });
             })
             ->addColumn('action', function ($item) {
-                return '
-                <a href="' . route('kurikulum.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded" title="edit">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </a>
-                <form action="' . route('kurikulum.destroy', $item->id) . '" method="POST" class="d-inline">
-                    ' . csrf_field() . '
-                    ' . method_field('delete') . '
-                    <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </form>
-            ';
+                if (Gate::check('kurikulum_edit')) {
+                    $btn = '
+                    <a href="' . route('kurikulum.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded mx-1" title="edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    ';
+                }
+
+                if (Gate::check('kurikulum_delete')) {
+                    $btn .= '
+                        <form action="' . route('kurikulum.destroy', $item->id) . '" method="POST" class="d-inline">
+                            ' . csrf_field() . '
+                            ' . method_field('delete') . '
+                            <button type="submit" class="btn btn-danger btn-sm px-3 rounded mx-1" title="hapus" onclick="return confirm(\'Hapus data ini?\')">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </form>
+                    ';
+                }
+
+                if (empty(trim($btn))) {
+                    $btn = '<span class="text-muted small">-</span>';
+                }
+
+                return $btn;
             })
             ->setRowId('DT_RowIndex')
-            ->rawColumns(['action', 'file', 'users_id']);
+            ->rawColumns(['action', 'file', 'status', 'users_id']);
     }
 
     /**
@@ -63,7 +93,14 @@ class KurikulumDataTable extends DataTable
      */
     public function query(Kurikulum $model): QueryBuilder
     {
-        return $model->newQuery()->with(['user']);
+        $query = $model->newQuery()->with(['user']);
+
+        // Jika bukan superadmin atau admin, tampilkan data milik sendiri saja
+        if (Auth::check() && !Auth::user()->is_superadmin && !Auth::user()->is_admin) {
+            $query->where('users_id', Auth::id());
+        }
+
+        return $query;
     }
 
     /**
@@ -119,6 +156,10 @@ class KurikulumDataTable extends DataTable
             Column::make('file')
                 ->title('DOKUMEN')
                 ->width('15%')
+                ->addClass('text-center'),
+            Column::computed('status')
+                ->title('STATUS')
+                ->width('10%')
                 ->addClass('text-center'),
             Column::computed('action')
                 ->title('AKSI')

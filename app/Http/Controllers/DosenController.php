@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\DataTables\DosenDataTable;
 use App\Http\Requests\DosenRequest;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Imports\DosenImport;
+use App\Exports\DosenTemplateExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DosenController extends Controller
 {
@@ -88,5 +91,31 @@ class DosenController extends Controller
             ->timerProgressBar()
             ->iconHtml('<i class="fa fa-check-circle"></i>');
         return redirect()->route('dosen.index');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            Excel::import(new DosenImport, $request->file('file'));
+            
+            Alert::success('Sukses', 'Data Dosen berhasil diimpor')
+                ->autoclose(4000)
+                ->toToast();
+        } catch (\Exception $e) {
+            Alert::error('Gagal', 'Terjadi kesalahan saat impor: ' . $e->getMessage())
+                ->autoclose(5000)
+                ->toToast();
+        }
+
+        return redirect()->back();
+    }
+
+    public function exportTemplate()
+    {
+        return Excel::download(new DosenTemplateExport, 'format_import_dosen.xlsx');
     }
 }

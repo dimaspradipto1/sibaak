@@ -4,6 +4,8 @@ namespace App\DataTables;
 
 use App\Models\SopAkademik;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -34,26 +36,42 @@ class SopAkademikDataTable extends DataTable
             })
             ->addColumn('file', function ($item) {
                 return '<a href="' . asset($item->file) . '" target="_blank"
-                            class="btn btn-sm btn-success text-white px-3 rounded">
-                            <i class="fa-solid fa-eye"></i> Lihat Dokumen
+                            class="btn btn-sm btn-info text-white rounded shadow-sm d-flex align-items-center justify-content-center px-3" style="height: 30px;">
+                            <i class="fa-solid fa-eye mr-2" style="font-size: 11px;"></i> <span style="font-size: 11px; font-weight: 600;">DOKUMEN</span>
                         </a>';
             })
-            ->addColumn('action', function ($item) {
-                return '
-                    <a href="' . route('sopakademik.edit', $item->id) . '" class="btn btn-warning btn-sm px-3 rounded" title="edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                    <form action="' . route('sopakademik.destroy', $item->id) . '" method="POST" class="d-inline">
-                        ' . csrf_field() . '
-                        ' . method_field('delete') . '
-                        <button type="submit" class="btn btn-danger btn-sm px-3 rounded" title="hapus">
-                            <i class="fa-solid fa-trash-can"></i>
+            ->addColumn('status', function ($item) {
+                if ($item->is_active) {
+                    return '
+                        <button type="button" class="btn btn-sm btn-primary badge-pill shadow-sm px-3 py-1 btn-toggle-status" data-id="' . $item->id . '" data-status="0" style="font-size: 10px; min-width: 80px; border: none;">
+                            <i class="fas fa-toggle-on mr-1"></i> AKTIF
                         </button>
-                    </form>
-                ';
+                    ';
+                } else {
+                    return '
+                        <button type="button" class="btn btn-sm btn-secondary badge-pill shadow-sm px-3 py-1 btn-toggle-status" data-id="' . $item->id . '" data-status="1" style="font-size: 10px; min-width: 80px; border: none; background: #e0e0e0; color: #777;">
+                            <i class="fas fa-toggle-off mr-1"></i> INAKTIF
+                        </button>
+                    ';
+                }
+            })
+            ->addColumn('action', function ($item) {
+                $btn = '<div class="d-flex justify-content-center align-items-center" style="gap: 5px;">';
+                if (Gate::check('sop_akademik_edit')) {
+                    $btn .= '<a href="' . route('sopakademik.edit', $item->id) . '" class="btn btn-sm btn-warning text-white rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Edit"><i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i></a>';
+                }
+                if (Gate::check('sop_akademik_delete')) {
+                    $btn .= '<form action="' . route('sopakademik.destroy', $item->id) . '" method="POST" class="m-0">' . csrf_field() . method_field('delete') . '<button type="submit" class="btn btn-danger btn-sm rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;" title="Hapus" onclick="return confirm(\'Hapus data ini?\')"><i class="fa-solid fa-trash-can" style="font-size: 11px;"></i></button></form>';
+                }
+                $btn .= '</div>';
+                
+                if (Gate::check('sop_akademik_edit') || Gate::check('sop_akademik_delete')) {
+                    return $btn;
+                }
+                return '<span class="text-muted small">-</span>';
             })
             ->setRowId('DT_RowIndex')
-            ->rawColumns(['action', 'users_id', 'file']);
+            ->rawColumns(['action', 'users_id', 'file', 'status']);
     }
 
     /**
@@ -63,7 +81,14 @@ class SopAkademikDataTable extends DataTable
      */
     public function query(SopAkademik $model): QueryBuilder
     {
-        return $model->newQuery()->with(['users']);
+        $query = $model->newQuery()->with(['users']);
+
+        // Jika bukan superadmin atau admin, hanya tampilkan data milik sendiri
+        if (Auth::check() && !Auth::user()->is_superadmin && !Auth::user()->is_admin) {
+            $query->where('users_id', Auth::id());
+        }
+
+        return $query;
     }
 
     /**
@@ -103,6 +128,10 @@ class SopAkademikDataTable extends DataTable
                 ->title('FAKULTAS'),
             Column::make('file')
                 ->title('DOKUMEN'),
+            Column::computed('status')
+                ->title('STATUS')
+                ->width('10%')
+                ->addClass('text-center'),
             Column::make('users_id')
                 ->title('DIAJUKAN OLEH'),
             Column::computed('action')

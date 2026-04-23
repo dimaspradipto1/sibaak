@@ -86,29 +86,15 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Fakultas</label>
                             <div class="col-sm-10">
-                                <select name="fakultas" id="fakultas" class="form-control rounded">
+                                <select name="fakultas" class="form-control rounded">
                                     <option value="">Pilih Fakultas</option>
                                     <option value="">=====================</option>
-                                    <option value="Fakultas Ekonomi dan Bisnis"
-                                        {{ old('fakultas') == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}
-                                        {{ $skkepanitiaan->fakultas == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>
-                                        Fakultas
-                                        Ekonomi dan Bisnis</option>
-                                    <option value="Fakultas Sains dan Teknologi"
-                                        {{ old('fakultas') == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}
-                                        {{ $skkepanitiaan->fakultas == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>
-                                        Fakultas
-                                        Sains dan Teknologi</option>
-                                    <option value="Fakultas Ilmu Kesehatan"
-                                        {{ old('fakultas') == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}
-                                        {{ $skkepanitiaan->fakultas == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas
-                                        Ilmu
-                                        Kesehatan</option>
+                                    <option value="Fakultas Sains dan Teknologi" {{ old('fakultas', $skkepanitiaan->fakultas) == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>Fakultas Sains dan Teknologi</option>
+                                    <option value="Fakultas Ilmu Kesehatan" {{ old('fakultas', $skkepanitiaan->fakultas) == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas Ilmu Kesehatan</option>
+                                    <option value="Fakultas Ekonomi & Bisnis" {{ old('fakultas', $skkepanitiaan->fakultas) == 'Fakultas Ekonomi & Bisnis' ? 'selected' : '' }}>Fakultas Ekonomi & Bisnis</option>
                                 </select>
                                 @error('fakultas')
-                                    <div class="text-danger mt-2">
-                                        {{ $message }}
-                                    </div>
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -198,6 +184,20 @@
     <script>
         $(document).ready(function() {
             $('#jenissk_id').select2();
+        });
+
+        $('form').on('submit', function() {
+            Swal.fire({
+                title: 'Sedang Memproses...',
+                text: 'Mohon tunggu sebentar, data sedang diperbarui.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            return true;
         });
     </script>
 @endpush

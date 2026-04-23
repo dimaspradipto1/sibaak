@@ -11,9 +11,35 @@ use Illuminate\Http\Request;
 use App\Models\SuratAkademik;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\DataTables\SuratAkademikDataTable;
+use Illuminate\Support\Facades\Auth;
+
+use App\Imports\SuratAkademikImport;
+use App\Exports\SuratAkademikTemplateExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SuratAkademikController extends Controller
 {
+    public function exportTemplate()
+    {
+        return Excel::download(new SuratAkademikTemplateExport, 'template_surat_akademik.xlsx');
+    }
+
+    public function import(Request $request) 
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            Excel::import(new SuratAkademikImport, $request->file('file'));
+            Alert::success('Berhasil', 'Data Surat Akademik berhasil diimport')->autoclose(3000)->toToast();
+        } catch (\Exception $e) {
+            Alert::error('Gagal', 'Terjadi kesalahan saat import: ' . $e->getMessage())->autoclose(5000)->toToast();
+        }
+
+        return redirect()->route('suratAkademik.index');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -30,7 +56,15 @@ class SuratAkademikController extends Controller
     {
         $dosens = Dosen::all();
         $title = 'Form Surat Akademik';
-        $users = User::where('is_mahasiswa', true)->get();
+        
+        if (Auth::user()->is_mahasiswa) {
+            $users = User::where('id', Auth::id())->get();
+        } else {
+            $users = User::whereHas('role', function ($query) {
+                $query->where('nama_role', 'MAHASISWA');
+            })->get();
+        }
+        
         $programStudi = ProgramStudi::all();
         return view('pages.suratAkademik.create', compact('users', 'programStudi', 'title', 'dosens'));
     }
@@ -40,7 +74,8 @@ class SuratAkademikController extends Controller
      */
     public function store(Request $request)
     {
-        $mahasiswa = Mahasiswa::where('users_id', $request->users_id)->first();
+        $userId = Auth::user()->is_mahasiswa ? Auth::id() : $request->users_id;
+        $mahasiswa = Mahasiswa::where('users_id', $userId)->first();
 
         if (!$mahasiswa) {
             return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan!');
@@ -64,7 +99,7 @@ class SuratAkademikController extends Controller
         }
 
         $data = [
-            'users_id' => $request->users_id,
+            'users_id' => $userId,
             'program_studi_id' => $mahasiswa->programStudi->id,
             'npm' => $mahasiswa->npm,
             'status_cuti' => 'Belum Pernah Cuti',
