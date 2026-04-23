@@ -7,10 +7,13 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Validators\Failure;
 use Illuminate\Support\Str;
 
-class UsersImport implements ToModel, WithHeadingRow, WithValidation
+class UsersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEmptyRows, SkipsOnFailure
 {
     /**
     * @param array $row
@@ -20,10 +23,11 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation
     public function model(array $row)
     {
         // Find role by name
-        $role = Role::where('nama_role', 'like', '%' . $row['role'] . '%')->first();
+        $roleName = $row['role'] ?? null;
+        if (!$roleName) return null;
+
+        $role = Role::where('nama_role', 'like', '%' . trim($roleName) . '%')->first();
         
-        // Default to Staff or lower if not found, or skip? 
-        // Let's assume the user provides correct role names from the template.
         if (!$role) {
             return null; // Skip if role not found
         }
@@ -45,5 +49,10 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation
             'password' => 'required|min:6',
             'role'     => 'required|string',
         ];
+    }
+
+    public function onFailure(Failure ...$failures)
+    {
+        // Failures are handled by the library, but we can log them if needed
     }
 }
