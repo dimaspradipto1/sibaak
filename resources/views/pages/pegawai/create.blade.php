@@ -91,9 +91,12 @@
                                 <select name="homebase" id="homebase" class="form-control rounded">
                                     <option value="">Pilih Program Studi</option>
                                     <option value="">=====================</option>
+                                    <option value='Rektorat'
+                                        {{ old('homebase') == 'Rektorat' ? 'selected' : '' }}>
+                                        Rektorat</option>
                                     <option value='Fakultas Ekonomi dan Bisnis (FEB)'
-                                        {{ old('homebase') == 'Fakultas Ekonomi dan Bisnis (FEB)' ? 'selected' : '' }}>
-                                        Fakultas Ekonomi dan Bisnis (FEB)</option>
+                                         {{ old('homebase') == 'Fakultas Ekonomi dan Bisnis (FEB)' ? 'selected' : '' }}>
+                                         Fakultas Ekonomi dan Bisnis (FEB)</option>
                                     <option value='Fakultas Sains dan Teknologi (FST)'
                                         {{ old('homebase') == 'Fakultas Sains dan Teknologi (FST)' ? 'selected' : '' }}>
                                         Fakultas Sains dan Teknologi (FST)</option>

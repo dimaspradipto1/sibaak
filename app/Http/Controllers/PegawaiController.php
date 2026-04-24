@@ -116,13 +116,16 @@ class PegawaiController extends Controller
             'jabatan'     => 'required|string',
             'nidn'        => 'required|string',
             'nup'         => 'required|string',
+            'homebase'    => 'required|string',
         ]);
 
         // Mengupdate data lainnya
-        $pegawai->users_id = $request->users_id;
-        $pegawai->jabatan  = $request->jabatan;
-        $pegawai->nidn     = $request->nidn;
-        $pegawai->nup      = $request->nup;
+        $pegawai->users_id   = $request->users_id;
+        $pegawai->nama_staff = $request->nama_staff;
+        $pegawai->jabatan    = $request->jabatan;
+        $pegawai->nidn       = $request->nidn;
+        $pegawai->nup        = $request->nup;
+        $pegawai->homebase   = $request->homebase;
 
         // Cek jika ada file gambar yang diupload
         if ($request->hasFile('url')) {
