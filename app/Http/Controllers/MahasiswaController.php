@@ -134,8 +134,15 @@ class MahasiswaController extends Controller
             Alert::success('Sukses', 'Data Mahasiswa berhasil diimpor')
                 ->autoclose(4000)
                 ->toToast();
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $errorMsg = 'Error pada baris ' . $failures[0]->row() . ': ' . $failures[0]->errors()[0];
+            
+            Alert::error('Gagal', $errorMsg)
+                ->autoclose(5000)
+                ->toToast();
         } catch (\Exception $e) {
-            Alert::error('Gagal', 'Terjadi kesalahan saat impor: ' . $e->getMessage())
+            Alert::error('Gagal', 'Terjadi kesalahan: ' . $e->getMessage())
                 ->autoclose(5000)
                 ->toToast();
         }
