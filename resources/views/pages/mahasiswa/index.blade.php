@@ -44,26 +44,7 @@
             </div>
         </div>
 
-        <style>
-            #mahasiswa-table thead th {
-                background-color: #f8f9fc;
-                text-transform: uppercase;
-                font-size: 10px;
-                letter-spacing: 0.4px;
-                color: #4e73df;
-                border-bottom: 2px solid #e3e6f0;
-                padding: 8px 10px !important;
-            }
-            #mahasiswa-table tbody td {
-                vertical-align: middle;
-                padding: 6px 10px !important;
-                color: #5a5c69;
-                font-size: 12px;
-                border-bottom: 1px solid #f1f3f9;
-            }
-            .btn-white { background-color: #fff; color: #6e707e; }
-            .btn-white:hover { background-color: #f8f9fc; color: #4e73df; }
-        </style>
+
 
 
         <!-- Import Modal -->
@@ -114,31 +95,54 @@
 
 @push('styles')
     <style>
-        #mahasiswa-table thead th {
-            background-color: #f8f9fc;
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.5px;
-            color: #5a5c69;
-            border-bottom: 2px solid #e3e6f0;
-            padding: 15px 10px;
-            vertical-align: middle;
+        .custom-file-label::after {
+            content: "Browse" !important;
         }
-        #mahasiswa-table tbody td {
-            vertical-align: middle;
-            padding: 12px 10px;
-            color: #5a5c69;
-            font-size: 13px;
+        .custom-file.drag-over .custom-file-label {
+            border: 2px dashed #046B26 !important;
+            background-color: rgba(4, 107, 38, 0.05) !important;
         }
     </style>
 @endpush
 
 @push('scripts')
     <script>
-        // Update custom file input label
-        $('.custom-file-input').on('change', function() {
-            let fileName = $(this).val().split('\\').pop();
-            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        $(document).ready(function() {
+            // Update custom file input label
+            $('.custom-file-input').on('change', function() {
+                let fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+            });
+
+            // Drag and Drop Logic
+            let dropZone = $('.custom-file');
+
+            dropZone.on('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $(this).addClass('drag-over');
+            });
+
+            dropZone.on('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $(this).removeClass('drag-over');
+            });
+
+            dropZone.on('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $(this).removeClass('drag-over');
+
+                let files = e.originalEvent.dataTransfer.files;
+                if (files.length > 0) {
+                    let fileInput = $(this).find('input[type="file"]')[0];
+                    fileInput.files = files;
+                    
+                    // Trigger change to update label
+                    $(fileInput).trigger('change');
+                }
+            });
         });
     </script>
     @if (app()->environment('production'))

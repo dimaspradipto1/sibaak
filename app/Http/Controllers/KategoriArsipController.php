@@ -109,12 +109,24 @@ class KategoriArsipController extends Controller
             'file' => 'required|mimes:xlsx,xls,csv'
         ]);
 
-        Excel::import(new KategoriArsipImport, $request->file('file'));
-
-        Alert::success('Data berhasil diimport')
-            ->toToast()
-            ->autoClose(4000)
-            ->timerProgressBar();
+        try {
+            Excel::import(new KategoriArsipImport, $request->file('file'));
+            
+            Alert::success('Sukses', 'Data Kategori Arsip berhasil diimpor')
+                ->autoclose(4000)
+                ->toToast();
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $errorMsg = 'Error pada baris ' . $failures[0]->row() . ': ' . $failures[0]->errors()[0];
+            
+            Alert::error('Gagal', $errorMsg)
+                ->autoclose(5000)
+                ->toToast();
+        } catch (\Exception $e) {
+            Alert::error('Gagal', 'Terjadi kesalahan: ' . $e->getMessage())
+                ->autoclose(5000)
+                ->toToast();
+        }
 
         return redirect()->route('kategoriarsip.index');
     }

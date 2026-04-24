@@ -28,35 +28,43 @@
     <div class="card-block p-0">
         <div class="table-responsive">
            {{ $dataTable->table([
-                    'class' => 'table table-hover mb-0 w-100',
-                    'id' => 'kategoriarsip-table'
-                ]) }}
+                'class' => 'table table-hover mb-0 w-100',
+                'id' => 'kategoriarsip-table'
+            ]) }}
         </div>
     </div>
 </div>
 
 <!-- Modal Import -->
 <div class="modal fade" id="modalImport" tabindex="-1" role="dialog" aria-labelledby="modalImportLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content border-0 shadow" style="border-radius: 12px;">
-            <div class="modal-header bg-light">
-                <h5 class="modal-title font-weight-bold" id="modalImportLabel" style="font-size: 1rem;">Import Kategori Arsip</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="modalImportLabel">Impor Kategori Arsip</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form action="{{ route('kategoriarsip.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body p-4">
-                    <div class="form-group mb-0">
-                        <label class="font-weight-bold small">Pilih File Excel (.xlsx, .xls)</label>
-                        <input type="file" name="file" class="form-control-file border p-2 rounded w-100" required>
-                        <small class="text-muted d-block mt-2">Gunakan template yang tersedia untuk memastikan format data benar.</small>
+                    <div class="alert alert-info border-0 shadow-none mb-4">
+                        <i class="fa-solid fa-circle-info mr-2"></i> 
+                        Pastikan format file sesuai dengan <strong>Format Import</strong> yang telah disediakan.
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold">Pilih Berkas Excel (.xlsx / .csv)</label>
+                        <div class="custom-file">
+                            <input type="file" name="file" class="custom-file-input" id="importFile" required>
+                            <label class="custom-file-label" for="importFile">Pilih file...</label>
+                        </div>
                     </div>
                 </div>
-                <div class="modal-footer bg-light p-2">
-                    <button type="button" class="btn btn-secondary btn-sm px-3" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary btn-sm px-4 shadow-sm">Mulai Import</button>
+                <div class="modal-footer bg-light border-0">
+                    <button type="button" class="btn btn-secondary btn-round btn-sm px-4" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success btn-round btn-sm px-4 shadow-sm">
+                        <i class="fa-solid fa-cloud-upload mr-1"></i> Mulai Impor
+                    </button>
                 </div>
             </form>
         </div>
@@ -66,41 +74,57 @@
 
 @push('styles')
     <style>
-        /* Compact Design Consistent with Arsip Utama */
-        #kategoriarsip-table thead th {
-            background-color: #f8f9fc;
-            text-transform: uppercase;
-            font-size: 10px;
-            letter-spacing: 0.4px;
-            color: #4e73df;
-            border-bottom: 2px solid #e3e6f0;
-            padding: 8px 10px !important;
-            vertical-align: middle;
+        .custom-file-label::after {
+            content: "Browse" !important;
         }
-        #kategoriarsip-table tbody td {
-            vertical-align: middle;
-            padding: 6px 10px !important;
-            color: #5a5c69;
-            font-size: 12px;
-            border-bottom: 1px solid #f1f3f9;
+        .custom-file.drag-over .custom-file-label {
+            border: 2px dashed #046B26 !important;
+            background-color: rgba(4, 107, 38, 0.05) !important;
         }
-        #kategoriarsip-table tbody tr:hover {
-            background-color: #fcfdff;
-        }
-        
-        .btn-white {
-            background-color: #fff;
-            color: #6e707e;
-        }
-        .btn-white:hover {
-            background-color: #f8f9fc;
-            color: #4e73df;
-        }
-        .rounded-md { border-radius: 6px !important; }
     </style>
 @endpush
 
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            // Update custom file input label
+            $('.custom-file-input').on('change', function() {
+                let fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+            });
+
+            // Drag and Drop Logic
+            let dropZone = $('.custom-file');
+
+            dropZone.on('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $(this).addClass('drag-over');
+            });
+
+            dropZone.on('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $(this).removeClass('drag-over');
+            });
+
+            dropZone.on('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $(this).removeClass('drag-over');
+
+                let files = e.originalEvent.dataTransfer.files;
+                if (files.length > 0) {
+                    let fileInput = $(this).find('input[type="file"]')[0];
+                    fileInput.files = files;
+                    
+                    // Trigger change to update label
+                    $(fileInput).trigger('change');
+                }
+            });
+        });
+    </script>
+
     @if(app()->environment('production'))
         {!! str_replace('http:', 'https:', $dataTable->scripts()) !!}
     @else
