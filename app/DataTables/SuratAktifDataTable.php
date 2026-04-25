@@ -106,21 +106,23 @@ class SuratAktifDataTable extends DataTable
      */
     public function query(SuratAktif $model): QueryBuilder
     {
-        // return $model->newQuery();
         $query = $model->newQuery()
             ->with(['users', 'programStudi']); // eager load biar cepat
 
-        if (Auth::user()->is_admin || Auth::user()->is_superadmin || Auth::user()->is_staffbaak) {
-            // Admin, Superadmin & Staff BAAK lihat semua
+        $user = Auth::user();
+
+        // Admin, Superadmin & siapa saja yang punya izin view → lihat semua
+        if ($user->is_admin || $user->is_superadmin || $user->is_staffbaak
+            || Gate::allows('surat_aktif_view')) {
             return $query;
         }
 
-        if (Auth::user()->is_mahasiswa) {
+        if ($user->is_mahasiswa) {
             // Mahasiswa hanya lihat miliknya
             return $query->where('users_id', Auth::id());
         }
 
-        // Role lain: kosong
+        // Role lain tanpa permission: kosong
         return $query->whereRaw('1=0');
     }
 

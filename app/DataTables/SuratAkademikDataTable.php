@@ -92,7 +92,16 @@ class SuratAkademikDataTable extends DataTable
     {
         $query = $model->newQuery()->with(['user', 'programStudi']);
 
-        if (Auth::user()->is_mahasiswa) {
+        $user = Auth::user();
+
+        // Admin, Superadmin & siapa saja yang punya izin view → lihat semua
+        if ($user->is_admin || $user->is_superadmin || $user->is_staffbaak
+            || Gate::allows('surat_akademik_view')) {
+            return $query;
+        }
+
+        if ($user->is_mahasiswa) {
+            // Mahasiswa hanya lihat miliknya
             $query->where('users_id', Auth::id());
         }
 
