@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -35,14 +36,8 @@ class LoginController extends Controller
         return view('layouts.auth.register');
     }
 
-    public function registerproses(Request $request)
+    public function registerproses(RegisterRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-        ]);
-
         $roleMahasiswa = \App\Models\Role::where('nama_role', 'MAHASISWA')->first();
         
         $user = User::create([
@@ -59,7 +54,7 @@ class LoginController extends Controller
         ]);
 
         Auth::login($user);
-        Alert::success('Berhasil', 'Register berhasil')
+        Alert::success('Berhasil', 'Akun berhasil dibuat')
             ->autoclose(4000)
             ->toToast()
             ->timerProgressBar()

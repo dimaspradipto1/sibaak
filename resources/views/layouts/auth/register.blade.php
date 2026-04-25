@@ -78,12 +78,29 @@
         .input-field {
             width: 100%;
             padding: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
             background: white;
             border: 1px solid #ddd;
             border-radius: 4px;
             color: black;
             font-size: 14px;
+        }
+
+        .input-field.is-error {
+            border-color: #e53935;
+        }
+
+        .field-error {
+            display: block;
+            color: #ff6b6b;
+            font-size: 12px;
+            text-align: left;
+            margin-bottom: 12px;
+            margin-top: -2px;
+        }
+
+        .field-error i {
+            margin-right: 4px;
         }
 
         .password-container {
@@ -203,13 +220,34 @@
         <form class="login-form" action="{{ route('registerproses') }}" method="post">
             @csrf
 
-            <p class="text-left">BAAK</p>
-            <input type="text" name="name" placeholder="Nama Lengkap" class="input-field" required>
-            <input type="email" name="email" placeholder="Email atau nomor ponsel" class="input-field" required>
+            <p class="text-left">Daftar Akun MYBAAK UIS</p>
+
+            {{-- Nama --}}
+            <input type="text" name="name" placeholder="Nama Lengkap"
+                   class="input-field {{ $errors->has('name') ? 'is-error' : '' }}"
+                   value="{{ old('name') }}">
+            @error('name')
+                <span class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+            @enderror
+
+            {{-- Email --}}
+            <input type="email" name="email" placeholder="Email (contoh: nama@uis.ac.id)"
+                   class="input-field {{ $errors->has('email') ? 'is-error' : '' }}"
+                   value="{{ old('email') }}">
+            @error('email')
+                <span class="field-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+            @enderror
+
+            {{-- Password --}}
             <div class="password-container">
-                <input type="password" name="password" id="password" placeholder="Sandi" class="input-field" required>
+                <input type="password" name="password" id="password" placeholder="Sandi (minimal 8 karakter)"
+                       class="input-field {{ $errors->has('password') ? 'is-error' : '' }}">
                 <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
             </div>
+            @error('password')
+                <span class="field-error" style="margin-bottom:12px;"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</span>
+            @enderror
+
             <button type="submit" class="submit-btn">Daftar</button>
             {{-- <div class="alternative-actions">
                 <p><a href="#">Gunakan Kode Masuk</a></p>
