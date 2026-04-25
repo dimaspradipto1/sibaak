@@ -56,7 +56,7 @@ class UnitKerjaSeeder extends Seeder
         UnitKerja::create(['nama_unit' => 'Tata Usaha Rektorat', 'parent_id' => $bauk->id]);
 
         // --- UPT TIK ---
-        $uptTik = UnitKerja::create(['nama_unit' => 'UPT Teknik Informasi Dan Komunikasi', 'kode_unit' => 'LPTI', 'parent_id' => $rektor->id]);
+        $uptTik = UnitKerja::create(['nama_unit' => 'Lembaga Pengembangan Teknologi dan Informasi (LPTI)', 'kode_unit' => 'LPTI', 'parent_id' => $rektor->id]);
         $kaLpti = UnitKerja::create(['nama_unit' => 'Kepala LPTI', 'parent_id' => $uptTik->id]);
         UnitKerja::create(['nama_unit' => 'Divisi Pengembangan Sistem Informasi Dan Aplikasi - ICT BAUK', 'parent_id' => $kaLpti->id]);
         UnitKerja::create(['nama_unit' => 'Divisi Infrastruktur, Jaringan, Dan Layanan Troubleshooting', 'parent_id' => $kaLpti->id]);
