@@ -268,6 +268,9 @@
         .tree-node {
             font-size: 0.72rem !important;
             padding: 1px 5px !important;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         /* Main Table Area Compact */
