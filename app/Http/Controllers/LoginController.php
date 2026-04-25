@@ -19,23 +19,14 @@ class LoginController extends Controller
 
     public function loginproses(LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
-        
-        if (Auth::attempt($credentials)) {
-            Alert::success('Berhasil', 'Login berhasil')
-                ->autoclose(4000)
-                ->toToast()
-                ->timerProgressBar()
-                ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
-            return redirect()->route('dashboard');  
-        }
-        
-        Alert::error('Gagal', 'Email atau password salah')
+        $request->authenticate();
+
+        Alert::success('Berhasil', 'Login berhasil')
             ->autoclose(4000)
             ->toToast()
             ->timerProgressBar()
             ->iconHtml('<i class="fa-solid fa-thumbs-up"></i>');
-        return redirect()->route('login')->withInput($request->only('email'));
+        return redirect()->route('dashboard');
     }
 
     public function register()

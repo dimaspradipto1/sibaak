@@ -78,12 +78,29 @@
         .input-field {
             width: 100%;
             padding: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
             background: white;
             border: 1px solid #ddd;
             border-radius: 4px;
             color: black;
             font-size: 14px;
+        }
+
+        .input-field.is-error {
+            border-color: #e53935;
+        }
+
+        .field-error {
+            display: block;
+            color: #ff6b6b;
+            font-size: 12px;
+            text-align: left;
+            margin-bottom: 12px;
+            margin-top: -4px;
+        }
+
+        .field-error i {
+            margin-right: 4px;
         }
 
         .password-container {
@@ -204,11 +221,24 @@
             @csrf
 
             <p class="text-left">MYBAAK UIS</p>
-            <input type="email" name="email" placeholder="Email atau nomor ponsel" class="input-field" required>
+            <input type="email" name="email" placeholder="Email atau nomor ponsel"
+                   class="input-field {{ $errors->has('email') ? 'is-error' : '' }}"
+                   value="{{ old('email') }}">
+            @error('email')
+                <span class="field-error">
+                    <i class="fa-solid fa-circle-exclamation"></i> {{ $message }}
+                </span>
+            @enderror
             <div class="password-container">
-                <input type="password" name="password" id="password" placeholder="Sandi" class="input-field" required>
+                <input type="password" name="password" id="password" placeholder="Sandi"
+                       class="input-field {{ $errors->has('password') ? 'is-error' : '' }}">
                 <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
             </div>
+            @error('password')
+                <span class="field-error" style="margin-bottom:12px;">
+                    <i class="fa-solid fa-circle-exclamation"></i> {{ $message }}
+                </span>
+            @enderror
             <button type="submit" class="submit-btn">Masuk</button>
             {{-- <div class="alternative-actions">
                 <p><a href="#">Gunakan Kode Masuk</a></p>
