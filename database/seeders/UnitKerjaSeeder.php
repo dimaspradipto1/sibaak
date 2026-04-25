@@ -21,7 +21,7 @@ class UnitKerjaSeeder extends Seeder
         // --- WAKIL REKTOR I ---
         $wr1 = UnitKerja::create(['nama_unit' => 'Wakil Rektor I', 'kode_unit' => 'WR1', 'parent_id' => $rektor->id]);
         $baak = UnitKerja::create(['nama_unit' => 'Ka. Biro Administrasi Akademik Kemahasiswaan (BAAK)', 'kode_unit' => 'BAAK', 'parent_id' => $wr1->id]);
-        
+
         $kabidAkademik = UnitKerja::create(['nama_unit' => 'Kabid. Akademik', 'kode_unit' => 'K-AKA', 'parent_id' => $baak->id]);
         UnitKerja::create(['nama_unit' => 'Staff Akademik Fakultas Ekonomi Dan Bisnis', 'parent_id' => $kabidAkademik->id]);
         UnitKerja::create(['nama_unit' => 'Staff Akademik Fakultas Sains Dan Teknologi', 'parent_id' => $kabidAkademik->id]);
@@ -38,7 +38,7 @@ class UnitKerjaSeeder extends Seeder
         // --- WAKIL REKTOR II ---
         $wr2 = UnitKerja::create(['nama_unit' => 'Wakil Rektor II', 'kode_unit' => 'WR2', 'parent_id' => $rektor->id]);
         $bauk = UnitKerja::create(['nama_unit' => 'Ka. Biro Administrasi Umum Dan Keuangan', 'kode_unit' => 'BAUK', 'parent_id' => $wr2->id]);
-        
+
         $kabidKeu = UnitKerja::create(['nama_unit' => 'Kabid. Keuangan', 'parent_id' => $bauk->id]);
         UnitKerja::create(['nama_unit' => 'Kasir Rektorat', 'parent_id' => $kabidKeu->id]);
         UnitKerja::create(['nama_unit' => 'Staff Keuangan Fakultas Ekonomi Dan Bisnis', 'parent_id' => $kabidKeu->id]);
@@ -52,19 +52,19 @@ class UnitKerjaSeeder extends Seeder
         $kabidSarpras = UnitKerja::create(['nama_unit' => 'Kabid. Sarana Dan Prasarana', 'parent_id' => $bauk->id]);
         UnitKerja::create(['nama_unit' => 'Admin Umum Sarpras', 'parent_id' => $kabidSarpras->id]);
         UnitKerja::create(['nama_unit' => 'Staff Sarpras', 'parent_id' => $kabidSarpras->id]);
-        
+
         UnitKerja::create(['nama_unit' => 'Tata Usaha Rektorat', 'parent_id' => $bauk->id]);
 
-        // --- UPT TIK ---
+        // --- LPTI ---
         $uptTik = UnitKerja::create(['nama_unit' => 'Lembaga Pengembangan Teknologi dan Informasi (LPTI)', 'kode_unit' => 'LPTI', 'parent_id' => $rektor->id]);
         $kaLpti = UnitKerja::create(['nama_unit' => 'Kepala LPTI', 'parent_id' => $uptTik->id]);
-        UnitKerja::create(['nama_unit' => 'Divisi Pengembangan Sistem Informasi Dan Aplikasi - ICT BAUK', 'parent_id' => $kaLpti->id]);
+        UnitKerja::create(['nama_unit' => 'Divisi Pengembangan Sistem Informasi Dan Aplikasi', 'parent_id' => $kaLpti->id]);
         UnitKerja::create(['nama_unit' => 'Divisi Infrastruktur, Jaringan, Dan Layanan Troubleshooting', 'parent_id' => $kaLpti->id]);
 
         // --- WAKIL REKTOR III ---
         $wr3 = UnitKerja::create(['nama_unit' => 'Wakil Rektor III', 'kode_unit' => 'WR3', 'parent_id' => $rektor->id]);
         $kaBiro3 = UnitKerja::create(['nama_unit' => 'Ka. Biro Kemahasiswaan, Alumni, Kerjasama, Perencanaan Dan Pengembangan', 'parent_id' => $wr3->id]);
-        
+
         $kabidHumas = UnitKerja::create(['nama_unit' => 'Kabid. Humas Dan Publikasi', 'parent_id' => $kaBiro3->id]);
         UnitKerja::create(['nama_unit' => 'Staff Dokumentasi', 'parent_id' => $kabidHumas->id]);
         UnitKerja::create(['nama_unit' => 'Staff Humas', 'parent_id' => $kabidHumas->id]);
