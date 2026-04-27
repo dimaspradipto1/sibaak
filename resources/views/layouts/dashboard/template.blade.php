@@ -7,31 +7,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <meta name="keywords"
-        content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
+    <meta name="keywords" content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
     <meta name="author" content="Codedthemes" />
     <!-- Favicon icon -->
     <link rel="icon" href="{{ asset('assets/images/logouis.png') }}" type="image/x-icon">
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet text-css">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif !important;
-        }
-        .card {
-            transition: all 0.3s ease;
-        }
-    </style>
+
     <!-- waves.css -->
     <link rel="stylesheet" href="{{ asset('assets/pages/waves/css/waves.min.css') }}" type="text/css" media="all">
-    <!-- Required Fremwork -->
+    <!-- Required Framework -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap/css/bootstrap.min.css') }}">
-    <!-- waves.css -->
-    <link rel="stylesheet" href="{{ asset('assets/pages/waves/css/waves.min.css') }}" type="text/css" media="all">
     <!-- themify icon -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/icon/themify-icons/themify-icons.css') }}">
-    <!-- font-awesome-n -->
+    <!-- font-awesome -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome-n.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css') }}">
     <!-- scrollbar.css -->
@@ -39,198 +28,16 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
 
-    {{--  datatables CSS  --}}
+    {{-- datatables CSS --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.6/css/dataTables.bootstrap5.css">
 
     {{-- select2 CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <style>
-        /* UIS BRANDING Integration */
-        :root {
-            --uis-green: #00A551;
-            --uis-yellow: #FFF742;
-            --uis-green-dark: #008240;
-        }
+    {{-- Dashboard layout styles --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard-layout.css') }}">
 
-        .pcoded-header {
-            background: linear-gradient(135deg, var(--uis-green) 0%, #008240 100%) !important;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
-        }
 
-        .pcoded-header .navbar-logo {
-            background-color: transparent !important;
-        }
-
-        .main-menu-header {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
-            background-size: cover !important;
-            background-position: center !important;
-            border-bottom: 3px solid var(--uis-yellow) !important;
-        }
-
-        .page-header {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("{{ asset('assets/images/gedunguis.JPG') }}") !important;
-            background-size: cover !important;
-            background-position: center !important;
-            border-bottom: 4px solid var(--uis-yellow) !important;
-        }
-
-        .pcoded-navbar .pcoded-item > li.active > a,
-        .pcoded-navbar .pcoded-item > li.pcoded-trigger > a {
-            background: var(--uis-green) !important;
-            color: #ffffff !important;
-            border-left: 4px solid var(--uis-yellow) !important;
-        }
-
-        .pcoded-navbar .pcoded-item > li.active > a .pcoded-micon,
-        .pcoded-navbar .pcoded-item > li.pcoded-trigger > a .pcoded-micon {
-            color: #ffffff !important;
-        }
-
-        .pcoded-navbar .pcoded-item li a:hover {
-            color: var(--uis-green) !important;
-        }
-
-        .pcoded-navbar .pcoded-item li.active a:hover,
-        .pcoded-navbar .pcoded-item li.pcoded-trigger a:hover {
-            color: #ffffff !important;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, var(--uis-green), var(--uis-green-dark)) !important;
-            border: none !important;
-            box-shadow: 0 4px 15px rgba(0, 165, 81, 0.3) !important;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 165, 81, 0.4) !important;
-        }
-
-        .pcoded-header,
-        .main-menu-header,
-        .page-header {
-            border: none !important;
-        }
-
-        .main-menu-header {
-            height: 150px !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: center !important;
-            align-items: center !important;
-            padding: 0 !important;
-        }
-
-        .main-menu-header img {
-            width: 60px !important;
-            height: 60px !important;
-            margin-bottom: 5px !important;
-        }
-
-        .user-details {
-            margin-top: 0 !important;
-        }
-
-        .page-header {
-            height: 140px !important;
-            display: flex !important;
-            align-items: center !important;
-            padding: 0 40px !important;
-            margin-bottom: 0 !important;
-        }
-
-        .page-header:before {
-            display: none !important;
-        }
-
-        .page-header .page-block {
-            padding: 0 !important;
-            display: flex !important;
-            align-items: center !important;
-            width: 100% !important;
-        }
-
-        .page-header .page-block>.row {
-            width: 100% !important;
-            margin: 0 !important;
-        }
-
-        /* Gap and border fixes */
-        .pcoded-navbar {
-            border-right: none !important;
-        }
-
-        .pcoded-main-container {
-            background: #f8f9fc !important;
-        }
-
-        /* Unified Premium Table Styling */
-        .table {
-            border-collapse: collapse !important;
-            border-spacing: 0 !important;
-            width: 100% !important;
-            border: 1px solid #dee2e6 !important;
-            margin-bottom: 1rem !important;
-        }
-
-        .table thead th {
-            background-color: #004b8d !important;
-            color: white !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            font-size: 11px !important;
-            letter-spacing: 0.5px !important;
-            padding: 12px 10px !important;
-            vertical-align: middle !important;
-            text-align: center !important;
-        }
-
-        .table tbody td {
-            border: 1px solid #dee2e6 !important;
-            padding: 12px 10px !important;
-            vertical-align: middle !important;
-            background-color: #ffffff !important;
-            color: #555 !important;
-            font-size: 13px !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-            transform: none !important;
-        }
-
-        .table tbody tr {
-            background-color: #ffffff !important;
-            transition: all 0.2s ease !important;
-        }
-
-        .table tbody tr:hover {
-            background-color: rgba(0, 75, 141, 0.05) !important;
-            box-shadow: none !important;
-            transform: none !important;
-        }
-
-        /* Adjustments for DataTables components */
-        .dataTables_wrapper .dataTables_length, 
-        .dataTables_wrapper .dataTables_filter,
-        .dataTables_wrapper .dataTables_info,
-        .dataTables_wrapper .dataTables_paginate {
-            font-size: 13px !important;
-            margin-bottom: 10px !important;
-        }
-
-        /* Card Customization */
-        .card {
-            border: none !important;
-            border-radius: 12px !important;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05) !important;
-        }
-        .card-header h5 {
-            font-weight: 700 !important;
-            color: #2c3e50 !important;
-        }
-    </style>
     @stack('style')
     @stack('styles')
 </head>
@@ -241,55 +48,149 @@
         <div class="loader-track">
             <div class="preloader-wrapper">
                 <div class="spinner-layer spinner-blue">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
+                    <div class="circle-clipper left"><div class="circle"></div></div>
+                    <div class="gap-patch"><div class="circle"></div></div>
+                    <div class="circle-clipper right"><div class="circle"></div></div>
                 </div>
                 <div class="spinner-layer spinner-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
+                    <div class="circle-clipper left"><div class="circle"></div></div>
+                    <div class="gap-patch"><div class="circle"></div></div>
+                    <div class="circle-clipper right"><div class="circle"></div></div>
                 </div>
-
                 <div class="spinner-layer spinner-yellow">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
+                    <div class="circle-clipper left"><div class="circle"></div></div>
+                    <div class="gap-patch"><div class="circle"></div></div>
+                    <div class="circle-clipper right"><div class="circle"></div></div>
                 </div>
-
                 <div class="spinner-layer spinner-green">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
+                    <div class="circle-clipper left"><div class="circle"></div></div>
+                    <div class="gap-patch"><div class="circle"></div></div>
+                    <div class="circle-clipper right"><div class="circle"></div></div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Pre-loader end -->
+
+    {{-- ============================================================
+         DESKTOP TOPNAV — INDEPENDENT, OUTSIDE #pcoded
+         Rendered directly in body so framework JS cannot interfere.
+         ============================================================ --}}
+    @php $currentRoute = (request()->route() ? request()->route()->getName() : ''); @endphp
+    <nav id="uis-topnav">
+        <ul>
+            {{-- Dashboard --}}
+            <li class="{{ Str::startsWith($currentRoute, 'dashboard') ? 'active' : '' }}">
+                <a href="{{ Auth::check() ? route('dashboard') : route('login') }}">
+                    <i class="ti-home"></i> Dashboard
+                </a>
+            </li>
+
+            {{-- Layanan Mahasiswa --}}
+            @if(Auth::check() && (Auth::user()->is_mahasiswa || Gate::any(['surat_aktif_view', 'surat_akademik_view'])))
+            <li class="has-sub {{ Str::startsWith($currentRoute, ['suratAktif', 'suratAkademik']) ? 'active' : '' }}">
+                <a href="javascript:void(0)"><i class="fa-solid fa-users"></i> Layanan Mahasiswa</a>
+                <ul class="uis-submenu">
+                    @if(Auth::user()->is_mahasiswa || Gate::check('surat_aktif_view'))
+                    <li><a href="{{ route('suratAktif.index') }}"><i class="ti-angle-right"></i> Surat Keterangan Aktif</a></li>
+                    @endif
+                    @if(Auth::user()->is_mahasiswa || Gate::check('surat_akademik_view'))
+                    <li><a href="{{ route('suratAkademik.index') }}"><i class="ti-angle-right"></i> Surat Layanan Akademik</a></li>
+                    @endif
+                </ul>
+            </li>
+            @endif
+
+            {{-- Arsip --}}
+            @canany(['arsip_utama_view', 'sk_kepanitiaan_view', 'lpj_kepanitiaan_view', 'kurikulum_view', 'pedoman_view', 'sop_akademik_view', 'wasdalbin_view'])
+            <li class="has-sub {{ Str::startsWith($currentRoute, ['arsiputama', 'skkepanitiaan', 'lpjkepanitiaan', 'kurikulum', 'pedoman', 'sopakademik', 'wasdalbin', 'semantic']) ? 'active' : '' }}">
+                <a href="javascript:void(0)"><i class="fa-solid fa-folder-open"></i> Arsip</a>
+                <ul class="uis-submenu">
+                    <li><a href="{{ route('semantic.index') }}"><i class="ti-angle-right"></i> Arsip UIS</a></li>
+                    @can('arsip_utama_view')<li><a href="{{ route('arsiputama.index') }}"><i class="ti-angle-right"></i> Arsip Utama</a></li>@endcan
+                    @can('sk_kepanitiaan_view')<li><a href="{{ route('skkepanitiaan.index') }}"><i class="ti-angle-right"></i> SK Kepanitiaan</a></li>@endcan
+                    @can('lpj_kepanitiaan_view')<li><a href="{{ route('lpjkepanitiaan.index') }}"><i class="ti-angle-right"></i> LPJ Kepanitiaan</a></li>@endcan
+                    @can('kurikulum_view')<li><a href="{{ route('kurikulum.index') }}"><i class="ti-angle-right"></i> Kurikulum Prodi</a></li>@endcan
+                    @can('pedoman_view')<li><a href="{{ route('pedoman.index') }}"><i class="ti-angle-right"></i> Pedoman</a></li>@endcan
+                    @can('sop_akademik_view')<li><a href="{{ route('sopakademik.index') }}"><i class="ti-angle-right"></i> SOP Akademik</a></li>@endcan
+                    @can('wasdalbin_view')<li><a href="{{ route('wasdalbin.index') }}"><i class="ti-angle-right"></i> Wasdalbin</a></li>@endcan
+                </ul>
+            </li>
+            @endcanany
+
+            {{-- Portal Artikel --}}
+            @can('artikel_view')
+            <li class="{{ Str::startsWith($currentRoute, 'artikel') ? 'active' : '' }}">
+                <a href="{{ route('artikel.index') }}"><i class="fa-solid fa-newspaper"></i> Portal Artikel</a>
+            </li>
+            @endcan
+
+            {{-- Laporan --}}
+            @canany(['rekapitulasi_arsip_view', 'rekapitulasi_surat_aktif_view'])
+            <li class="has-sub {{ Str::startsWith($currentRoute, 'rekapitulasi') ? 'active' : '' }}">
+                <a href="javascript:void(0)"><i class="fa-regular fa-file-lines"></i> Laporan</a>
+                <ul class="uis-submenu">
+                    @can('rekapitulasi_arsip_view')<li><a href="{{ route('rekapitulasiarsip.index') }}"><i class="ti-angle-right"></i> Rekapitulasi Arsip</a></li>@endcan
+                    @can('rekapitulasi_surat_aktif_view')<li><a href="{{ route('rekapitulasisurataktif.index') }}"><i class="ti-angle-right"></i> Rekapitulasi Surat Aktif</a></li>@endcan
+                </ul>
+            </li>
+            @endcanany
+
+            {{-- Master Data --}}
+            @canany(['role_view', 'users_view', 'pegawai_view', 'dosen_view', 'mahasiswa_view', 'jenis_sk_view', 'kategori_arsip_view', 'tahun_akademik_view', 'program_studi_view', 'unit_kerja_view'])
+            <li class="has-sub {{ Str::startsWith($currentRoute, ['role', 'users', 'pegawai', 'dosen', 'mahasiswa', 'jenissk', 'kategoriarsip', 'tahunAkademik', 'programStudi', 'unitkerja']) ? 'active' : '' }}">
+                <a href="javascript:void(0)"><i class="fa-solid fa-database"></i> Master Data</a>
+                <ul class="uis-submenu">
+                    @can('role_view')<li><a href="{{ route('role.index') }}"><i class="fa-solid fa-users-gear"></i> Role Akses</a></li>@endcan
+                    @can('users_view')<li><a href="{{ route('users.index') }}"><i class="fa-solid fa-users"></i> Pengguna</a></li>@endcan
+                    @can('pegawai_view')<li><a href="{{ route('pegawai.index') }}"><i class="fa-solid fa-user-gear"></i> Pegawai</a></li>@endcan
+                    @can('dosen_view')<li><a href="{{ route('dosen.index') }}"><i class="fa-solid fa-user-gear"></i> Dosen</a></li>@endcan
+                    @can('mahasiswa_view')<li><a href="{{ route('mahasiswa.index') }}"><i class="fa-solid fa-users"></i> Mahasiswa</a></li>@endcan
+                    @can('jenis_sk_view')<li><a href="{{ route('jenissk.index') }}"><i class="fa-solid fa-list"></i> Jenis SK</a></li>@endcan
+                    @can('kategori_arsip_view')<li><a href="{{ route('kategoriarsip.index') }}"><i class="fa-solid fa-tags"></i> Kategori Arsip</a></li>@endcan
+                    @can('tahun_akademik_view')<li><a href="{{ route('tahunAkademik.index') }}"><i class="fa-solid fa-calendar-days"></i> Tahun Akademik</a></li>@endcan
+                    @can('program_studi_view')<li><a href="{{ route('programStudi.index') }}"><i class="fa-solid fa-folder-closed"></i> Program Studi</a></li>@endcan
+                    @can('unit_kerja_view')<li><a href="{{ route('unitkerja.index') }}"><i class="fa-solid fa-sitemap"></i> Unit Kerja</a></li>@endcan
+                </ul>
+            </li>
+            @endcanany
+
+            {{-- Panduan --}}
+            <li class="has-sub {{ Str::startsWith($currentRoute, ['userGuide', 'faq', 'userguide']) ? 'active' : '' }}">
+                <a href="javascript:void(0)"><i class="fa-solid fa-book"></i> Panduan</a>
+                <ul class="uis-submenu">
+                    @canany(['users_view', 'role_view'])
+                    <li><a href="{{ route('userGuideTatausaha.index') }}"><i class="ti-angle-right"></i> Panduan Admin - Tata Usaha</a></li>
+                    <li><a href="{{ route('userGuideMahasiswa.index') }}"><i class="ti-angle-right"></i> Panduan Admin - Mahasiswa</a></li>
+                    <li><a href="{{ route('faq.index') }}"><i class="ti-angle-right"></i> FAQ Admin</a></li>
+                    @endcanany
+                    <li><a href="{{ route('userGuidePenggunaTatausaha') }}"><i class="ti-angle-right"></i> Panduan Tata Usaha</a></li>
+                    <li><a href="{{ route('userGuidePenggunaMahasiswa') }}"><i class="ti-angle-right"></i> Panduan Mahasiswa</a></li>
+                    <li><a href="{{ route('userguidepengguna') }}"><i class="ti-angle-right"></i> FAQ</a></li>
+                </ul>
+            </li>
+
+            {{-- User Menu (right-aligned, desktop only) --}}
+            @auth
+            <li class="has-sub uis-user-menu">
+                <a href="javascript:void(0)">
+                    <img src="{{ Auth::user()->profile && Auth::user()->profile->foto ? asset('storage/' . Auth::user()->profile->foto) : asset('assets/images/user.png') }}"
+                         style="width:26px;height:26px;object-fit:cover;border-radius:50%;vertical-align:middle;margin-right:6px;">
+                    {{ Auth::user()->name }}
+                </a>
+                <ul class="uis-submenu">
+                    <li><a href="{{ route('settings.index') }}"><i class="ti-settings"></i> Settings</a></li>
+                    <li><a href="{{ route('profile.index') }}"><i class="ti-user"></i> Profile</a></li>
+                    <li><a href="{{ route('userGuide.index') }}"><i class="fa-regular fa-file-lines"></i> User Guide</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1BMulYA5yhLsgtMXJ4fMs55jG2d-CT86kSI43tGqMSQE/edit?usp=sharing" target="_blank"><i class="ti-comment"></i> Feedback</a></li>
+                    <li><a href="{{ route('logout') }}"><i class="ti-power-off"></i> Logout</a></li>
+                </ul>
+            </li>
+            @endauth
+        </ul>
+    </nav>
+    {{-- END DESKTOP TOPNAV --}}
+
     <div id="pcoded" class="pcoded">
         <div class="pcoded-overlay-box"></div>
         <div class="pcoded-container navbar-wrapper">
@@ -315,12 +216,9 @@
                                     <div class="col-md-4">
                                         <ul class="breadcrumb">
                                             <li class="breadcrumb-item">
-                                                <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Dashboard
-                                                </a>
+                                                <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Dashboard</a>
                                             </li>
-                                            <li class="breadcrumb-item"><a
-                                                    href="javascript:void(0)">{{ $title ?? 'Dashboard' }}</a>
-                                            </li>
+                                            <li class="breadcrumb-item"><a href="javascript:void(0)">{{ $title ?? 'Dashboard' }}</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -357,14 +255,11 @@
     <script src="{{ asset('assets/pages/waves/js/waves.min.js') }}"></script>
     <!-- jquery slimscroll js -->
     <script type="text/javascript" src="{{ asset('assets/js/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
-
     <!-- slimscroll js -->
     <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-
     <!-- menu js -->
     <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
     <script src="{{ asset('assets/js/vertical/vertical-layout.min.js') }}"></script>
-
     <script type="text/javascript" src="{{ asset('assets/js/script.js') }}"></script>
 
     {{-- fontawesome --}}
@@ -374,20 +269,47 @@
     <script src="https://cdn.datatables.net/2.3.6/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.3.6/js/dataTables.bootstrap5.js"></script>
 
-
     {{-- select2 --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     {{-- ckeditor --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.16.2/ckeditor.js"></script>
 
-
-
     {{-- SweetAlert2 JS --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @stack('script')
     @stack('scripts')
+
+    <script>
+    /* Auto-mark active topnav menu based on current URL */
+    document.addEventListener('DOMContentLoaded', function () {
+        var currentPath = window.location.pathname;
+
+        // Mark active submenu item
+        document.querySelectorAll('#uis-topnav .uis-submenu > li > a').forEach(function (link) {
+            if (link.getAttribute('href') && link.getAttribute('href') !== 'javascript:void(0)') {
+                var linkPath = new URL(link.href, window.location.origin).pathname;
+                if (currentPath.startsWith(linkPath) && linkPath !== '/') {
+                    link.closest('li').classList.add('active');
+                    // Also keep parent menu open/active visually
+                    var parentLi = link.closest('#uis-topnav > ul > li');
+                    if (parentLi) parentLi.classList.add('active');
+                }
+            }
+        });
+
+        // Mark active top-level items (no submenu)
+        document.querySelectorAll('#uis-topnav > ul > li:not(.has-sub) > a').forEach(function (link) {
+            if (link.getAttribute('href') && link.getAttribute('href') !== 'javascript:void(0)') {
+                var linkPath = new URL(link.href, window.location.origin).pathname;
+                if (currentPath.startsWith(linkPath) && linkPath !== '/') {
+                    link.closest('li').classList.add('active');
+                }
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>

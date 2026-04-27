@@ -1,0 +1,350 @@
+/* ================================================
+   MYBAAK UIS — Dashboard Layout Styles
+   Extracted from template.blade.php
+   ================================================ */
+
+/* ========================
+   GLOBAL
+   ======================== */
+body { font-family: 'Poppins', sans-serif !important; }
+.card { transition: all 0.3s ease; border: none !important; border-radius: 12px !important; box-shadow: 0 5px 20px rgba(0,0,0,0.05) !important; }
+.card-header h5 { font-weight: 700 !important; color: #2c3e50 !important; }
+
+/* ========================
+   UIS BRANDING
+   ======================== */
+:root {
+    --uis-green: #00A551;
+    --uis-yellow: #FFF742;
+    --uis-green-dark: #008240;
+}
+
+.pcoded-header {
+    background: linear-gradient(135deg, var(--uis-green) 0%, #008240 100%) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+}
+.pcoded-header .navbar-logo { background-color: transparent !important; }
+
+.main-menu-header {
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url("/assets/images/gedunguis.JPG") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    border-bottom: 3px solid var(--uis-yellow) !important;
+    height: 150px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
+}
+.main-menu-header img { width: 60px !important; height: 60px !important; margin-bottom: 5px !important; }
+.user-details { margin-top: 0 !important; }
+
+.page-header {
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("/assets/images/gedunguis.JPG") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    border-bottom: 4px solid var(--uis-yellow) !important;
+    height: 140px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 40px !important;
+    margin-bottom: 0 !important;
+}
+.page-header:before { display: none !important; }
+.page-header .page-block { padding: 0 !important; display: flex !important; align-items: center !important; width: 100% !important; }
+.page-header .page-block>.row { width: 100% !important; margin: 0 !important; }
+
+.pcoded-header, .main-menu-header, .page-header { border: none !important; }
+.pcoded-navbar { border-right: none !important; }
+.pcoded-main-container { background: #f8f9fc !important; }
+
+/* Sidebar active states (for mobile) */
+.pcoded-navbar .pcoded-item > li.active > a,
+.pcoded-navbar .pcoded-item > li.pcoded-trigger > a {
+    background: var(--uis-green) !important;
+    color: #ffffff !important;
+    border-left: 4px solid var(--uis-yellow) !important;
+}
+
+/* ========================
+   BUTTON STYLES
+   ======================== */
+.btn-primary {
+    background: linear-gradient(45deg, var(--uis-green), var(--uis-green-dark)) !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(0, 165, 81, 0.3) !important;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 165, 81, 0.4) !important; }
+
+/* ========================
+   TABLE STYLES
+   ======================== */
+.table { border-collapse: collapse !important; border-spacing: 0 !important; width: 100% !important; border: 1px solid #dee2e6 !important; margin-bottom: 1rem !important; }
+.table thead th {
+    background-color: #004b8d !important; color: white !important;
+    border: 1px solid rgba(255,255,255,0.3) !important; font-weight: 700 !important;
+    text-transform: uppercase !important; font-size: 11px !important;
+    letter-spacing: 0.5px !important; padding: 12px 10px !important;
+    vertical-align: middle !important; text-align: center !important;
+}
+.table tbody td {
+    border: 1px solid #dee2e6 !important; padding: 12px 10px !important;
+    vertical-align: middle !important; background-color: #ffffff !important;
+    color: #555 !important; font-size: 13px !important;
+    border-radius: 0 !important; box-shadow: none !important; transform: none !important;
+}
+.table tbody tr { background-color: #ffffff !important; transition: all 0.2s ease !important; }
+.table tbody tr:hover { background-color: rgba(0,75,141,0.05) !important; box-shadow: none !important; transform: none !important; }
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate { font-size: 13px !important; margin-bottom: 10px !important; }
+
+/* ========================
+   DESKTOP LAYOUT (>= 992px)
+   ======================== */
+@media (min-width: 992px) {
+    /* Light gray background so content box stands out */
+    body { background: #eef2f7 !important; }
+
+    /* Hide hamburger, hide original sidebar */
+    .navbar-logo .mobile-menu { display: none !important; }
+    .pcoded-navbar { display: none !important; }
+
+    /* ── Align navbar content to 1140px ──
+       Apply padding so logo (left) & user icons (right) sit within 1140px bounds.
+       max() keeps at least 30px on narrow desktops. */
+    .pcoded-header {
+        padding-left: max(30px, calc((100% - 1140px) / 2)) !important;
+        padding-right: max(30px, calc((100% - 1140px) / 2)) !important;
+    }
+    /* Reset container-fluid padding so it doesn't double-pad */
+    .pcoded-header .navbar-container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Main container adjustments */
+    .pcoded-main-container {
+        margin-left: 0 !important;
+        margin-top: 116px !important;
+    }
+    #pcoded[vertical-layout="vertical"][pcoded-device-type="desktop"] .pcoded-main-container {
+        margin-left: 0 !important;
+    }
+
+    /* Content area: full width, transparent */
+    .pcoded-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        background: transparent !important;
+    }
+    .pcoded-inner-content {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Content area: max-width constrained, transparent background
+       Individual cards from each view sit directly on gray background */
+    .page-wrapper {
+        max-width: 1140px !important;
+        margin: 24px auto !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        padding: 0 !important;
+    }
+    .page-body {
+        padding: 16px 0 !important;
+    }
+
+    /* ── Page-header (hero): full width, sticky saat scroll ── */
+    .page-header {
+        position: sticky !important;
+        top: 116px !important;   /* tepat di bawah header(56px) + topnav(60px) */
+        z-index: 100 !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        overflow: hidden !important;
+    }
+
+    /* ── Align topnav menu items to 1140px ──
+       Same padding formula as .pcoded-header so menu items
+       align perfectly with the logo above and content box below. */
+    #uis-topnav {
+        padding-left: max(30px, calc((100% - 1140px) / 2)) !important;
+        padding-right: max(30px, calc((100% - 1140px) / 2)) !important;
+    }
+
+    /* ── On desktop: hide duplicate user profile from green header ──
+       User menu is now in the topnav below. */
+    .pcoded-header li.user-profile.header-notification {
+        display: none !important;
+    }
+}
+
+/* ========================
+   DESKTOP TOPNAV (full width background, fixed)
+   ======================== */
+#uis-topnav {
+    display: none;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: #ffffff;
+    z-index: 1050;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border-bottom: 1px solid #e8e8e8;
+    align-items: center;
+    padding: 0 30px;
+    overflow: visible;
+}
+
+@media (min-width: 992px) {
+    #uis-topnav { display: flex; }
+}
+@media (max-width: 991px) {
+    #uis-topnav { display: none !important; }
+}
+
+/* Nav items */
+#uis-topnav > ul {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 4px !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
+}
+#uis-topnav > ul > li {
+    position: relative !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+}
+#uis-topnav > ul > li > a {
+    display: flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    padding: 8px 14px !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    color: #444 !important;
+    text-decoration: none !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+    transition: all 0.2s !important;
+}
+#uis-topnav > ul > li > a:hover,
+#uis-topnav > ul > li.active > a {
+    background: var(--uis-green) !important;
+    color: #fff !important;
+    border-bottom: 3px solid var(--uis-yellow) !important;
+}
+#uis-topnav > ul > li > a i { font-size: 14px; }
+
+/* Dropdown caret: ▶ default → ▾ on hover */
+#uis-topnav > ul > li.has-sub > a::after {
+    content: "▶";
+    font-family: inherit;
+    font-size: 10px;
+    margin-left: 6px;
+    color: #aaa;
+    line-height: 1;
+}
+#uis-topnav > ul > li.has-sub:hover > a::after,
+#uis-topnav > ul > li.has-sub.active > a::after {
+    content: "▾";
+    font-size: 16px;
+    color: #fff;
+}
+
+/* Submenu */
+#uis-topnav .uis-submenu {
+    display: none !important;
+    position: absolute !important;
+    top: 58px !important;
+    left: 0 !important;
+    min-width: 240px !important;
+    background: #fff !important;
+    border: 1px solid #eee !important;
+    border-radius: 10px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12) !important;
+    padding: 8px 0 !important;
+    z-index: 1060 !important;
+    list-style: none !important;
+    margin: 0 !important;
+}
+#uis-topnav > ul > li.has-sub:hover .uis-submenu { display: block !important; }
+#uis-topnav .uis-submenu > li > a {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 9px 20px !important;
+    font-size: 13px !important;
+    color: #555 !important;
+    text-decoration: none !important;
+    transition: all 0.2s !important;
+}
+/* Hide the ti-angle-right icon, use CSS bullet instead */
+#uis-topnav .uis-submenu > li > a > i {
+    display: none !important;
+}
+#uis-topnav .uis-submenu > li > a::before {
+    content: "•";
+    color: var(--uis-green);
+    font-size: 18px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+#uis-topnav .uis-submenu > li > a:hover {
+    background: rgba(0,165,81,0.06) !important;
+    color: var(--uis-green) !important;
+    padding-left: 26px !important;
+}
+/* Active submenu item */
+#uis-topnav .uis-submenu > li.active > a {
+    background: rgba(0,165,81,0.10) !important;
+    color: var(--uis-green) !important;
+    font-weight: 600 !important;
+    padding-left: 26px !important;
+}
+#uis-topnav .uis-submenu > li.active > a::before {
+    color: var(--uis-green) !important;
+    font-size: 22px !important;
+}
+
+/* ── User menu: push to right side of topnav ── */
+#uis-topnav > ul > li.uis-user-menu {
+    margin-left: auto !important;
+}
+/* User menu submenu opens from the right (right:0) */
+#uis-topnav > ul > li.uis-user-menu .uis-submenu {
+    left: auto !important;
+    right: 0 !important;
+}
+/* Show icons in user submenu (override bullet) */
+#uis-topnav > ul > li.uis-user-menu .uis-submenu > li > a > i {
+    display: inline-block !important;
+    width: 16px !important;
+    color: #888 !important;
+}
+#uis-topnav > ul > li.uis-user-menu .uis-submenu > li > a::before {
+    display: none !important;
+}
+/* Caret for user menu */
+#uis-topnav > ul > li.uis-user-menu.has-sub > a::after {
+    content: "▾" !important;
+    font-size: 14px !important;
+}
+#uis-topnav > ul > li.uis-user-menu.has-sub:hover > a::after {
+    content: "▾" !important;
+}
