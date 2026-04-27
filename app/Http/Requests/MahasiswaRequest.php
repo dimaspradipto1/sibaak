@@ -22,11 +22,13 @@ class MahasiswaRequest extends FormRequest
      */
     public function rules(): array
     {
+        $mahasiswaId = $this->route('mahasiswa') ? $this->route('mahasiswa')->id : null;
+
         $rules = [
             'program_studi_id' => 'required|exists:program_studis,id',
             'tempat_lahir' => 'required',
             'tgl_lahir' => 'required|date',
-            'npm' => 'required|numeric',
+            'npm' => 'required|numeric|unique:mahasiswas,npm,' . $mahasiswaId,
             'jenjang_pendidikan' => 'required|string',
             'fakultas' => 'required|string',
             'semester' => 'required|string',
@@ -36,7 +38,10 @@ class MahasiswaRequest extends FormRequest
 
         // Jika user yang login adalah mahasiswa, kita tidak perlu memasukkan `users_id`
         if (!Auth::user()->is_mahasiswa) {
-            $rules['users_id'] = 'required|exists:users,id'; // Pastikan `users_id` terisi untuk admin/staff
+            $rules['users_id'] = 'required|exists:users,id|unique:mahasiswas,users_id,' . $mahasiswaId;
+        } else {
+            // Jika mahasiswa mengedit datanya sendiri, pastikan users_id tetap unik kecuali miliknya sendiri
+            $rules['users_id'] = 'nullable|unique:mahasiswas,users_id,' . $mahasiswaId;
         }
 
         return $rules;
@@ -46,10 +51,12 @@ class MahasiswaRequest extends FormRequest
     {
         return [
             'users_id.required' => 'Pilih user terlebih dahulu.',
+            'users_id.unique' => 'User ini sudah memiliki profil mahasiswa.',
             'program_studi_id.required' => 'Pilih program studi terlebih dahulu.',
             'tempat_lahir.required' => 'Tempat lahir wajib diisi.',
             'tgl_lahir.required' => 'Tanggal lahir wajib diisi.',
             'npm.required' => 'NPM wajib diisi.',
+            'npm.unique' => 'NPM ini sudah terdaftar.',
             'jenjang_pendidikan.required' => 'Jenjang pendidikan wajib diisi.',
             'fakultas.required' => 'Fakultas wajib diisi.',
             'semester.required' => 'Semester wajib diisi.',

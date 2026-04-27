@@ -145,7 +145,7 @@ class MahasiswaImport implements ToModel, WithHeadingRow, WithValidation, SkipsE
     public function rules(): array
     {
         return [
-            '*.npm'   => 'required',
+            '*.npm'   => 'required|unique:mahasiswas,npm',
             '*.prodi' => 'required',
         ];
     }

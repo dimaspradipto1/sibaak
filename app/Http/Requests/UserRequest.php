@@ -21,9 +21,11 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->user ? (is_object($this->user) ? $this->user->id : $this->user) : 'NULL';
+
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . ($this->user ? $this->user->id : 'NULL'),
+            'name' => 'required|string|max:255|unique:users,name,' . $userId,
+            'email' => 'required|email|max:255|unique:users,email,' . $userId,
             'password' => $this->isMethod('POST') ? 'required' : 'nullable',
             'role_id' => 'required|exists:roles,id',
             'is_active' => 'nullable|boolean',
@@ -34,6 +36,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name.required'     => 'Nama Lengkap wajib diisi',
+            'name.unique'       => 'Nama sudah terdaftar',
             'email.required'    => 'Email wajib diisi',
             'email.unique'      => 'Email sudah terdaftar',
             'password.required' => 'Password wajib diisi',

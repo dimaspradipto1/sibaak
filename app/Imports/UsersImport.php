@@ -44,7 +44,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation, SkipsEmpty
     public function rules(): array
     {
         return [
-            'nama'     => 'required|string|max:255',
+            'nama'     => 'required|string|max:255|unique:users,name',
             'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:6',
             'role'     => 'required|string',

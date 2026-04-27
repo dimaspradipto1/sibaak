@@ -14,7 +14,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'     => 'required|string|max:255',
+            'name'     => 'required|string|max:255|unique:users,name',
             'email'    => [
                 'required',
                 'email',
@@ -30,6 +30,7 @@ class RegisterRequest extends FormRequest
         return [
             'name.required'     => 'Nama lengkap tidak boleh kosong.',
             'name.max'          => 'Nama lengkap maksimal 255 karakter.',
+            'name.unique'       => 'Nama ini sudah terdaftar, silakan gunakan nama lain.',
             'email.required'    => 'Email tidak boleh kosong.',
             'email.email'       => 'Format email tidak valid.',
             'email.unique'      => 'Email ini sudah terdaftar, silakan gunakan email lain.',
