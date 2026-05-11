@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Artikel;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -22,10 +23,10 @@ class ArtikelDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addIndexColumn()
-            ->addColumn('users_id', function ($item) {
+            ->addColumn('penulis', function ($item) {
                 return $item->user ? $item->user->name : '-';
             })
-            ->addColumn('tipe', function ($item) {
+            ->editColumn('tipe', function ($item) {
                 return '<span class="badge badge-info text-white px-3 py-2 text-capitalize">' . $item->tipe . '</span>';
             })
             ->addColumn('media_url', function ($item) {
@@ -67,7 +68,7 @@ class ArtikelDataTable extends DataTable
                 return $actions;
             })
             ->setRowId('id')
-            ->rawColumns(['action', 'tipe', 'media_url']);
+            ->rawColumns(['action', 'tipe', 'media_url', 'penulis']);
     }
 
     /**
@@ -77,7 +78,21 @@ class ArtikelDataTable extends DataTable
      */
     public function query(Artikel $model): QueryBuilder
     {
-        return $model->newQuery()->with('user');
+        $query = $model->newQuery()->with('user');
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        // Role yang boleh melihat semua artikel
+        $privilegedRoles = ['Super Admin', 'Admin', 'Administrator'];
+        $userRoleName = $user->role?->nama_role ?? '';
+
+        // Jika bukan role privileged, tampilkan hanya artikel milik user sendiri
+        if (!in_array($userRoleName, $privilegedRoles)) {
+            $query->where('users_id', $user->id);
+        }
+
+        return $query;
     }
 
     /**
@@ -117,7 +132,7 @@ class ArtikelDataTable extends DataTable
             Column::make('tipe')
                 ->title('KATEGORI')
                 ->addClass('text-center'),
-            Column::make('users_id')
+            Column::make('penulis')
                 ->title('PENULIS'),
             Column::make('media_url')
                 ->title('MEDIA/LINK'),
