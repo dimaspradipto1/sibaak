@@ -24,7 +24,7 @@ class KurikulumRequest extends FormRequest
         return [
             'tahun' => 'required',
             'nama_kurikulum' => 'required',
-            'fakultas' => 'nullable',
+            'fakultas' => 'required',
             'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }

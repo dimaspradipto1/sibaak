@@ -24,7 +24,7 @@ class WasdalbinRequest extends FormRequest
         return [
             'tahun' => 'required',
             'nama_wasdalbin' => 'required',
-            'fakultas' => 'nullable',
+            'fakultas' => 'required',
             'file' => ($this->isMethod('post') ? 'required' : 'nullable') . '|file|mimes:pdf|max:51200',
         ];
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('users_id')->constrained('users')->cascadeOnDelete();
             $table->string('tahun');
             $table->string('nama_kurikulum');
-            $table->string('fakultas');
+            $table->string('fakultas')->nullable();
             $table->string('file');
             $table->boolean('is_active')->default(true);
             $table->timestamps();

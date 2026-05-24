@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('nama_dokumen');
             $table->string('ketua');
             $table->string('sekretaris');
-            $table->string('fakultas');
+            $table->string('fakultas')->nullable();
             $table->string('file')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
