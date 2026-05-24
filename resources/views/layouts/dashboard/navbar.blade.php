@@ -40,10 +40,23 @@
             </ul>
             <ul class="nav-right">
                 <li class="header-notification">
-                    <a href="javascript:void(0)" class="waves-effect waves-light">
-                        <i class="ti-bell"></i>
+                    <a href="javascript:void(0)" class="waves-effect waves-light" style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+                        <i class="ti-bell" style="font-size: 20px;"></i>
                         @if ($totalPending > 0)
-                            <span class="badge bg-c-red">{{ $totalPending }}</span>
+                            <span class="badge bg-c-red" style="
+                                position: absolute;
+                                top: -8px;
+                                right: -10px;
+                                font-size: 10px;
+                                min-width: 18px;
+                                height: 18px;
+                                line-height: 18px;
+                                padding: 0 4px;
+                                border-radius: 50%;
+                                text-align: center;
+                                font-weight: 600;
+                                pointer-events: none;
+                            ">{{ $totalPending }}</span>
                         @endif
                     </a>
                     <ul class="show-notification">
