@@ -246,23 +246,29 @@
             background: rgba(60, 64, 67, 0.08);
         }
 
-        /* Gallery Grid Style */
-        .gallery-item {
+        /* Gallery Grid Style (Google Images Layout) */
+        .google-images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 4px;
+        }
+
+        .google-image-card {
             border-radius: 8px;
             overflow: hidden;
-            border: 1px solid #dadce0;
-            transition: all 0.2s;
             background: #fff;
-            position: relative;
+            cursor: pointer;
+            transition: opacity 0.15s;
         }
 
-        .gallery-item:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transform: translateY(-2px);
+        .google-image-card:hover {
+            opacity: 0.92;
         }
 
-        .gallery-preview {
-            height: 200px;
+        .google-image-thumb {
+            display: block;
+            width: 100%;
+            height: 170px;
             background: #f8f9fa;
             display: flex;
             align-items: center;
@@ -271,22 +277,30 @@
             overflow: hidden;
         }
 
-        .gallery-preview img {
+        .google-image-thumb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: top;
         }
 
-        .gallery-info {
-            padding: 12px;
-            border-top: 1px solid #ebebeb;
+        .google-image-info {
+            padding: 6px 4px 10px;
         }
 
-        .gallery-title {
-            font-size: 13px;
+        .google-image-title {
+            font-size: 12px;
             color: #202124;
             font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .google-image-source {
+            font-size: 11px;
+            color: #70757a;
+            margin-top: 2px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -671,7 +685,7 @@
 
         <div class="container-fluid py-4 pl-3 pr-5">
             <div class="row ml-md-5 pl-md-5">
-                <div class="col-md-7">
+                <div class="{{ $tab == 'gambar' ? 'col-12' : 'col-md-7' }}">
                     <p class="text-muted small mb-4">Ditemukan {{ $results->count() }} hasil
                         ({{ round(microtime(true) - LARAVEL_START, 2) }} detik)</p>
 
@@ -681,24 +695,21 @@
                         </div>
                     @else
                         @if ($tab == 'gambar')
-                            <div class="row">
+                            <div class="google-images-grid">
                                 @foreach ($results as $item)
-                                    <div class="col-6 col-md-3 col-lg-2 mb-4">
-                                        <div class="gallery-item shadow-sm">
-                                            <a href="{{ $item->link }}" target="_blank" class="gallery-preview">
-                                                @if ($item->thumbnail)
-                                                    <img src="{{ $item->thumbnail }}" alt="{{ $item->title }}"
-                                                        onerror="this.parentElement.innerHTML='<i class=\'fa-solid {{ $item->icon }} {{ $item->color }}\' style=\'font-size: 60px;\'></i>'">
-                                                @else
-                                                    <i class="fa-solid {{ $item->icon }} {{ $item->color }}"
-                                                        style="font-size: 60px;"></i>
-                                                @endif
-                                            </a>
-                                            <div class="gallery-info">
-                                                <div class="gallery-title" title="{{ $item->title }}">
-                                                    {{ $item->title }}</div>
-                                                <div class="xsmall text-muted mt-1">{{ $item->type }}</div>
-                                            </div>
+                                    <div class="google-image-card">
+                                        <a href="{{ $item->link }}" target="_blank" class="google-image-thumb">
+                                            @if ($item->thumbnail)
+                                                <img src="{{ $item->thumbnail }}" alt="{{ $item->title }}"
+                                                    onerror="this.parentElement.innerHTML='<i class=\'fa-solid {{ $item->icon }} {{ $item->color }}\' style=\'font-size: 60px;\'></i>'">
+                                            @else
+                                                <i class="fa-solid {{ $item->icon }} {{ $item->color }}"
+                                                    style="font-size: 60px;"></i>
+                                            @endif
+                                        </a>
+                                        <div class="google-image-info">
+                                            <div class="google-image-title" title="{{ $item->title }}">{{ $item->title }}</div>
+                                            <div class="google-image-source">{{ $item->type }}</div>
                                         </div>
                                     </div>
                                 @endforeach
@@ -856,7 +867,7 @@
                     @endif
                 </div>
 
-                <div class="col-md-4 results-right-sidebar d-none d-md-block">
+                <div class="col-md-4 results-right-sidebar d-none d-md-block {{ $tab == 'gambar' ? 'd-none' : '' }}" style="{{ $tab == 'gambar' ? 'display:none!important;' : '' }}">
                     @if ($top_result)
                         <div class="kp-clean-box">
                             @if ($top_result->thumbnail)
