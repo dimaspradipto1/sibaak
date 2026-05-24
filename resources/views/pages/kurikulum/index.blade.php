@@ -10,7 +10,7 @@
             </div>
             @can('kurikulum_create')
             <div class="d-inline-flex shadow-sm overflow-hidden" style="border: 1px solid #e3e6f0; border-radius: 30px;">
-                <a href="{{ route('kurikulum.create') }}" class="btn btn-success btn-xs font-weight-bold px-3 py-1 border-0" style="background-color: #046B26; color: white; font-size: 10px; height: 32px; line-height: 24px;">
+                <a href="{{ route('kurikulum.create') }}" class="btn btn-success rounded btn-xs font-weight-bold px-3 py-1 border-0" style="background-color: #046B26; color: white; font-size: 10px; height: 32px; line-height: 24px;">
                     <i class="fas fa-plus mr-1"></i> TAMBAH
                 </a>
             </div>

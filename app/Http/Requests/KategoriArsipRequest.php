@@ -25,4 +25,13 @@ class KategoriArsipRequest extends FormRequest
             'kategori_arsip' => 'required|string|max:255',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'kategori_arsip.required' => 'Nama kategori arsip wajib diisi.',
+            'kategori_arsip.string'   => 'Nama kategori arsip harus berupa teks.',
+            'kategori_arsip.max'      => 'Nama kategori arsip maksimal 255 karakter.',
+        ];
+    }
 }
