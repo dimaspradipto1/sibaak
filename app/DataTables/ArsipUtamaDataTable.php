@@ -92,8 +92,15 @@ class ArsipUtamaDataTable extends DataTable
                 $btn .= '</div>';
                 return $btn;
             })
+            ->editColumn('nama_arsip', function ($item) {
+                $plain = strip_tags($item->nama_arsip);
+                $preview = mb_strimwidth($plain, 0, 120, '...');
+                $html = htmlspecialchars($item->nama_arsip, ENT_QUOTES);
+                return '<span title="' . $html . '" data-toggle="tooltip" data-placement="top"'
+                    . ' data-html="true" style="cursor:default;">' . e($preview) . '</span>';
+            })
             ->setRowId('id')
-            ->rawColumns(['action', 'file_arsip', 'status']);
+            ->rawColumns(['action', 'file_arsip', 'status', 'nama_arsip']);
     }
 
     public function query(ArsipUtama $model): QueryBuilder

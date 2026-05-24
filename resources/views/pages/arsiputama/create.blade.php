@@ -137,7 +137,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nama Arsip</label>
                             <div class="col-sm-10">
-                                <textarea name="nama_arsip" class="form-control rounded" rows="3" placeholder="Masukkan nama arsip">{{ old('nama_arsip') }}</textarea>
+                                <textarea name="nama_arsip" id="nama_arsip" class="form-control rounded" rows="5" placeholder="Masukkan nama arsip">{{ old('nama_arsip') }}</textarea>
                                 @error('nama_arsip')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -188,6 +188,40 @@
                 iframe.height = '500px';
                 previewContainer.appendChild(iframe);
             }
+        });
+    </script>
+    <script>
+        // Inisialisasi CKEditor untuk Nama Arsip
+        CKEDITOR.replace('nama_arsip', {
+            toolbar: [
+                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+                { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'] },
+                { name: 'links', items: ['Link', 'Unlink'] },
+                { name: 'styles', items: ['Format', 'FontSize'] },
+                { name: 'colors', items: ['TextColor', 'BGColor'] },
+                { name: 'tools', items: ['Maximize', 'Source'] }
+            ],
+            height: 250,
+            removePlugins: 'elementspath',
+            resize_enabled: false
+        });
+
+        // Pastikan CKEditor sync ke textarea sebelum submit
+        $('form').on('submit', function() {
+            for (var instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+            Swal.fire({
+                title: 'Sedang Mengunggah...',
+                text: 'Mohon tunggu sebentar, file sedang dikirim ke Google Drive.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            return true;
         });
     </script>
     <script>
