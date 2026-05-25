@@ -231,7 +231,7 @@ class SemanticArsipController extends Controller
             $kurikulum = Kurikulum::with(['user.role'])
                 ->where('is_active', true)
                 ->where(function ($q) use ($buildSearch) {
-                    $buildSearch($q, ['nama_kurikulum', 'program_studi', 'semester']);
+                    $buildSearch($q, ['nama_kurikulum', 'tahun', 'fakultas']);
                 })
                 ->get()
                 ->map(function ($item) use ($getThumbnail) {
@@ -248,7 +248,7 @@ class SemanticArsipController extends Controller
             $pedoman = Pedoman::with(['users.role'])
                 ->where('is_active', true)
                 ->where(function ($q) use ($buildSearch) {
-                    $buildSearch($q, ['nama_pedoman', 'deskripsi', 'semester']);
+                    $buildSearch($q, ['nama_pedoman', 'tahun', 'fakultas']);
                 })
                 ->get()
                 ->map(function ($item) use ($getThumbnail) {
@@ -265,7 +265,7 @@ class SemanticArsipController extends Controller
             $sop = SopAkademik::with(['users.role'])
                 ->where('is_active', true)
                 ->where(function ($q) use ($buildSearch) {
-                    $buildSearch($q, ['nama_sop', 'deskripsi', 'semester']);
+                    $buildSearch($q, ['nama_sop', 'fakultas']);
                 })
                 ->get()
                 ->map(function ($item) use ($getThumbnail) {
@@ -282,7 +282,7 @@ class SemanticArsipController extends Controller
             $wasdalbin = Wasdalbin::with(['users.role'])
                 ->where('is_active', true)
                 ->where(function ($q) use ($buildSearch) {
-                    $buildSearch($q, ['nama_wasdalbin', 'deskripsi', 'semester']);
+                    $buildSearch($q, ['nama_wasdalbin', 'tahun', 'fakultas']);
                 })
                 ->get()
                 ->map(function ($item) use ($getThumbnail) {
