@@ -22,6 +22,7 @@ body { font-family: 'Poppins', sans-serif !important; }
 .pcoded-header {
     background: linear-gradient(135deg, var(--uis-green) 0%, #008240 100%) !important;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+    z-index: 1100 !important;
 }
 .pcoded-header .navbar-logo { background-color: transparent !important; }
 

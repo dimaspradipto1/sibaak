@@ -59,7 +59,7 @@
                             ">{{ $totalPending }}</span>
                         @endif
                     </a>
-                    <ul class="show-notification">
+                    <ul class="show-notification" style="top: 100%; z-index: 1050;">
                         <li>
                             <h6>Notifikasi</h6>
                             @if ($totalPending > 0)
@@ -128,14 +128,16 @@
                 </li>
                 <li class="user-profile header-notification">
                     @auth
-                    <a href="javascript:void(0)" class="waves-effect waves-light">
-                        <img src="{{ Auth::user()->profile && Auth::user()->profile->foto ? asset('storage/' . Auth::user()->profile->foto) : asset('assets/images/user.png') }}"
-                            class="img-radius" alt="User-Profile-Image"
-                            style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                        <span>{{ Auth::user()->name }}</span>
-                        <i class="ti-angle-down"></i>
-                    </a>
-                    <ul class="show-notification profile-notification">
+                    <a href="javascript:void(0)" class="waves-effect waves-light"
+                    style="display: inline-flex; flex-direction: column; align-items: center; line-height: 1.2; gap: 2px;">
+                    <img src="{{ Auth::user()->profile && Auth::user()->profile->foto ? asset('storage/' . Auth::user()->profile->foto) : asset('assets/images/user.png') }}"
+                        class="img-radius" alt="User-Profile-Image"
+                        style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%;">
+                    <span style="font-size: 11px; font-weight: 500; color: #fff; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        {{ Auth::user()->name }} <i class="ti-angle-down" style="font-size: 9px;"></i>
+                    </span>
+                </a>
+                    <ul class="show-notification profile-notification" style="top: 100%; z-index: 1050;">
                         <li class="waves-effect waves-light">
                             <a href="{{ route('semantic.index') }}">
                                 <i class="ti-settings"></i> Search Engine

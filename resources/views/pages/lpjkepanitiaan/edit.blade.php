@@ -66,6 +66,22 @@
                         </div>
 
                         <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Fakultas</label>
+                            <div class="col-sm-10">
+                                <select name="fakultas" class="form-control rounded">
+                                    <option value="">Pilih Fakultas</option>
+                                    <option value="">=====================</option>
+                                    <option value="Fakultas Ekonomi dan Bisnis" {{ old('fakultas', $lpjkepanitiaan->fakultas) == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>Fakultas Ekonomi dan Bisnis (FEB)</option>
+                                    <option value="Fakultas Sains dan Teknologi" {{ old('fakultas', $lpjkepanitiaan->fakultas) == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>Fakultas Sains dan Teknologi (FST)</option>
+                                    <option value="Fakultas Ilmu Kesehatan" {{ old('fakultas', $lpjkepanitiaan->fakultas) == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas Ilmu Kesehatan (Fikes)</option>
+                                </select>
+                                @error('fakultas')
+                                    <div class="text-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Upload Dokumen</label>
                             <div class="col-sm-10">
                                 <input type="file" name="file" class="form-control rounded" id="file-input">
