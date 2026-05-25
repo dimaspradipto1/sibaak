@@ -97,6 +97,11 @@ body { font-family: 'Poppins', sans-serif !important; }
 }
 .table tbody tr { background-color: #ffffff !important; transition: all 0.2s ease !important; }
 .table tbody tr:hover { background-color: rgba(0,75,141,0.05) !important; box-shadow: none !important; transform: none !important; }
+.table tbody td:last-child,
+.table tbody td:has(.btn),
+.table tbody td:has(form) {
+    white-space: nowrap !important;
+}
 .dataTables_wrapper .dataTables_length,
 .dataTables_wrapper .dataTables_filter,
 .dataTables_wrapper .dataTables_info,
