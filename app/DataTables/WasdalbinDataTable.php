@@ -91,8 +91,8 @@ class WasdalbinDataTable extends DataTable
     {
         $query = $model->newQuery()->with(['users']);
 
-        // Jika bukan superadmin atau admin, hanya tampilkan data milik sendiri
-        if (Auth::check() && !Auth::user()->is_superadmin && !Auth::user()->is_admin) {
+        // Jika bukan superadmin atau admin, hanya tampilkan data milik sendiri (kecuali memiliki akses view)
+        if (Auth::check() && !Auth::user()->is_superadmin && !Auth::user()->is_admin && !Gate::allows('wasdalbin_view')) {
             $query->where('users_id', Auth::id());
         }
 

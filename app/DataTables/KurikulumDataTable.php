@@ -95,8 +95,8 @@ class KurikulumDataTable extends DataTable
     {
         $query = $model->newQuery()->with(['user']);
 
-        // Jika bukan superadmin atau admin, tampilkan data milik sendiri saja
-        if (Auth::check() && !Auth::user()->is_superadmin && !Auth::user()->is_admin) {
+        // Jika bukan superadmin atau admin, tampilkan data milik sendiri saja (kecuali memiliki akses view)
+        if (Auth::check() && !Auth::user()->is_superadmin && !Auth::user()->is_admin && !Gate::allows('kurikulum_view')) {
             $query->where('users_id', Auth::id());
         }
 

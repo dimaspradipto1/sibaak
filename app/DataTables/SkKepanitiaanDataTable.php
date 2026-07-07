@@ -121,8 +121,8 @@ class SkKepanitiaanDataTable extends DataTable
     {
         $query = $model->newQuery()->with(['tahunAkademik', 'users', 'jenissk']);
 
-        // Jika bukan superadmin atau admin, hanya tampilkan data milik sendiri
-        if (Auth::check() && !Auth::user()->is_superadmin && !Auth::user()->is_admin) {
+        // Jika bukan superadmin atau admin, hanya tampilkan data milik sendiri (kecuali memiliki akses view)
+        if (Auth::check() && !Auth::user()->is_superadmin && !Auth::user()->is_admin && !Gate::allows('sk_kepanitiaan_view')) {
             $query->where('users_id', Auth::id());
         }
 

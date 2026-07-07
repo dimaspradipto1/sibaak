@@ -109,7 +109,7 @@ class ArsipUtamaDataTable extends DataTable
         $user = Auth::user();
 
         // 1. Logika Hak Akses Hirarki Berdasarkan Unit Kerja
-        $isHigherLevel = $user->is_superadmin || $user->is_admin || ($user->role && strtoupper($user->role->nama_role) == 'REKTOR');
+        $isHigherLevel = $user->is_superadmin || $user->is_admin || ($user->role && strtoupper($user->role->nama_role) == 'REKTOR') || Gate::allows('arsip_utama_view');
 
         if (!$isHigherLevel) {
             $unitKerja = $user->role?->unitKerja;
