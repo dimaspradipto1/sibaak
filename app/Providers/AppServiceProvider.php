@@ -53,6 +53,11 @@ class AppServiceProvider extends ServiceProvider
         // View composer for navbar and sidebar notifications
         view()->composer(['layouts.dashboard.navbar', 'layouts.dashboard.sidebar'], function ($view) {
             $pendingSuratAktif = \App\Models\SuratAktif::where('status', 'pending')->count();
+            
+            $pendingSuratAkademik = 0;
+            if (Schema::hasTable('surat_akademiks') && Schema::hasColumn('surat_akademiks', 'status')) {
+                $pendingSuratAkademik = \App\Models\SuratAkademik::where('status', 'pending')->count();
+            }
 
             $recentArsip = \App\Models\RekapitulasiArsip::with([
                 'skKepanitiaan',
@@ -63,11 +68,11 @@ class AppServiceProvider extends ServiceProvider
                 'wasdalbin'
             ])->latest()->take(5)->get();
 
-            $totalPending = $pendingSuratAktif;
+            $totalPending = $pendingSuratAktif + $pendingSuratAkademik;
 
             $view->with([
                 'pendingSuratAktifCount' => $pendingSuratAktif,
-                'pendingSuratAkademikCount' => 0,
+                'pendingSuratAkademikCount' => $pendingSuratAkademik,
                 'totalPending' => $totalPending,
                 'recentArsip' => $recentArsip
             ]);

@@ -40,24 +40,28 @@
             </ul>
             <ul class="nav-right">
                 <li class="header-notification">
-                    <a href="javascript:void(0)" class="waves-effect waves-light" style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
-                        <i class="ti-bell" style="font-size: 20px;"></i>
-                        @if ($totalPending > 0)
-                            <span class="badge bg-c-red" style="
-                                position: absolute;
-                                top: -8px;
-                                right: -10px;
-                                font-size: 10px;
-                                min-width: 18px;
-                                height: 18px;
-                                line-height: 18px;
-                                padding: 0 4px;
-                                border-radius: 50%;
-                                text-align: center;
-                                font-weight: 600;
-                                pointer-events: none;
-                            ">{{ $totalPending }}</span>
-                        @endif
+                    <a href="javascript:void(0)" class="waves-effect waves-light" style="display: inline-flex; align-items: center; justify-content: center;">
+                        <div style="position: relative; display: inline-block; padding: 4px 8px 0 0;">
+                            <i class="ti-bell" style="font-size: 20px; line-height: 20px;"></i>
+                            @if ($totalPending > 0)
+                                <span class="badge badge-danger" style="
+                                    position: absolute;
+                                    top: 6px;
+                                    right: 2px;
+                                    font-size: 9px;
+                                    min-width: 16px;
+                                    height: 16px;
+                                    line-height: 16px;
+                                    padding: 0 4px;
+                                    border-radius: 50%;
+                                    text-align: center;
+                                    font-weight: bold;
+                                    pointer-events: none;
+                                    background-color: #ff5252 !important;
+                                    color: white !important;
+                                ">{{ $totalPending }}</span>
+                            @endif
+                        </div>
                     </a>
                     <ul class="show-notification" style="top: 100%; z-index: 1050;">
                         <li>
