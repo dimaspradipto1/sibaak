@@ -44,7 +44,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nama Staff Lengkap dengan Gelar</label>
                             <div class="col-sm-10">
-                                <input type="text" name="nama_staff"
+                                <input type="text" name="nama_staff" id="nama_staff"
                                     value="{{ old('nama_staff', $pegawai->nama_staff) }}"
                                     class="form-control rounded @error('nama_staff') is-invalid @enderror">
                                 @error('nama_staff')
@@ -148,6 +148,16 @@
     <script>
         $(document).ready(function() {
             $('#users_id').select2();
+
+            // Auto-fill nama_staff saat pegawai dipilih
+            $('#users_id').on('change', function() {
+                var selectedName = $(this).find('option:selected').text().trim();
+                if (selectedName && selectedName !== 'Pilih Pegawai') {
+                    $('#nama_staff').val(selectedName);
+                } else {
+                    $('#nama_staff').val('');
+                }
+            });
         });
     </script>
 @endpush

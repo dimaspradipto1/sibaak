@@ -127,7 +127,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Alasan Cuti Akademik</label>
+                            <label class="col-sm-2 col-form-label">Alasan</label>
                             <div class="col-sm-10">
                                 <textarea name="alasan_cuti" class="form-control rounded" id="alasan_cuti" cols="30" rows="4" required></textarea>
                             </div>

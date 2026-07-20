@@ -85,11 +85,11 @@ class SuratAkademikController extends Controller
             return redirect()->back()->with('error', 'Program studi mahasiswa tidak ditemukan!');
         }
 
-        $kabaak = Pegawai::where('nama_staff', 'LIKE', '%Leni%')->first();
-        $kabauk = Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN%')->first();
+        $kabaak = Pegawai::where('jabatan', 'LIKE', '%BIRO ADMINISTRASI AKADEMIK%')->first();
+        $kabauk = Pegawai::where('jabatan', 'LIKE', '%BIRO ADMINISTRASI UMUM%')->first();
 
         if (!$kabaak) {
-            Alert::error('Gagal', 'Data Kepala Biro Administrasi Akademik (Leni) tidak ditemukan!')->autoclose(3000)->toToast();
+            Alert::error('Gagal', 'Data Kepala Biro Administrasi Akademik tidak ditemukan!')->autoclose(3000)->toToast();
             return redirect()->back();
         }
 
@@ -138,8 +138,8 @@ class SuratAkademikController extends Controller
 
         $dosen = Dosen::find($suratAkademik->dosen_pembimbing_akademik);
         $kaprodi = Dosen::find($suratAkademik->kaprodi);
-        $kabaak = Pegawai::where('nama_staff', 'LIKE', '%Leni%')->first();
-        $kabauk = Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN%')->first();
+        $kabaak = Pegawai::where('jabatan', 'LIKE', '%BIRO ADMINISTRASI AKADEMIK%')->first();
+        $kabauk = Pegawai::where('jabatan', 'LIKE', '%BIRO ADMINISTRASI UMUM%')->first();
         $programStudi = ProgramStudi::find($mahasiswa->program_studi_id);
         $fakultas = $mahasiswa->fakultas;
         $user = User::find($suratAkademik->users_id);
@@ -212,8 +212,8 @@ class SuratAkademikController extends Controller
     
     public function validasi(SuratAkademik $suratAkademik)
     {
-        $kabaak = Pegawai::where('nama_staff', 'LIKE', '%Leni%')->first();
-        $kabauk = Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI UMUM DAN KEUANGAN%')->first();
+        $kabaak = Pegawai::where('jabatan', 'LIKE', '%BIRO ADMINISTRASI AKADEMIK%')->first();
+        $kabauk = Pegawai::where('jabatan', 'LIKE', '%BIRO ADMINISTRASI UMUM%')->first();
 
         return view('pages.suratAkademik.validasi', compact('suratAkademik', 'kabaak', 'kabauk'));
     }

@@ -169,7 +169,7 @@ class SuratAktifController extends Controller
     {
         $no_surat = $suratAktif->no_surat;
         $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
-        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)%')->first();
+        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%BIRO ADMINISTRASI AKADEMIK%')->first();
         $user = $pegawai ? $pegawai->user : null;
         $bulanRomawi = $this->getBulanRomawi();
         return view('pages.suratAktif.show', compact('suratAktif', 'no_surat', 'program_studi', 'bulanRomawi', 'user', 'pegawai'));
@@ -223,7 +223,7 @@ class SuratAktifController extends Controller
 
     public function validasi(SuratAktif $suratAktif)
     {
-        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)%')->first();
+        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%BIRO ADMINISTRASI AKADEMIK%')->first();
         $userApproval = $pegawai ? $pegawai->user : null;
 
         return view('pages.suratAktif.detailsuratakademik', compact('suratAktif', 'pegawai', 'userApproval'));
@@ -233,7 +233,7 @@ class SuratAktifController extends Controller
     {
         $no_surat = $suratAktif->no_surat;
         $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
-        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)%')->first();
+        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%BIRO ADMINISTRASI AKADEMIK%')->first();
         $user = $pegawai ? $pegawai->user : null;
         $bulanRomawi = $this->getBulanRomawi();
         $is_preview = true;
@@ -243,7 +243,7 @@ class SuratAktifController extends Controller
     {
         $no_surat = $suratAktif->no_surat;
         $program_studi = ProgramStudi::find($suratAktif->program_studi_id)->program_studi;
-        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%KA. BIRO ADMINISTRASI AKADEMIK KEMAHASISWAAN (BAAK)%')->first();
+        $pegawai = \App\Models\Pegawai::where('jabatan', 'LIKE', '%BIRO ADMINISTRASI AKADEMIK%')->first();
         $user = $pegawai ? $pegawai->user : null;
         $bulanRomawi = $this->getBulanRomawi();
         return view('pages.suratAktif.show', compact('suratAktif', 'no_surat', 'program_studi', 'bulanRomawi', 'user', 'pegawai'));
