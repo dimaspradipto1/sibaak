@@ -72,6 +72,7 @@
                                 <option value="Fakultas Sains dan Teknologi">Fakultas Sains dan Teknologi</option>
                                 <option value="Fakultas Ekonomi dan Bisnis">Fakultas Ekonomi dan Bisnis</option>
                                 <option value="Fakultas Ilmu Kesehatan">Fakultas Ilmu Kesehatan</option>
+                                <option value="BAAK">BAAK</option>
                                </select>
                             </div>
                         </div>

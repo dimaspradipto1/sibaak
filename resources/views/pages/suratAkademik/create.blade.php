@@ -67,7 +67,23 @@
                         @csrf
 
                         <!-- Input users_id -->
-                        <input type="hidden" name="users_id" value="{{ Auth::id() }}">
+                        @if (Auth::user()->is_admin || Auth::user()->is_superadmin)
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Nama Mahasiswa</label>
+                                <div class="col-sm-10">
+                                    <select name="users_id" id="users_id" class="form-control rounded" required>
+                                        <option value="">Pilih Mahasiswa / User</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}" {{ old('users_id') == $user->id ? 'selected' : '' }}>
+                                                {{ $user->name }} {{ isset($user->mahasiswa) && $user->mahasiswa->npm ? ' (NPM: ' . $user->mahasiswa->npm . ')' : '' }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @else
+                            <input type="hidden" name="users_id" value="{{ Auth::id() }}">
+                        @endif
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Semester Saat Ini</label>
@@ -151,6 +167,10 @@
 @push('script')
     <script>
         $(document).ready(function() {
+            $('#users_id').select2({
+                placeholder: "Pilih Mahasiswa / User",
+                allowClear: true
+            });
             $('#dosen_pembimbing_akademik').select2();
             $('#kaprodi').select2();
         });

@@ -60,8 +60,12 @@ class SuratAktifController extends Controller
             $users = User::where('id', Auth::id())->get();
         } else {
             $users = User::whereHas('role', function ($query) {
-                $query->where('nama_role', 'MAHASISWA');
-            })->get();
+                $query->where('nama_role', 'LIKE', '%MAHASISWA%');
+            })->orWhereHas('mahasiswa')->with('mahasiswa')->get();
+
+            if ($users->isEmpty()) {
+                $users = User::with('mahasiswa')->get();
+            }
         }
 
         $programStudi = ProgramStudi::all();

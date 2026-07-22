@@ -103,6 +103,9 @@
                                     <option value="Fakultas Ilmu Kesehatan (FIKES)"
                                         {{ old('homebase') == 'Fakultas Ilmu Kesehatan (FIKES)' ? 'selected' : '' }}>
                                         Fakultas Ilmu Kesehatan (FIKES)</option>
+                                    <option value="BAAK (Biro Administrasi Akademik dan Kemahasiswaan)"
+                                        {{ old('homebase') == 'BAAK (Biro Administrasi Akademik dan Kemahasiswaan)' ? 'selected' : '' }}>
+                                        BAAK (Biro Administrasi Akademik dan Kemahasiswaan)</option>
                                 </select>
                                 @error('homebase')
                                     <span class="text-danger small">{{ $message }}</span>

@@ -33,11 +33,30 @@ class SuratAktifDataTable extends DataTable
                 }
                 return $name;
             })
+            ->filterColumn('users_id', function ($query, $keyword) {
+                $query->whereHas('users', function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
+            })
             ->addColumn('program_studi_id', function ($item) {
                 return $item->programStudi ? $item->programStudi->program_studi : '-';
             })
+            ->filterColumn('program_studi_id', function ($query, $keyword) {
+                $query->whereHas('programStudi', function ($q) use ($keyword) {
+                    $q->where('program_studi', 'like', "%{$keyword}%");
+                });
+            })
             ->addColumn('status', function ($item) {
                 return $item->status == 'pending' ? '<span class="badge badge-warning text-white px-3 py-2">Pending</span>' : ($item->status == 'diterima' ? '<span class="badge badge-success text-white px-3 py-2">Diterima</span>' : ($item->status == 'ditolak' ? '<span class="badge badge-danger text-white px-3 py-2">Ditolak</span>' : '-'));
+            })
+            ->filterColumn('status', function ($query, $keyword) {
+                $query->where('status', 'like', "%{$keyword}%");
+            })
+            ->addColumn('created_at', function ($item) {
+                return $item->created_at ? $item->created_at->locale('id')->isoFormat('dddd, DD/MM/YYYY - HH:mm') : '-';
+            })
+            ->filterColumn('created_at', function ($query, $keyword) {
+                $query->where('created_at', 'like', "%{$keyword}%");
             })
             ->addColumn('action', function ($item) {
                 $actions = '';
@@ -96,7 +115,7 @@ class SuratAktifDataTable extends DataTable
                 return $actions;
             })
             ->setRowId('DT_RowIndex')
-            ->rawColumns(['action', 'users_id', 'program_studi_id', 'status']);
+            ->rawColumns(['action', 'users_id', 'program_studi_id', 'status', 'created_at']);
     }
 
     /**
@@ -107,7 +126,8 @@ class SuratAktifDataTable extends DataTable
     public function query(SuratAktif $model): QueryBuilder
     {
         $query = $model->newQuery()
-            ->with(['users', 'programStudi']); // eager load biar cepat
+            ->with(['users', 'programStudi'])
+            ->latest('id'); // eager load biar cepat & urutkan terbaru (DESC)
 
         $user = Auth::user();
 
@@ -135,7 +155,7 @@ class SuratAktifDataTable extends DataTable
             ->setTableId('surataktif-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->orderBy(1)
+            ->orderBy(0, 'desc')
             ->selectStyleSingle()
             ->scrollX(true)
             ->buttons([
@@ -166,6 +186,10 @@ class SuratAktifDataTable extends DataTable
                 ->title('PROGRAM STUDI')
                 ->width('15%')
                 ->addClass('text-start'),
+            Column::make('created_at')
+                ->title('TANGGAL SUBMIT')
+                ->width('18%')
+                ->addClass('text-center'),
             Column::make('status')
                 ->title('STATUS')
                 ->width('10%')

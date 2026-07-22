@@ -33,6 +33,7 @@
                                     <option value="Fakultas Ekonomi dan Bisnis" {{ old('fakultas', $sopakademik->fakultas) == 'Fakultas Ekonomi dan Bisnis' ? 'selected' : '' }}>Fakultas Ekonomi dan Bisnis (FEB)</option>
                                     <option value="Fakultas Sains dan Teknologi" {{ old('fakultas', $sopakademik->fakultas) == 'Fakultas Sains dan Teknologi' ? 'selected' : '' }}>Fakultas Sains dan Teknologi (FST)</option>
                                     <option value="Fakultas Ilmu Kesehatan" {{ old('fakultas', $sopakademik->fakultas) == 'Fakultas Ilmu Kesehatan' ? 'selected' : '' }}>Fakultas Ilmu Kesehatan (Fikes)</option>
+                                    <option value="BAAK" {{ old('fakultas', $sopakademik->fakultas) == 'BAAK' ? 'selected' : '' }}>BAAK (Biro Administrasi Akademik dan Kemahasiswaan)</option>
                                 </select>
                                 @error('fakultas')
                                     <div class="text-danger">{{ $message }}</div>
