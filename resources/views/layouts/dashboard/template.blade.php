@@ -37,6 +37,19 @@
     {{-- Dashboard layout styles --}}
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard-layout.css') }}">
 
+    {{-- SweetAlert toast container adjustment so it appears below top navbar --}}
+    <style>
+        .swal2-container {
+            z-index: 999999 !important;
+        }
+        .swal2-container.swal2-top,
+        .swal2-container.swal2-top-start,
+        .swal2-container.swal2-top-end,
+        .swal2-top-end {
+            top: 75px !important;
+            padding-top: 10px !important;
+        }
+    </style>
 
     @stack('style')
     @stack('styles')
