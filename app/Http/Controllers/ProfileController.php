@@ -69,8 +69,11 @@ class ProfileController extends Controller
             $user->update(['name' => $request->name]);
         }
 
-        // Update Profile (General Personal Info)
-        $profileData = array_filter($request->only([
+        // Update Profile (General Personal Info & Identifiers)
+        $profileData = $request->only([
+            'nip',
+            'nidn',
+            'nuptk',
             'nidk',
             'nupn',
             'nbm',
@@ -84,7 +87,9 @@ class ProfileController extends Controller
             'no_telp',
             'email_pribadi',
             'alamat'
-        ]), fn($value) => !is_null($value));
+        ]);
+
+        $profileData = array_filter($profileData, fn($value) => !is_null($value));
 
         // Handle Photo Upload
         if ($request->hasFile('foto')) {
@@ -101,7 +106,7 @@ class ProfileController extends Controller
             $profileData['foto'] = $path;
         }
 
-        $user->profile()->updateOrCreate(
+        $profile = $user->profile()->updateOrCreate(
             ['users_id' => $user->id],
             $profileData
         );
@@ -109,53 +114,55 @@ class ProfileController extends Controller
         // Update based on Role (Specific Institutional Info)
         if ($user->is_mahasiswa) {
             $currentMahasiswa = $user->mahasiswa;
-            $mahasiswaData = [
+            $mahasiswaData = array_filter([
                 'npm' => $request->npm ?? ($currentMahasiswa->npm ?? null),
                 'program_studi_id' => $request->program_studi_id ?? ($currentMahasiswa->program_studi_id ?? null),
                 'fakultas' => $request->fakultas ?? ($currentMahasiswa->fakultas ?? null),
                 'jenjang_pendidikan' => $request->jenjang_pendidikan ?? ($currentMahasiswa->jenjang_pendidikan ?? null),
                 'semester' => $request->semester ?? ($currentMahasiswa->semester ?? null),
                 'status_cuti' => $request->status_cuti ?? ($currentMahasiswa->status_cuti ?? 'Belum Pernah Cuti'),
-            ];
+            ], fn($value) => !is_null($value));
 
             $mahasiswa = $user->mahasiswa()->updateOrCreate(
                 ['users_id' => $user->id],
                 $mahasiswaData
             );
-            $user->profile->update(['mahasiswa_id' => $mahasiswa->id, 'npm' => $mahasiswa->npm]);
+            $profile->update(['mahasiswa_id' => $mahasiswa->id, 'npm' => $mahasiswa->npm]);
         }
 
-        if ($user->pegawai || $user->is_tata_usaha || $user->is_staffbaak) {
+        if ($user->pegawai || $user->is_tata_usaha || $user->is_staffbaak || $user->is_admin || $user->is_superadmin) {
             $currentPegawai = $user->pegawai;
-            $pegawaiData = [
+            $pegawaiData = array_filter([
                 'nama_staff' => $request->name ?? ($currentPegawai->nama_staff ?? $user->name),
                 'jabatan' => $request->jabatan ?? ($currentPegawai->jabatan ?? null),
                 'nidn' => $request->nidn ?? ($currentPegawai->nidn ?? null),
                 'nup' => $request->nup ?? ($currentPegawai->nup ?? null),
                 'homebase' => $request->homebase ?? ($currentPegawai->homebase ?? null),
-            ];
+            ], fn($value) => !is_null($value));
 
-            $pegawai = $user->pegawai()->updateOrCreate(
-                ['users_id' => $user->id],
-                $pegawaiData
-            );
-            $user->profile->update(['pegawai_id' => $pegawai->id]);
+            if (!empty($pegawaiData)) {
+                $pegawai = $user->pegawai()->updateOrCreate(
+                    ['users_id' => $user->id],
+                    $pegawaiData
+                );
+                $profile->update(['pegawai_id' => $pegawai->id]);
+            }
         }
 
         if ($user->dosen) {
             $currentDosen = $user->dosen;
-            $dosenData = [
+            $dosenData = array_filter([
                 'nama_dosen' => $request->name ?? ($currentDosen->nama_dosen ?? $user->name),
                 'nidn' => $request->nidn ?? ($currentDosen->nidn ?? null),
                 'nup' => $request->nup ?? ($currentDosen->nup ?? null),
                 'nuptk' => $request->nuptk ?? ($currentDosen->nuptk ?? null),
-            ];
+            ], fn($value) => !is_null($value));
 
             $dosen = $user->dosen()->updateOrCreate(
                 ['email' => $user->email],
                 $dosenData
             );
-            $user->profile->update(['dosen_id' => $dosen->id]);
+            $profile->update(['dosen_id' => $dosen->id]);
         }
 
         return redirect()->route('profile.index')->with('success', 'Profil berhasil diperbarui');

@@ -354,9 +354,9 @@
                                                 <td class="profile-info-value">
                                                     @if (request('edit'))
                                                         <input type="text" name="nip"
-                                                            value="{{ old('nip', $pegawai->nip ?? ($dosen->nip ?? '')) }}">
+                                                            value="{{ old('nip', $profile->nip ?? ($pegawai->nip ?? ($dosen->nip ?? ''))) }}">
                                                     @else
-                                                        {{ $pegawai->nip ?? ($dosen->nip ?? '-') }}
+                                                        {{ $profile->nip ?? ($pegawai->nip ?? ($dosen->nip ?? '-')) }}
                                                     @endif
                                                 </td>
                                             </tr>
@@ -366,9 +366,9 @@
                                                 <td class="profile-info-value">
                                                     @if (request('edit'))
                                                         <input type="text" name="nidn"
-                                                            value="{{ old('nidn', $pegawai->nidn ?? ($dosen->nidn ?? '')) }}">
+                                                            value="{{ old('nidn', $profile->nidn ?? ($pegawai->nidn ?? ($dosen->nidn ?? ''))) }}">
                                                     @else
-                                                        {{ $pegawai->nidn ?? ($dosen->nidn ?? '-') }}
+                                                        {{ $profile->nidn ?? ($pegawai->nidn ?? ($dosen->nidn ?? '-')) }}
                                                     @endif
                                                 </td>
                                             </tr>
@@ -378,9 +378,9 @@
                                                 <td class="profile-info-value">
                                                     @if (request('edit'))
                                                         <input type="text" name="nuptk"
-                                                            value="{{ old('nuptk', $dosen->nuptk ?? '') }}">
+                                                            value="{{ old('nuptk', $profile->nuptk ?? ($dosen->nuptk ?? '')) }}">
                                                     @else
-                                                        {{ $dosen->nuptk ?? '-' }}
+                                                        {{ $profile->nuptk ?? ($dosen->nuptk ?? '-') }}
                                                     @endif
                                                 </td>
                                             </tr>
