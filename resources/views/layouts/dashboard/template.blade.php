@@ -37,7 +37,7 @@
     {{-- Dashboard layout styles --}}
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard-layout.css') }}">
 
-    {{-- SweetAlert toast container adjustment so it appears below top navbar --}}
+    {{-- SweetAlert & Modal positioning adjustment so they appear below top navbar --}}
     <style>
         .swal2-container {
             z-index: 999999 !important;
@@ -48,6 +48,18 @@
         .swal2-top-end {
             top: 75px !important;
             padding-top: 10px !important;
+        }
+
+        /* Bootstrap Modal adjustment so modal dialog starts below top navbar */
+        .modal {
+            z-index: 10550 !important;
+            padding-top: 75px !important;
+        }
+        .modal-backdrop {
+            z-index: 10540 !important;
+        }
+        .modal-dialog {
+            margin-top: 10px !important;
         }
     </style>
 
