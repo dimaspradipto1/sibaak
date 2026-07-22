@@ -303,6 +303,63 @@
     {{-- SweetAlert2 JS --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    {{-- SweetAlert2 Helper & Global Confirm Handler --}}
+    <script>
+        function confirmDelete(event, element) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            var form = element ? (element.form || element.closest('form')) : null;
+            Swal.fire({
+                title: 'Konfirmasi Hapus',
+                text: 'Apakah Anda yakin ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed && form) {
+                    form.submit();
+                }
+            });
+            return false;
+        }
+
+        $(document).ready(function() {
+            $(document).on('click', 'button[onclick*="confirm"], a[onclick*="confirm"]', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var btn = this;
+                var form = btn.closest('form');
+                
+                Swal.fire({
+                    title: 'Konfirmasi Hapus',
+                    text: 'Apakah Anda yakin ingin menghapus data ini?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (form) {
+                            form.submit();
+                        } else if (btn.tagName === 'A' && btn.href) {
+                            window.location.href = btn.href;
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+
     @stack('script')
     @stack('scripts')
 

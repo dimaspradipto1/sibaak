@@ -82,7 +82,7 @@ class SuratAktifDataTable extends DataTable
                         <form action="' . route('suratAktif.destroy', $item) . '" method="POST" class="d-inline">
                             ' . csrf_field() . '
                             ' . method_field('delete') . '
-                            <button type="submit" class="btn btn-danger btn-sm py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Hapus" onclick="return confirm(\'Hapus data ini?\')"><i class="fa-solid fa-trash-can"></i></button>
+                            <button type="submit" class="btn btn-danger btn-sm py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Hapus" onclick="return confirmDelete(event, this)"><i class="fa-solid fa-trash-can"></i></button>
                         </form>
                     ';
                 }
