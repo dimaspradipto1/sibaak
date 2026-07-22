@@ -116,7 +116,6 @@ class SuratAkademikController extends Controller
             'kaprodi' => $request->kaprodi,
             'kabaak' => $kabaak->id,
             'kabauk' => $kabauk->id,
-            'status' => 'pending',
         ];
 
         SuratAkademik::create($data);
