@@ -42,12 +42,6 @@ class SuratAkademikDataTable extends DataTable
                     $q->where('program_studi', 'like', "%{$keyword}%");
                 });
             })
-            ->addColumn('status', function ($item) {
-                return $item->status == 'pending' ? '<span class="badge badge-warning text-white px-3 py-2">Pending</span>' : ($item->status == 'diterima' ? '<span class="badge badge-success text-white px-3 py-2">Diterima</span>' : ($item->status == 'ditolak' ? '<span class="badge badge-danger text-white px-3 py-2">Ditolak</span>' : '-'));
-            })
-            ->filterColumn('status', function ($query, $keyword) {
-                $query->where('status', 'like', "%{$keyword}%");
-            })
             ->addColumn('created_at', function ($item) {
                 return $item->created_at ? $item->created_at->locale('id')->isoFormat('dddd, DD/MM/YYYY - HH:mm') : '-';
             })
@@ -57,16 +51,13 @@ class SuratAkademikDataTable extends DataTable
             ->addColumn('action', function ($item) {
                 $showButton = '';
                 $editButton = '';
-                $updateStatusButton = '';
                 $deleteButton = '';
 
-                // Tombol cetak/print untuk yang punya akses edit atau delete (Staff/Admin)
                 if (Gate::check('surat_akademik_edit') || Gate::check('surat_akademik_delete')) {
                     $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Cetak Surat</span></a>';
                 }
                 if (Gate::check('surat_akademik_edit')) {
                     $editButton = '<a href="' . route('suratAkademik.edit', $item->id) . '" class="btn btn-sm btn-warning text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>';
-                    $updateStatusButton = '<a href="' . route('suratAkademik.editStatus', $item->id) . '" class="btn btn-sm btn-info text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Update Status"><i class="fa-solid fa-check-circle"></i><span class="d-none d-lg-inline"> Status</span></a>';
                 }
                 if (Gate::check('surat_akademik_delete')) {
                     $deleteButton = '
@@ -78,27 +69,18 @@ class SuratAkademikDataTable extends DataTable
                     ';
                 }
 
-                // Tombol untuk mahasiswa
                 if (Auth::user()->is_mahasiswa) {
-                    if ($item->status == 'pending') {
-                        $showButton = '<span class="text-info small font-italic"><i class="fa-solid fa-clock mr-1"></i>Estimasi surat diproses 3 hari kerja</span>';
-                    } else {
-                        $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-info text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Lihat Detail"><i class="fa-solid fa-eye"></i><span class="d-none d-md-inline"> Detail</span></a>';
-                        
-                        if ($item->status == 'diterima') {
-                            $showButton .= '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Cetak Surat</span></a>';
-                        }
-                    }
+                    $showButton = '<a href="' . route('suratAkademik.show', $item->id) . '" class="btn btn-sm btn-success text-white py-2 px-2 px-md-3 mb-1 mr-1 mr-md-2 rounded" title="Cetak Surat" target="_blank"><i class="fa-solid fa-print"></i><span class="d-none d-md-inline"> Cetak Surat</span></a>';
                 }
 
-                $result = $showButton . $editButton . $updateStatusButton . $deleteButton;
+                $result = $showButton . $editButton . $deleteButton;
                 if (empty(trim($result))) {
                     $result = '<span class="text-muted small">-</span>';
                 }
                 return $result;
             })
             ->setRowId('DT_RowIndex')
-            ->rawColumns(['action', 'users_id', 'program_studi_id', 'status', 'created_at']);
+            ->rawColumns(['action', 'users_id', 'program_studi_id', 'created_at']);
     }
 
 
@@ -170,10 +152,6 @@ class SuratAkademikDataTable extends DataTable
             Column::make('created_at')
                 ->title('TANGGAL SUBMIT')
                 ->width('18%')
-                ->addClass('text-center'),
-            Column::make('status')
-                ->title('STATUS')
-                ->width('10%')
                 ->addClass('text-center'),
             Column::computed('action')
                 ->title('AKSI')
