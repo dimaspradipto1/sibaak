@@ -85,7 +85,7 @@ class SemanticArsipController extends Controller
 
             // 1. Search in Artikel
             $artikelItems = Artikel::with(['user.role'])
-                ->where(function ($q) use ($buildSearch, $query, $words, $flexibleQuery) {
+                ->where(function ($q) use ($buildSearch, $query, $flexibleQuery) {
                     $buildSearch($q, ['judul', 'tipe', 'konten', 'keyword']);
                     $q->orWhere('judul', 'like', $flexibleQuery);
                     $q->orWhereHas('user', function ($sq) use ($query) {
@@ -168,7 +168,7 @@ class SemanticArsipController extends Controller
             // 3. Search in SK Kepanitiaan
             $sk = SkKepanitiaan::with(['users.role', 'jenissk'])
                 ->where(function ($q) use ($buildSearch, $query, $words) {
-                    $buildSearch($q, ['nama_dokumen', 'nomor_sk', 'fakultas', 'keterangan', 'file']);
+                    $buildSearch($q, ['nama_dokumen', 'nomor_sk', 'semester', 'fakultas', 'file']);
                     $q->orWhereHas('jenissk', function ($sq) use ($query, $words) {
                         $sq->where('jenis_sk', 'like', "%{$query}%");
                         foreach ($words as $word) {
@@ -194,7 +194,7 @@ class SemanticArsipController extends Controller
             // 4. Search in LPJ Kepanitiaan
             $lpj = LpjKepanitiaan::with(['users.role'])
                 ->where(function ($q) use ($buildSearch, $query) {
-                    $buildSearch($q, ['nama_dokumen', 'ketua', 'sekretaris', 'bendahara', 'semester', 'fakultas', 'keterangan', 'file']);
+                    $buildSearch($q, ['nama_dokumen', 'ketua', 'sekretaris', 'semester', 'fakultas', 'file']);
                     $q->orWhereHas('users', function ($sq) use ($query) {
                         $sq->where('name', 'like', "%{$query}%");
                     });
@@ -214,7 +214,7 @@ class SemanticArsipController extends Controller
             // 5. Search in Kurikulum
             $kurikulum = Kurikulum::with(['user.role'])
                 ->where(function ($q) use ($buildSearch, $query) {
-                    $buildSearch($q, ['nama_kurikulum', 'tahun', 'prodi', 'fakultas', 'keterangan', 'file']);
+                    $buildSearch($q, ['nama_kurikulum', 'tahun', 'fakultas', 'file']);
                     $q->orWhereHas('user', function ($sq) use ($query) {
                         $sq->where('name', 'like', "%{$query}%");
                     });
@@ -223,7 +223,7 @@ class SemanticArsipController extends Controller
                 ->map(function ($item) use ($getThumbnail) {
                     $item->type = 'Kurikulum';
                     $item->title = $item->nama_kurikulum;
-                    $item->description = 'Dokumen Kurikulum Prodi ' . ($item->prodi ?? '') . ($item->fakultas ? ' - ' . $item->fakultas : '') . ($item->tahun ? ' (' . $item->tahun . ')' : '') . '. Tersimpan dalam pangkalan data kurikulum akademik UIS.';
+                    $item->description = 'Dokumen Kurikulum Prodi ' . ($item->fakultas ? ' - ' . $item->fakultas : '') . ($item->tahun ? ' (' . $item->tahun . ')' : '') . '. Tersimpan dalam pangkalan data kurikulum akademik UIS.';
                     $item->link = $item->file;
                     $item->icon = 'fa-book';
                     $item->color = 'text-info';
@@ -234,7 +234,7 @@ class SemanticArsipController extends Controller
             // 6. Search in Pedoman
             $pedoman = Pedoman::with(['users.role'])
                 ->where(function ($q) use ($buildSearch, $query) {
-                    $buildSearch($q, ['nama_pedoman', 'tahun', 'fakultas', 'keterangan', 'file']);
+                    $buildSearch($q, ['nama_pedoman', 'tahun', 'fakultas', 'file']);
                     $q->orWhereHas('users', function ($sq) use ($query) {
                         $sq->where('name', 'like', "%{$query}%");
                     });
@@ -254,7 +254,7 @@ class SemanticArsipController extends Controller
             // 7. Search in SOP
             $sop = SopAkademik::with(['users.role'])
                 ->where(function ($q) use ($buildSearch, $query) {
-                    $buildSearch($q, ['nama_sop', 'fakultas', 'keterangan', 'file']);
+                    $buildSearch($q, ['nama_sop', 'fakultas', 'file']);
                     $q->orWhereHas('users', function ($sq) use ($query) {
                         $sq->where('name', 'like', "%{$query}%");
                     });
@@ -274,7 +274,7 @@ class SemanticArsipController extends Controller
             // 8. Search in Wasdalbin
             $wasdalbin = Wasdalbin::with(['users.role'])
                 ->where(function ($q) use ($buildSearch, $query) {
-                    $buildSearch($q, ['nama_wasdalbin', 'tahun', 'fakultas', 'keterangan', 'file']);
+                    $buildSearch($q, ['nama_wasdalbin', 'tahun', 'fakultas', 'file']);
                     $q->orWhereHas('users', function ($sq) use ($query) {
                         $sq->where('name', 'like', "%{$query}%");
                     });
